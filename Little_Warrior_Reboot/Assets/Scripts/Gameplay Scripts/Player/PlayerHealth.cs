@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class PlayerHealth : Subject, IObserver, IDamageInterface
 {
@@ -11,6 +12,14 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
 
     HealthSystem _healthSystem;
 
+    PlayerActionMap _playerInput;
+
+    void Awake()
+    {
+        _playerInput = new PlayerActionMap();
+        _playerInput.Player.TestRestart.Enable();
+        _playerInput.Player.TestRestart.started += _TestRestartInput;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -60,4 +69,15 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
     {
         _NotifyObservers(damageTaken);
     }
+
+    //Note: This input exists at present for debugging purposes. This will be removed at a later point in time
+    void _TestRestartInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+
 }

@@ -62,6 +62,15 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestRestart"",
+                    ""type"": ""Button"",
+                    ""id"": ""2861b9aa-cd63-4601-9a4f-5a66deb5ccc6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -130,6 +139,17 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""action"": ""TestPunch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""66c6b4c3-c53f-404b-bcba-aa2283db9c2e"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestRestart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -170,6 +190,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_TestPunch = m_Player.FindAction("TestPunch", throwIfNotFound: true);
+        m_Player_TestRestart = m_Player.FindAction("TestRestart", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -236,6 +257,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_TestPunch;
+    private readonly InputAction m_Player_TestRestart;
     public struct PlayerActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -244,6 +266,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @TestPunch => m_Wrapper.m_Player_TestPunch;
+        public InputAction @TestRestart => m_Wrapper.m_Player_TestRestart;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -265,6 +288,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @TestPunch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
                 @TestPunch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
                 @TestPunch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
+                @TestRestart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
+                @TestRestart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
+                @TestRestart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -281,6 +307,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @TestPunch.started += instance.OnTestPunch;
                 @TestPunch.performed += instance.OnTestPunch;
                 @TestPunch.canceled += instance.OnTestPunch;
+                @TestRestart.started += instance.OnTestRestart;
+                @TestRestart.performed += instance.OnTestRestart;
+                @TestRestart.canceled += instance.OnTestRestart;
             }
         }
     }
@@ -324,6 +353,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
         void OnTestPunch(InputAction.CallbackContext context);
+        void OnTestRestart(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
