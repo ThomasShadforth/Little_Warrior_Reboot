@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "TestPunch",
+                    "name": "LightAttack",
                     "type": "Button",
                     "id": "b17ba93f-d16a-4670-9528-788cd63738aa",
                     "expectedControlType": "Button",
@@ -45,6 +45,15 @@
                     "name": "TestRestart",
                     "type": "Button",
                     "id": "2861b9aa-cd63-4601-9a4f-5a66deb5ccc6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeavyAttack",
+                    "type": "Button",
+                    "id": "a805096f-4995-4eed-845a-59b84c67a142",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -114,7 +123,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TestPunch",
+                    "action": "LightAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -126,6 +135,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TestRestart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f7fa493-ac2c-4603-be25-6bddaebdee48",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeavyAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

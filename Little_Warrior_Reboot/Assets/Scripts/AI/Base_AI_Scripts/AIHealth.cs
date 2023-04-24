@@ -8,6 +8,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     [SerializeField] int _maxHealth;
     [SerializeField] HealthBar _enemyHealthBar;
     HealthSystem _healthSystem;
+    AIStatus _aiStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +17,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
         _ownerSubject = this;
         _ownerSubject.AddObserver(this);
+        _aiStatus = GetComponent<AIStatus>();
         //_ownerSubject.GetObserverCount();
     }
 
@@ -31,8 +33,6 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         {
             _enemyHealthBar.UpdateHealthFillAmount(_healthSystem.GetHealthPercent());
         }
-
-        Debug.Log(_healthSystem.GetHealth());
 
         if (_healthSystem.CheckIsDead())
         {
@@ -54,8 +54,17 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         _healthSystem.Damage(damageTaken);
     }
 
-    public void DetectHit(int damageTaken, Transform hitOrigin = null)
+    public void DetectHit(int damageTaken, Vector2 knockbackForce = default(Vector2), float knockbackDuration = 0)
     {
         _NotifyObservers(damageTaken);
+
+        if (_aiStatus)
+        {
+            _aiStatus.SetKnockbackTime(knockbackDuration);
+            _aiStatus.SetStatus(StatusEnum.Knockback, true);
+            GetComponent<Rigidbody2D>().velocity = knockbackForce;
+        }
+
+        
     }
 }

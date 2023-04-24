@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDamageInterface
 {
-    public void DetectHit(int damageTaken, Transform hitOrigin = null);
+    public void DetectHit(int damageTaken, Vector2 knockbackApplied = default(Vector2), float knockbackDuration = 0);
 }

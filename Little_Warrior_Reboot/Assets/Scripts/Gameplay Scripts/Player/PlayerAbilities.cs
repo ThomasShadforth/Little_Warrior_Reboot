@@ -7,13 +7,15 @@ public class PlayerAbilities : MonoBehaviour
 {
     PlayerSkillManager _playerSkills;
     PlayerMovement _playerMove;
+    PlayerCombat _playerCombat;
 
     // Start is called before the first frame update
     void Start()
     {
         _playerMove = GetComponent<PlayerMovement>();
+        _playerCombat = GetComponent<PlayerCombat>();
         _playerSkills = new PlayerSkillManager();
-
+        
         SkillTreeUI skillTree = FindObjectOfType<SkillTreeUI>();
 
         if(skillTree != null)

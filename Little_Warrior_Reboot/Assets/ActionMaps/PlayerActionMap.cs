@@ -55,7 +55,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""TestPunch"",
+                    ""name"": ""LightAttack"",
                     ""type"": ""Button"",
                     ""id"": ""b17ba93f-d16a-4670-9528-788cd63738aa"",
                     ""expectedControlType"": ""Button"",
@@ -67,6 +67,15 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""name"": ""TestRestart"",
                     ""type"": ""Button"",
                     ""id"": ""2861b9aa-cd63-4601-9a4f-5a66deb5ccc6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HeavyAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""a805096f-4995-4eed-845a-59b84c67a142"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -136,7 +145,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""TestPunch"",
+                    ""action"": ""LightAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -148,6 +157,17 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""TestRestart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f7fa493-ac2c-4603-be25-6bddaebdee48"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HeavyAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -189,8 +209,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         m_Player_PlayerMovement = m_Player.FindAction("PlayerMovement", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        m_Player_TestPunch = m_Player.FindAction("TestPunch", throwIfNotFound: true);
+        m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_TestRestart = m_Player.FindAction("TestRestart", throwIfNotFound: true);
+        m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -256,8 +277,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PlayerMovement;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Sprint;
-    private readonly InputAction m_Player_TestPunch;
+    private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_TestRestart;
+    private readonly InputAction m_Player_HeavyAttack;
     public struct PlayerActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -265,8 +287,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         public InputAction @PlayerMovement => m_Wrapper.m_Player_PlayerMovement;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
-        public InputAction @TestPunch => m_Wrapper.m_Player_TestPunch;
+        public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @TestRestart => m_Wrapper.m_Player_TestRestart;
+        public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -285,12 +308,15 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @Sprint.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
                 @Sprint.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSprint;
-                @TestPunch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
-                @TestPunch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
-                @TestPunch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestPunch;
+                @LightAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
+                @LightAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
+                @LightAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLightAttack;
                 @TestRestart.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
                 @TestRestart.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
                 @TestRestart.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestRestart;
+                @HeavyAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
+                @HeavyAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -304,12 +330,15 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
-                @TestPunch.started += instance.OnTestPunch;
-                @TestPunch.performed += instance.OnTestPunch;
-                @TestPunch.canceled += instance.OnTestPunch;
+                @LightAttack.started += instance.OnLightAttack;
+                @LightAttack.performed += instance.OnLightAttack;
+                @LightAttack.canceled += instance.OnLightAttack;
                 @TestRestart.started += instance.OnTestRestart;
                 @TestRestart.performed += instance.OnTestRestart;
                 @TestRestart.canceled += instance.OnTestRestart;
+                @HeavyAttack.started += instance.OnHeavyAttack;
+                @HeavyAttack.performed += instance.OnHeavyAttack;
+                @HeavyAttack.canceled += instance.OnHeavyAttack;
             }
         }
     }
@@ -352,8 +381,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         void OnPlayerMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnTestPunch(InputAction.CallbackContext context);
+        void OnLightAttack(InputAction.CallbackContext context);
         void OnTestRestart(InputAction.CallbackContext context);
+        void OnHeavyAttack(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

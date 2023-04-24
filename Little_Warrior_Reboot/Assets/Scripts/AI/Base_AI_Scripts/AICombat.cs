@@ -9,6 +9,7 @@ public class AICombat : MonoBehaviour
     [SerializeField] Transform _hitDetectPoint;
     [SerializeField] float _hitDetectRadius;
     [SerializeField] float _attackCoolTime;
+    [SerializeField] Vector2 _knockForce;
     IDamageInterface _aiDamageInterface;
 
     bool _isAttacking;
@@ -37,8 +38,14 @@ public class AICombat : MonoBehaviour
             //In the case of the AI, only damage if the player is detected (So they don't unintentionally harm other enemies/environmental objects)
             if(damageInterface != null && damageInterface != _aiDamageInterface && hitObject.gameObject.CompareTag("Player"))
             {
+                Vector2 knockForce = _knockForce;
+                if(hitObject.transform.position.x < transform.position.x)
+                {
+                    knockForce.x *= -1;
+                }
+
                 //To do: Pass in position for purpose of knockback calculation
-                damageInterface.DetectHit(20);
+                damageInterface.DetectHit(20, _knockForce, .8f);
             }
         }
     }

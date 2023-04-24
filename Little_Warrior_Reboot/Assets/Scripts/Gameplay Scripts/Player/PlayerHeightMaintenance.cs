@@ -20,6 +20,8 @@ public class PlayerHeightMaintenance : MonoBehaviour
     [SerializeField] bool _shouldMaintainHeight = true;
 
     bool _grounded;
+    PlayerCombat _playerCombat;
+    PlayerStatus _playerStatus;
 
     private void Awake()
     {
@@ -30,14 +32,16 @@ public class PlayerHeightMaintenance : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _playerCombat = GetComponent<PlayerCombat>();
+        _playerStatus = GetComponent<PlayerStatus>();
     }
-
-    
 
     private void FixedUpdate()
     {
-        //Debug.Log(_grounded);
+        if((_playerCombat && _playerCombat.GetIsAttacking() && _playerCombat.GetAirAttack()) || (_playerStatus && _playerStatus.CheckForStatus()))
+        {
+            return;
+        }
 
         CheckForGrounded();
     }

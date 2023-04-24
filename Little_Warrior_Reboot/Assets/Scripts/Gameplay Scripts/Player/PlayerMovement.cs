@@ -27,6 +27,8 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerHeightMaintenance _heightMaintenance;
     PlayerSprint _playerSprint;
+    PlayerCombat _playerCombat;
+    PlayerStatus _playerStatus;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class PlayerMovement : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _heightMaintenance = GetComponent<PlayerHeightMaintenance>();
         _playerSprint = GetComponent<PlayerSprint>();
+        _playerCombat = GetComponent<PlayerCombat>();
+        _playerStatus = GetComponent<PlayerStatus>();
         SetMaxSpeed(_maxSpeed);
     }
 
@@ -51,6 +55,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
+        if ((_playerCombat && _playerCombat.GetIsAttacking()) || (_playerStatus && _playerStatus.CheckForStatus()))
+        {
+            return;
+        }
 
         _grounded = _heightMaintenance.GetGrounded();
 
@@ -113,7 +121,6 @@ public class PlayerMovement : MonoBehaviour
             extraSpeed = _playerSprint.GetSprintSpeed();
             //Debug.Log(extraSpeed);
         }
-
         
         _velocity = new Vector2(_speed + extraSpeed, _rb2d.velocity.y);
         _prevGrounded = _grounded;

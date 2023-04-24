@@ -531,6 +531,7 @@ GameObject:
   - component: {fileID: 215167873}
   - component: {fileID: 215167884}
   - component: {fileID: 215167885}
+  - component: {fileID: 215167886}
   m_Layer: 0
   m_Name: TempAISprite
   m_TagString: Untagged
@@ -789,6 +790,20 @@ MonoBehaviour:
   _hitDetectPoint: {fileID: 1937807908}
   _hitDetectRadius: 0.4
   _attackCoolTime: 1
+  _knockForce: {x: 3, y: 3}
+--- !u!114 &215167886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215167872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d852e8a89a05b84c9d62aca4e20c6f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _knockTime: 0
 --- !u!1 &232841212
 GameObject:
   m_ObjectHideFlags: 0
@@ -1369,7 +1384,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.2318139, y: 11.135798, z: -10}
+  m_LocalPosition: {x: 1.2449965, y: 11.135798, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2559,6 +2574,8 @@ GameObject:
   - component: {fileID: 1391536426}
   - component: {fileID: 1391536428}
   - component: {fileID: 1391536429}
+  - component: {fileID: 1391536430}
+  - component: {fileID: 1391536431}
   m_Layer: 7
   m_Name: TempPlayerSprite
   m_TagString: Player
@@ -2581,7 +2598,7 @@ MonoBehaviour:
   _sprintSpeedIncrease: 20
   _timeTakenToSprint: 0.15
   _timeTakenToSlow: 0.07
-  _distBetweenAfterImage: 0.7
+  _distBetweenAfterImage: 0.1
   _currentSprintSpeed: 0
   lerpPoint: 0.5
 --- !u!114 &1391536417
@@ -2799,6 +2816,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409114586d50ca54a8493ca04de4800f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerLightAttacks:
+  - _attackName: Punch
+    _nextLightAttack: 
+    _nextHeavyAttack: Rising Punch
+    _isUnlocked: 1
+    _defaultMove: 1
+    _damageDealt: 20
+    _attackKnockback: {x: 5, y: 2}
+    _knockbackDuration: 0.8
+    _attackMoveForce: {x: 4, y: 0}
+  _playerHeavyAttacks:
+  - _attackName: Rising Punch
+    _nextLightAttack: 
+    _nextHeavyAttack: 
+    _isUnlocked: 1
+    _defaultMove: 1
+    _damageDealt: 20
+    _attackKnockback: {x: 3, y: 7}
+    _knockbackDuration: 1.7
+    _attackMoveForce: {x: 0, y: 8}
   _hitDetectPoint: {fileID: 1540776291}
   _hitDetectRadius: 0.4
 --- !u!114 &1391536429
@@ -2816,6 +2853,30 @@ MonoBehaviour:
   _ownerSubject: {fileID: 0}
   _maxHealth: 100
   _playerHealthBar: {fileID: 1879107382}
+--- !u!114 &1391536430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391536415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 102c5089dc4ff284c830faf02f5d0d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1391536431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1391536415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d6d3fab65e1219459991cfc1d1a1dc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1442741365
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 public class AIMovement : MonoBehaviour
 {
     AIHeightMaintenance _heightMaintenance;
+    AIStatus _aiStatus;
     Rigidbody2D _rb2d;
     Vector2 _velocity;
 
@@ -31,6 +32,7 @@ public class AIMovement : MonoBehaviour
     void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _aiStatus = GetComponent<AIStatus>();
         _heightMaintenance = GetComponent<AIHeightMaintenance>();
         SetMaxSpeed(false);
     }
@@ -43,6 +45,14 @@ public class AIMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if((_aiStatus && _aiStatus.CheckForStatus()))
+        {
+            _speed = 0;
+            _xDirection = 0;
+            Debug.Log("KNOCKBACK");
+            return;
+        }
+
         _grounded = _heightMaintenance.CheckForGrounded();
 
         _velocity = _rb2d.velocity;

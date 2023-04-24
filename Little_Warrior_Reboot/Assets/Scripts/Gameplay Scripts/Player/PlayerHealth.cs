@@ -11,6 +11,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
     [SerializeField] HealthBar _playerHealthBar;
 
     HealthSystem _healthSystem;
+    PlayerStatus _playerStatus;
 
     PlayerActionMap _playerInput;
 
@@ -26,6 +27,8 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
     {
         _healthSystem = new HealthSystem(_maxHealth);
         _healthSystem.OnHealthChanged += HealthSystem_OnHealthChanged;
+
+        _playerStatus = GetComponent<PlayerStatus>();
 
         _ownerSubject = this;
         _ownerSubject.AddObserver(this);
@@ -48,8 +51,6 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
             _playerHealthBar.UpdateHealthFillAmount(_healthSystem.GetHealthPercent());
         }
 
-        Debug.Log(_healthSystem.GetHealth());
-
         if (_healthSystem.CheckIsDead())
         {
             //Temp: Restart the current level
@@ -65,9 +66,18 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
         _healthSystem.Damage(damageTaken);
     }
 
-    public void DetectHit(int damageTaken, Transform hitOrigin = null)
+    public void DetectHit(int damageTaken, Vector2 knockbackForce = default(Vector2), float knockbackDuration = 0)
     {
         _NotifyObservers(damageTaken);
+
+        if (_playerStatus)
+        {
+            _playerStatus.SetKnockbackTime(knockbackDuration);
+            _playerStatus.SetStatus(StatusEnum.Knockback, true);
+            GetComponent<PlayerHeightMaintenance>().SetMaintainHeight(false);
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            GetComponent<Rigidbody2D>().velocity = knockbackForce;
+        }
     }
 
     //Note: This input exists at present for debugging purposes. This will be removed at a later point in time

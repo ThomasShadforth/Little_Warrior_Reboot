@@ -1,0 +1,65 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[System.Serializable]
+public class AttackData
+{
+    [SerializeField] string _attackName;
+    [SerializeField] string _nextLightAttack;
+    [SerializeField] string _nextHeavyAttack;
+    //To Do: Insert Heavy and Down attacks.
+    [SerializeField] bool _isUnlocked;
+    [SerializeField] bool _defaultMove;
+    [SerializeField] int _damageDealt;
+    //Test: Knockback multiplier vectors for specific attacks (E.g. Uppercut)
+    [SerializeField] Vector2 _attackKnockback;
+    [SerializeField] float _knockbackDuration;
+    //Test: Force Multipliers for attack movement
+    [SerializeField] Vector2 _attackMoveForce;
+
+    public string GetAttackName()
+    {
+        return _attackName;
+    }
+
+    public string GetNextLightAttack()
+    {
+        return _nextLightAttack;
+    }
+    
+    public string GetNextHeavyAttack()
+    {
+        return _nextHeavyAttack;
+    }
+
+    public int GetDamageDealt()
+    {
+        return _damageDealt;
+    }
+
+    public bool GetUnlockStatus()
+    {
+        return _isUnlocked;
+    }
+
+    public float GetKnockbackDuration()
+    {
+        return _knockbackDuration;
+    }
+
+    public Vector2 GetMovementForce()
+    {
+        return _attackMoveForce;
+    }
+
+    public Vector2 GetAttackKnockback()
+    {
+        return _attackKnockback;
+    }
+
+    public void SetUnlockStatus(bool willUnlock)
+    {
+        _isUnlocked = willUnlock;
+    }
+}

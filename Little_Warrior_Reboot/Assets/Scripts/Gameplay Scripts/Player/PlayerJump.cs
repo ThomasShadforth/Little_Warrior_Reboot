@@ -29,6 +29,8 @@ public class PlayerJump : MonoBehaviour
     PlayerActionMap _playerInput;
     PlayerMovement _playerMove;
     PlayerHeightMaintenance _heightMaintenance;
+    PlayerCombat _playerCombat;
+    PlayerStatus _playerStatus;
 
     private void Awake()
     {
@@ -44,20 +46,24 @@ public class PlayerJump : MonoBehaviour
         _rb2d = GetComponent<Rigidbody2D>();
         _playerMove = GetComponent<PlayerMovement>();
         _heightMaintenance = GetComponent<PlayerHeightMaintenance>();
+        _playerCombat = GetComponent<PlayerCombat>();
+        _playerStatus = GetComponent<PlayerStatus>();
     }
 
     // Update is called once per frame
     void Update()
     {
         _jumpFloat = _playerInput.Player.Jump.ReadValue<float>();
-        //Debug.Log(_playerMove.GetGroundedState());
-
-        //_desiredJump |= _playerInput.Player.Jump.WasPressedThisFrame();
-        //_desiredJump
+        
     }
 
     private void FixedUpdate()
     {
+        if((_playerCombat && _playerCombat.GetIsAttacking()) || (_playerStatus && _playerStatus.CheckForStatus()))
+        {
+            return;
+        }
+
         _velocity = _rb2d.velocity;
 
         _Jump();

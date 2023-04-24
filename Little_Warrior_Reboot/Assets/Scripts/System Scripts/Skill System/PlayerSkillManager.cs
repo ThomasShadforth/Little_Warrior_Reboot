@@ -17,7 +17,8 @@ public class PlayerSkillManager
         None,
         HealthMax_1,
         HealthMax_2,
-        MoveSpeedMax_1
+        MoveSpeedMax_1,
+        Rising_Punch
     }
 
     private List<AbilityType> _unlockedAbilityList;

@@ -5,34 +5,42 @@ using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
-    //For now, simply play the test animation for the sake of testing player/enemy interaction
-    //Eventually this will be expanded.
-
+    [SerializeField] AttackData[] _playerLightAttacks;
+    [SerializeField] AttackData[] _playerHeavyAttacks;
+    AttackData _currentAttack;
     [SerializeField] Transform _hitDetectPoint;
     [SerializeField] float _hitDetectRadius;
     IDamageInterface _playerDamageInterface;
+    bool _isAttacking;
+    bool _airAttack;
+    PlayerHeightMaintenance _playerHeight;
 
-    PlayerActionMap _playerInput;
 
-
-    private void Awake()
-    {
-        _playerInput = new PlayerActionMap();
-        _playerInput.Player.TestPunch.Enable();
-
-        _playerInput.Player.TestPunch.started += _TestPunchInput;
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
         _playerDamageInterface = GetComponent<IDamageInterface>();
+        _playerHeight = GetComponent<PlayerHeightMaintenance>();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UnlockAttack(string attackName)
     {
-        
+        foreach(AttackData attack in _playerLightAttacks)
+        {
+            if(attack.GetAttackName() == attackName)
+            {
+                attack.SetUnlockStatus(true);
+                return;
+            }
+        }
+
+        foreach(AttackData attack in _playerHeavyAttacks)
+        {
+            if(attack.GetAttackName() == attackName)
+            {
+                attack.SetUnlockStatus(true);
+                return;
+            }
+        }
     }
 
     public void AttackHitDetect()
@@ -45,7 +53,14 @@ public class PlayerCombat : MonoBehaviour
 
             if(damageInterface != null && damageInterface != _playerDamageInterface)
             {
-                damageInterface.DetectHit(20);
+                Vector2 knockForce = _currentAttack.GetAttackKnockback();
+
+                if(hitObject.transform.position.x < transform.position.x)
+                {
+                    knockForce.x *= -1;
+                }
+
+                damageInterface.DetectHit(_currentAttack.GetDamageDealt(), knockForce, _currentAttack.GetKnockbackDuration());
             }
 
         }
@@ -54,16 +69,119 @@ public class PlayerCombat : MonoBehaviour
     public void ResetAttackAnimation()
     {
         GetComponent<Animator>().Play("Idle");
+        _isAttacking = false;
+        _airAttack = false;
+        _currentAttack = null;
     }
 
-    void _TestPunchInput(InputAction.CallbackContext context)
+    public void ApplyMoveForce()
     {
-        //Debug.Log("PUNCHING");
-        GetComponent<Animator>().Play("PlayerPunch1");
+        
+        Vector2 moveForce = _currentAttack.GetMovementForce();
+        moveForce.x *= transform.localScale.x;
+
+        if (moveForce.y > 0) {
+            _playerHeight.SetMaintainHeight(false);
+            GetComponent<Rigidbody2D>().gravityScale = 1.7f;
+            _airAttack = true;
+        }
+        
+        GetComponent<Rigidbody2D>().velocity = moveForce;
+
     }
 
-    private void OnDrawGizmosSelected()
+    
+    public void TriggerAttack(string attackType)
     {
-        Gizmos.DrawWireSphere(_hitDetectPoint.position, _hitDetectRadius);
+        if(attackType == "Light")
+        {
+            if(_currentAttack == null)
+            {
+                if (_playerLightAttacks[0].GetUnlockStatus())
+                {
+                    _currentAttack = _playerLightAttacks[0];
+                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                }
+            }
+            else
+            {
+                if(_currentAttack.GetNextLightAttack() != "")
+                {
+                    _SearchForAttack(_currentAttack.GetNextLightAttack());
+                } else if(_currentAttack.GetNextHeavyAttack() != "")
+                {
+                    _SearchForAttack(_currentAttack.GetNextHeavyAttack());
+                }
+            }
+            
+        } else if(attackType == "Heavy")
+        {
+            if (_currentAttack == null)
+            {
+                if (_playerHeavyAttacks[0].GetUnlockStatus())
+                {
+                    _currentAttack = _playerHeavyAttacks[0];
+                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                }
+            }
+            else
+            {
+                if (_currentAttack.GetNextLightAttack() != "")
+                {
+                    _SearchForAttack(_currentAttack.GetNextLightAttack());
+                }
+                else if (_currentAttack.GetNextHeavyAttack() != "")
+                {
+                    _SearchForAttack(_currentAttack.GetNextHeavyAttack());
+                }
+            }
+        }
     }
+
+
+    void _SearchForAttack(string nextAttackName)
+    {
+        foreach(AttackData attack in _playerLightAttacks)
+        {
+            if(attack.GetAttackName() == nextAttackName)
+            {
+                if (attack.GetUnlockStatus())
+                {
+                    _currentAttack = attack;
+                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                }
+                return;
+            }
+        }
+
+        foreach(AttackData attack in _playerHeavyAttacks)
+        {
+            if(attack.GetAttackName() == nextAttackName)
+            {
+                if (attack.GetUnlockStatus())
+                {
+                    _currentAttack = attack;
+                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                }
+                return;
+            }
+        }
+    }
+
+    public bool GetAirAttack()
+    {
+        return _airAttack;
+    }
+
+    public bool GetIsAttacking()
+    {
+        return _isAttacking;
+    }
+
+    public void SetIsAttacking()
+    {
+        _isAttacking = true;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+    }
+
 }
