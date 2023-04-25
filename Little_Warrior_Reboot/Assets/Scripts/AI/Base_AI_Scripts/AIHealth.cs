@@ -7,6 +7,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     [SerializeField] Subject _ownerSubject;
     [SerializeField] int _maxHealth;
     [SerializeField] HealthBar _enemyHealthBar;
+    [SerializeField] float _deathHitStop;
     HealthSystem _healthSystem;
     AIStatus _aiStatus;
 
@@ -36,6 +37,8 @@ public class AIHealth : Subject, IObserver, IDamageInterface
 
         if (_healthSystem.CheckIsDead())
         {
+            FindObjectOfType<HitStop>().StopTime(_deathHitStop);
+
             if(EnemyObjectPool.instance != null)
             {
                 EnemyObjectPool.instance.AddToPool(gameObject);

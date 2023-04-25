@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerSkillManager
 {
     public event EventHandler<OnSkillUnlockedEventArgs> OnSkillUnlocked;
+    public event EventHandler OnSkillPointsChanged;
 
     public class OnSkillUnlockedEventArgs : EventArgs
     {
@@ -18,15 +19,26 @@ public class PlayerSkillManager
         HealthMax_1,
         HealthMax_2,
         MoveSpeedMax_1,
-        Rising_Punch
+        Rising_Punch_1,
+        Rising_Punch_2,
+        Punch_Default,
+        Punch_1,
+        Punch_2
     }
 
     private List<AbilityType> _unlockedAbilityList;
-    //Insert skill points when ready
+    private int _skillPoints;
 
     public PlayerSkillManager()
     {
         _unlockedAbilityList = new List<AbilityType>();
+        _skillPoints = 10;
+    }
+
+    public void IncreaseSkillPoints(int numberOfSP)
+    {
+        _skillPoints += numberOfSP;
+        OnSkillPointsChanged?.Invoke(this, EventArgs.Empty);
     }
 
     private void _UnlockAbility(AbilityType abilityType)
@@ -65,11 +77,8 @@ public class PlayerSkillManager
                         canUnlock = false;
                     }
                 }
-
                 
-
                 return canUnlock;
-
             }
         }
         else
@@ -81,21 +90,34 @@ public class PlayerSkillManager
 
     }
 
+    public int GetSkillPoints()
+    {
+        return _skillPoints;
+    }
+
+    public bool CheckSkillPointRequirement(int costRequirement)
+    {
+        return _skillPoints >= costRequirement;
+    }
+
     public AbilityType[] GetAbilityRequirements(AbilityType abilityType)
     {
         switch (abilityType)
         {
             case AbilityType.HealthMax_2: return new AbilityType[1] { AbilityType.HealthMax_1};
+            case AbilityType.Rising_Punch_2: return new AbilityType[1] { AbilityType.Rising_Punch_1 };
         }
 
         return new AbilityType[1] {AbilityType.None};
     }
 
-    public bool TryUnlockAbility(AbilityType abilityType)
+    public bool TryUnlockAbility(AbilityType abilityType, int abilityCost)
     {
         if (CanUnlock(abilityType))
         {
             _UnlockAbility(abilityType);
+            _skillPoints -= abilityCost;
+            OnSkillPointsChanged?.Invoke(this, EventArgs.Empty);
             return true;
         }
         else

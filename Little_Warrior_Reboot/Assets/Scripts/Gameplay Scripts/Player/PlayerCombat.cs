@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,12 +15,34 @@ public class PlayerCombat : MonoBehaviour
     bool _isAttacking;
     bool _airAttack;
     PlayerHeightMaintenance _playerHeight;
-
+    PlayerAbilities _playerAbilities;
 
     void Start()
     {
         _playerDamageInterface = GetComponent<IDamageInterface>();
         _playerHeight = GetComponent<PlayerHeightMaintenance>();
+        _playerAbilities = GetComponent<PlayerAbilities>();
+        _SetupDefaultSkills();
+    }
+
+    private void _SetupDefaultSkills()
+    {
+        for(int i = 0; i < _playerLightAttacks.Length; i++)
+        {
+            if (_playerLightAttacks[i].GetDefaultStatus()) {
+                _playerAbilities.UnlockDefaultAbility(_playerLightAttacks[i].GetAbilityType());
+                _playerLightAttacks[i].SetUnlockStatus(true);
+            
+            }
+        }
+
+        for(int i = 0; i < _playerHeavyAttacks.Length; i++)
+        {
+            if (_playerHeavyAttacks[i].GetDefaultStatus()) {
+                _playerAbilities.UnlockDefaultAbility(_playerHeavyAttacks[i].GetAbilityType());
+                _playerHeavyAttacks[i].SetUnlockStatus(true);
+            } 
+        }
     }
 
     public void UnlockAttack(string attackName)
@@ -89,7 +112,6 @@ public class PlayerCombat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = moveForce;
 
     }
-
     
     public void TriggerAttack(string attackType)
     {
@@ -137,7 +159,6 @@ public class PlayerCombat : MonoBehaviour
             }
         }
     }
-
 
     void _SearchForAttack(string nextAttackName)
     {

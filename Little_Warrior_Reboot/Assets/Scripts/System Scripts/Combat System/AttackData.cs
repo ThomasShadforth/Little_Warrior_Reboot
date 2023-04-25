@@ -17,6 +17,7 @@ public class AttackData
     [SerializeField] float _knockbackDuration;
     //Test: Force Multipliers for attack movement
     [SerializeField] Vector2 _attackMoveForce;
+    [SerializeField] PlayerSkillManager.AbilityType _abilityType;
 
     public string GetAttackName()
     {
@@ -43,6 +44,11 @@ public class AttackData
         return _isUnlocked;
     }
 
+    public bool GetDefaultStatus()
+    {
+        return _defaultMove;
+    }
+
     public float GetKnockbackDuration()
     {
         return _knockbackDuration;
@@ -56,6 +62,11 @@ public class AttackData
     public Vector2 GetAttackKnockback()
     {
         return _attackKnockback;
+    }
+
+    public PlayerSkillManager.AbilityType GetAbilityType()
+    {
+        return _abilityType;
     }
 
     public void SetUnlockStatus(bool willUnlock)

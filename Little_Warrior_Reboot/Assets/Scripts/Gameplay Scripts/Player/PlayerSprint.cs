@@ -45,7 +45,7 @@ public class PlayerSprint : MonoBehaviour
 
         _xDirection = _playerInput.Player.PlayerMovement.ReadValue<float>();
 
-        if(_xDirection != _prevXDirection && (_xDirection != 0 || _xDirection == 0))
+        if(_xDirection != _prevXDirection && (_xDirection != 0 || _xDirection == 0) && _startedSprint)
         {
             StopCoroutine(BurstSprintCo());
             StartCoroutine(StopSprintCo());
@@ -93,29 +93,32 @@ public class PlayerSprint : MonoBehaviour
             yield return null;
         }
 
-        timePercentage = 0;
+        timePercentage = 1;
 
-        while(timePercentage < 1)
+        while(timePercentage > 0)
         {
-            timePercentage += Time.deltaTime / _timeTakenToSlow;
-            _currentSprintSpeed = Mathf.MoveTowards(_currentSprintSpeed, 0, timePercentage);
+            timePercentage -= Time.deltaTime / _timeTakenToSlow;
+            _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
+            Debug.Log("DECREASING SPRINT SPEED");
             yield return null;
         }
 
+        _currentSprintSpeed = 0;
         _startedSprint = false;
     }
 
     IEnumerator StopSprintCo()
     {
-        float timePercentage = 0;
+        float timePercentage = 1;
 
-        while(timePercentage < 1)
+        while(timePercentage > 0)
         {
-            timePercentage += Time.deltaTime / _timeTakenToSlow;
-            _currentSprintSpeed = Mathf.MoveTowards(_currentSprintSpeed, 0, timePercentage);
+            timePercentage -= Time.deltaTime / _timeTakenToSlow;
+            _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
             yield return null;
         }
 
+        _currentSprintSpeed = 0;
         _startedSprint = false;
     }
 

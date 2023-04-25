@@ -16,7 +16,7 @@ public class PlayerAbilities : MonoBehaviour
         _playerCombat = GetComponent<PlayerCombat>();
         _playerSkills = new PlayerSkillManager();
         
-        SkillTreeUI skillTree = FindObjectOfType<SkillTreeUI>();
+        SkillTreeUI skillTree = FindObjectOfType<SkillTreeUI>(true);
 
         if(skillTree != null)
         {
@@ -40,12 +40,14 @@ public class PlayerAbilities : MonoBehaviour
             case PlayerSkillManager.AbilityType.MoveSpeedMax_1:
                 _playerMove.SetMaxSpeed(30);
                 break;
+            case PlayerSkillManager.AbilityType.Rising_Punch_1:
+                _playerCombat.UnlockAttack("Rising Punch");
+                break;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UnlockDefaultAbility(PlayerSkillManager.AbilityType abilityType)
     {
-        
+        bool unlocked = _playerSkills.TryUnlockAbility(abilityType, 0);
     }
 }
