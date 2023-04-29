@@ -8,6 +8,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     [SerializeField] int _maxHealth;
     [SerializeField] HealthBar _enemyHealthBar;
     [SerializeField] float _deathHitStop;
+    [SerializeField] int _expOnDeath;
     HealthSystem _healthSystem;
     AIStatus _aiStatus;
 
@@ -26,6 +27,13 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     void Update()
     {
         
+    }
+
+    private void OnDisable()
+    {
+
+
+        FindObjectOfType<PlayerLevelSystem>().IncreaseExp(_expOnDeath);
     }
 
     void HealthSystem_OnHealthChanged(object obj, System.EventArgs e)

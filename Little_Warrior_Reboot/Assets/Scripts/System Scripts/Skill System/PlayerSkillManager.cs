@@ -7,6 +7,7 @@ public class PlayerSkillManager
 {
     public event EventHandler<OnSkillUnlockedEventArgs> OnSkillUnlocked;
     public event EventHandler OnSkillPointsChanged;
+    public event EventHandler OnPlayerLevelUp;
 
     public class OnSkillUnlockedEventArgs : EventArgs
     {
@@ -28,17 +29,25 @@ public class PlayerSkillManager
 
     private List<AbilityType> _unlockedAbilityList;
     private int _skillPoints;
+    private int _currentLevel;
 
     public PlayerSkillManager()
     {
         _unlockedAbilityList = new List<AbilityType>();
         _skillPoints = 10;
+        _currentLevel = 1;
     }
 
     public void IncreaseSkillPoints(int numberOfSP)
     {
         _skillPoints += numberOfSP;
         OnSkillPointsChanged?.Invoke(this, EventArgs.Empty);
+    }
+
+    public void PlayerLevelUp(int currentLevel)
+    {
+        _currentLevel = currentLevel;
+        OnPlayerLevelUp?.Invoke(this, EventArgs.Empty);
     }
 
     private void _UnlockAbility(AbilityType abilityType)
@@ -53,6 +62,18 @@ public class PlayerSkillManager
     public bool IsAbilityUnlocked(AbilityType abilityType)
     {
         return _unlockedAbilityList.Contains(abilityType);
+    }
+
+    public bool CheckLevelRequirement(int levelRequirement)
+    {
+        if (_currentLevel >= levelRequirement)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public bool CanUnlock(AbilityType abilityType)

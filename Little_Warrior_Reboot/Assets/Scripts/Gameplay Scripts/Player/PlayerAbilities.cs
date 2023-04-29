@@ -46,6 +46,16 @@ public class PlayerAbilities : MonoBehaviour
         }
     }
 
+    public void CallPlayerLevelNotify(int playerLevel)
+    {
+        _playerSkills.PlayerLevelUp(playerLevel);
+    }
+
+    public void CallAddSkillPoint(int skillpoints)
+    {
+        _playerSkills.IncreaseSkillPoints(skillpoints);
+    }
+
     public void UnlockDefaultAbility(PlayerSkillManager.AbilityType abilityType)
     {
         bool unlocked = _playerSkills.TryUnlockAbility(abilityType, 0);

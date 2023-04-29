@@ -45,15 +45,20 @@ public class AIMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GamePause.paused)
+        {
+            _rb2d.velocity = Vector2.zero;
+            return;
+        }
+
         if((_aiStatus && _aiStatus.CheckForStatus()))
         {
             _speed = 0;
             _xDirection = 0;
-            Debug.Log("KNOCKBACK");
             return;
         }
 
-        _grounded = _heightMaintenance.CheckForGrounded();
+        _grounded = _heightMaintenance.GetGrounded();
 
         _velocity = _rb2d.velocity;
 
@@ -61,7 +66,7 @@ public class AIMovement : MonoBehaviour
         {
             if (_speed > 0)
             {
-                _speed += _decelRate * 1.9f * Time.deltaTime;
+                _speed += _decelRate * 1.9f * GamePause.deltaTime;
 
                 if (_speed < 0)
                 {
@@ -70,7 +75,7 @@ public class AIMovement : MonoBehaviour
             }
             else if (_speed > -_currentMaxSpeed)
             {
-                _speed -= _accelRate * Time.deltaTime;
+                _speed -= _accelRate * GamePause.deltaTime;
 
                 if (_speed < -_currentMaxSpeed) _speed = -_currentMaxSpeed;
 
@@ -80,21 +85,21 @@ public class AIMovement : MonoBehaviour
         {
             if (_speed < 0)
             {
-                _speed -= _decelRate * 1.9f * Time.deltaTime;
+                _speed -= _decelRate * 1.9f * GamePause.deltaTime;
 
                 if (_speed > 0) _speed = .5f;
 
             }
             else if (_speed < _currentMaxSpeed)
             {
-                _speed += _accelRate * Time.deltaTime;
+                _speed += _accelRate * GamePause.deltaTime;
 
                 if (_speed > _currentMaxSpeed) _speed = _currentMaxSpeed;
             }
         }
         else if (_xDirection == 0)
         {
-            _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _currentMaxSpeed * Time.deltaTime);
+            _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _currentMaxSpeed * GamePause.deltaTime);
         }
 
         _velocity.x = _speed;

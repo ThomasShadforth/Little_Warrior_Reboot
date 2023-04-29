@@ -45,7 +45,7 @@ public class AIPatrolData : MonoBehaviour
     {
         if(_waitTimer > 0)
         {
-            _waitTimer -= Time.deltaTime;
+            _waitTimer -= GamePause.deltaTime;
         }
 
     }

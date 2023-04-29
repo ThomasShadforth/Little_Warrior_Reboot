@@ -50,11 +50,35 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GamePause.paused)
+        {
+            if (!_rb2d.IsSleeping())
+            {
+                _rb2d.Sleep();
+            }
+
+            return;
+        }
+
+        if (_rb2d.IsSleeping())
+        {
+            Debug.Log("WAKING UP");
+
+            _rb2d.WakeUp();
+        }
+        
+
         _playerMoveInput = _playerInput.Player.PlayerMovement.ReadValue<float>();
     }
 
     void FixedUpdate()
     {
+        if (GamePause.paused)
+        {
+            _rb2d.velocity = Vector2.zero;
+            return;
+        }
+
         if ((_playerCombat && _playerCombat.GetIsAttacking()) || (_playerStatus && _playerStatus.CheckForStatus()))
         {
             return;
@@ -81,7 +105,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (_speed > 0)
             {
-                _speed += _decelRate * 1.9f * Time.deltaTime;
+                _speed += _decelRate * 1.9f * GamePause.deltaTime;
 
                 if (_speed < 0)
                 {
@@ -89,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
                 }
             } else if (_speed > -_maxSpeed)
             {
-                _speed -= _accelRate * Time.deltaTime;
+                _speed -= _accelRate * GamePause.deltaTime;
 
                 if (_speed < -_maxSpeed) _speed = -_maxSpeed;
 
@@ -98,19 +122,19 @@ public class PlayerMovement : MonoBehaviour
         {
             if(_speed < 0)
             {
-                _speed -= _decelRate * 1.9f * Time.deltaTime;
+                _speed -= _decelRate * 1.9f * GamePause.deltaTime;
 
                 if(_speed > 0) _speed = .5f;
 
             } else if(_speed < _maxSpeed)
             {
-                _speed += _accelRate * Time.deltaTime;
+                _speed += _accelRate * GamePause.deltaTime;
 
                 if (_speed > _maxSpeed) _speed = _maxSpeed;
             }
         } else if(_playerMoveInput == 0)
         {
-            _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _maxSpeed * Time.deltaTime);
+            _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _maxSpeed * GamePause.deltaTime);
             
         }
 

@@ -29,7 +29,7 @@ public class HealthBar : MonoBehaviour
     {
         while(_healthImage.fillAmount != fillPercent)
         {
-            _healthImage.fillAmount = Mathf.MoveTowards(_healthImage.fillAmount, fillPercent, _fillSpeed * Time.deltaTime);
+            _healthImage.fillAmount = Mathf.MoveTowards(_healthImage.fillAmount, fillPercent, _fillSpeed * GamePause.deltaTime);
             yield return null;
         }
 

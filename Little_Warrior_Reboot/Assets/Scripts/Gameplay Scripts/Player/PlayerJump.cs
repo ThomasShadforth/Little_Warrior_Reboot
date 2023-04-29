@@ -149,6 +149,8 @@ public class PlayerJump : MonoBehaviour
 
     void _JumpInput(InputAction.CallbackContext context)
     {
+        if (GamePause.paused) return;
+
         if (context.started)
         {
             _holdingJump = true;

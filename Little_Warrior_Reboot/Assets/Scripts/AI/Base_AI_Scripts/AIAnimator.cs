@@ -30,6 +30,8 @@ public class AIAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GamePause.paused) return;
+
         _grounded = _aiMove.GetGroundedState();
 
         if(_xDirection != 0)

@@ -19,6 +19,10 @@ public class AIHeightMaintenance : MonoBehaviour
     [SerializeField] float _springDamp;
     [SerializeField] bool _shouldMaintainHeight = true;
 
+    AIStatus _aiStatus;
+
+    bool _grounded;
+
     private void Awake()
     {
         _rb2d = GetComponent<Rigidbody2D>();
@@ -28,7 +32,23 @@ public class AIHeightMaintenance : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _aiStatus = GetComponent<AIStatus>();
+    }
+
+    private void FixedUpdate()
+    {
+        if(_aiStatus && _aiStatus.CheckForStatus())
+        {
+            return;
+        }
+
+        CheckForGrounded();
+
+    }
+
+    public bool GetGrounded()
+    {
+        return _grounded;
     }
 
     public void SetMaintainHeight(bool shouldMaintainHeight)
@@ -36,18 +56,16 @@ public class AIHeightMaintenance : MonoBehaviour
         _shouldMaintainHeight = shouldMaintainHeight;
     }
 
-    public bool CheckForGrounded()
+    public void CheckForGrounded()
     {
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
 
-        bool grounded = _CheckGrounded(rayHitGround, hit);
+        _grounded = _CheckGrounded(rayHitGround, hit);
 
         if (rayHitGround && _shouldMaintainHeight)
         {
             _MaintainHeight(hit);
         }
-
-        return grounded;
     }
 
     private bool _CheckGrounded(bool rayHitGround, RaycastHit2D hit)

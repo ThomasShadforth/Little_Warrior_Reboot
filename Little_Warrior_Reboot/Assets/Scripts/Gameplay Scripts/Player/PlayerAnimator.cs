@@ -40,6 +40,7 @@ public class PlayerAnimator : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GamePause.paused) return;
 
         _grounded = _playerMove.GetGroundedState();
 

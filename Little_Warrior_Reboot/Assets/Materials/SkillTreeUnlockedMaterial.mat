@@ -51,7 +51,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _Alpha: 1
+    - _ColorMask: 0
     - _EnableExternalAlpha: 0
+    - _Stencil: 0
+    - _StencilComp: 0
+    - _StencilOp: 0
+    - _StencilReadMask: 0
+    - _StencilWriteMask: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}

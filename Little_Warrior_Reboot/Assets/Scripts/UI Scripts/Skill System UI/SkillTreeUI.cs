@@ -12,6 +12,8 @@ public class SkillTreeUI : MonoBehaviour
     [SerializeField] Sprite _pathLineSprite;
     [SerializeField] Sprite _pathLineGlowSprite;
 
+    [SerializeField] TextMeshProUGUI _skillPointText;
+
     [SerializeField] GameObject _infoPanel;
     [SerializeField] TextMeshProUGUI _nameText;
     [SerializeField] TextMeshProUGUI _descText;
@@ -28,16 +30,24 @@ public class SkillTreeUI : MonoBehaviour
     {
         _playerSkills = playerSkills;
 
+        Transform skillTreeBase = transform.Find("Scroll").Find("SkillPanel").Find("SkillTreeElements");
+
+        if (!skillTreeBase)
+        {
+            return;
+        }
+
         _abilityButtonList = new List<AbilityButton>();
-        _abilityButtonList.Add(new AbilityButton(transform.Find("SkillTreeElements").Find("healthMax1Btn"), playerSkills, PlayerSkillManager.AbilityType.HealthMax_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Max Health Increase - 1", "Reinforces your metal plating, allowing for more survivability", 5, this));
-        _abilityButtonList.Add(new AbilityButton(transform.Find("SkillTreeElements").Find("healthMax2Btn"), playerSkills, PlayerSkillManager.AbilityType.HealthMax_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Max Health Increase - 2", "Reinforces your metal plating further, allowing for even more survivability", 10, this));
-        _abilityButtonList.Add(new AbilityButton(transform.Find("SkillTreeElements").Find("risingPunch1Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 1", "A technique that sends your fist soaring into the air!", 10, this));
-        _abilityButtonList.Add(new AbilityButton(transform.Find("SkillTreeElements").Find("risingPunch2Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 2", "Strengthens your rising punch, letting it deal more damage!", 10, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("healthMax1Btn"), playerSkills, PlayerSkillManager.AbilityType.HealthMax_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Max Health Increase - 1", "Reinforces your metal plating, allowing for more survivability", 5, 2, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("healthMax2Btn"), playerSkills, PlayerSkillManager.AbilityType.HealthMax_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Max Health Increase - 2", "Reinforces your metal plating further, allowing for even more survivability", 10, 5, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("risingPunch1Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 1", "A technique that sends your fist soaring into the air!", 10, 2, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("risingPunch2Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 2", "Strengthens your rising punch, letting it deal more damage!", 10, 5, this));
 
         _playerSkills.OnSkillUnlocked += PlayerSkillManager_OnSkillUnlocked;
-        _playerSkills.OnSkillPointsChanged += _UpdateSkillPointsUI;
+        _playerSkills.OnSkillPointsChanged += PlayerSkillManager_OnSkillPointsChanged;
 
         _UpdateUI();
+        UpdateSkillPointsUI();
     }
 
     void PlayerSkillManager_OnSkillUnlocked(object sender, PlayerSkillManager.OnSkillUnlockedEventArgs e)
@@ -46,9 +56,19 @@ public class SkillTreeUI : MonoBehaviour
         _UpdateUI();
     }
 
-    void _UpdateSkillPointsUI(object sender, System.EventArgs e)
+    void PlayerSkillManager_OnSkillPointsChanged(object sender, System.EventArgs e)
     {
+        UpdateSkillPointsUI();
+    }
 
+    void PlayerSkillManager_OnPlayerLevelUp(object sender, System.EventArgs e)
+    {
+        _UpdateUI();
+    }
+
+    public void UpdateSkillPointsUI()
+    {
+        _skillPointText.text = $"Skill Points: {_playerSkills.GetSkillPoints()}";
     }
 
     void _UpdateUI()
@@ -89,7 +109,7 @@ public class SkillTreeUI : MonoBehaviour
     }
 
     //Display the skill on the info panel
-    public void DisplayInfoPanel(string abilityName, string abilityDescription, int abilityCost, PlayerSkillManager.AbilityType selectedAbilityType)
+    public void DisplayInfoPanel(string abilityName, string abilityDescription, int abilityCost, int levelRequirement, PlayerSkillManager.AbilityType selectedAbilityType)
     {
         
         _infoPanel.SetActive(true);
@@ -98,7 +118,7 @@ public class SkillTreeUI : MonoBehaviour
         _costText.text = $"Cost: {abilityCost}";
         _selectedAbilityCost = abilityCost;
         _selectedAbilityType = selectedAbilityType;
-        _buyButton.GetComponent<Button>().interactable = (_playerSkills.CheckSkillPointRequirement(abilityCost) && !_playerSkills.IsAbilityUnlocked(selectedAbilityType));
+        _buyButton.GetComponent<Button>().interactable = (_playerSkills.CheckSkillPointRequirement(abilityCost) && !_playerSkills.IsAbilityUnlocked(selectedAbilityType) && _playerSkills.CheckLevelRequirement(levelRequirement));
 
     }
 
@@ -114,9 +134,10 @@ public class SkillTreeUI : MonoBehaviour
         string _abilityName;
         string _abilityDescription;
         int _abilityCost;
+        int _requiredLevel;
         SkillTreeUI _ownerSkillTree;
 
-        public AbilityButton(Transform transform, PlayerSkillManager playerSkills, PlayerSkillManager.AbilityType abilityType, Material lockedSkillMat, Material unlockedSkillMat, string abilityName, string abilityDesc, int abilityCost, SkillTreeUI ownerSkillTree)
+        public AbilityButton(Transform transform, PlayerSkillManager playerSkills, PlayerSkillManager.AbilityType abilityType, Material lockedSkillMat, Material unlockedSkillMat, string abilityName, string abilityDesc, int abilityCost, int requiredLevel, SkillTreeUI ownerSkillTree)
         {
             if (transform == null) return;
            
@@ -129,24 +150,14 @@ public class SkillTreeUI : MonoBehaviour
             this._abilityName = abilityName;
             this._abilityDescription = abilityDesc;
             this._abilityCost = abilityCost;
+            this._requiredLevel = requiredLevel;
             this._ownerSkillTree = ownerSkillTree;
 
             this._image = transform.Find("image").GetComponent<Image>();
             this._backgroundImage = transform.Find("background").GetComponent<Image>();
 
-            /*
-            transform.GetComponent<Button>().onClick.AddListener(() =>
-            {
-                if (!playerSkills.IsAbilityUnlocked(abilityType))
-                {
-                    if (!playerSkills.TryUnlockAbility(abilityType))
-                    {
-                        //Output UI warning that skill cannot be unlocked
-                    }
-                }
-            });*/
-
-            transform.GetComponent<Button>().onClick.AddListener(() => _ownerSkillTree.DisplayInfoPanel(_abilityName, _abilityDescription, _abilityCost, _abilityType));
+            
+            transform.GetComponent<Button>().onClick.AddListener(() => _ownerSkillTree.DisplayInfoPanel(_abilityName, _abilityDescription, _abilityCost, _requiredLevel, _abilityType));
             
         }
 
@@ -165,17 +176,16 @@ public class SkillTreeUI : MonoBehaviour
             }
             else
             {
-                if (_playerSkills.CanUnlock(_abilityType))
+                if (_playerSkills.CanUnlock(_abilityType) && _playerSkills.CheckLevelRequirement(_requiredLevel))
                 {
                     _image.material = _unlockedSkillMaterial;
                     _backgroundImage.color = new Color(75, 103, 125);
-                    //_transform.GetComponent<Button>().enabled = true;
+                    
                 }
                 else
                 {
                     _image.material = _lockedSkillMaterial;
                     _backgroundImage.color = new Color(.3f, .3f, .3f);
-                    //_transform.GetComponent<Button>().enabled = false;
                 }
             }
         }

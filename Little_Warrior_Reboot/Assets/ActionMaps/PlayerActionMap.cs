@@ -80,6 +80,24 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""4147204f-ddf3-4fdf-a8de-f54bfadc6fa6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TestEXPAdd"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d46ddd8-e7a5-4f53-b1f4-f320fb2d2551"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -170,6 +188,28 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""action"": ""HeavyAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8d4ae62c-aba1-4a9b-953a-4f9de85c3f2c"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ded7ec90-94aa-4877-8099-dfc51f906f18"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TestEXPAdd"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -212,6 +252,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         m_Player_LightAttack = m_Player.FindAction("LightAttack", throwIfNotFound: true);
         m_Player_TestRestart = m_Player.FindAction("TestRestart", throwIfNotFound: true);
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
+        m_Player_PauseGame = m_Player.FindAction("PauseGame", throwIfNotFound: true);
+        m_Player_TestEXPAdd = m_Player.FindAction("TestEXPAdd", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -280,6 +322,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LightAttack;
     private readonly InputAction m_Player_TestRestart;
     private readonly InputAction m_Player_HeavyAttack;
+    private readonly InputAction m_Player_PauseGame;
+    private readonly InputAction m_Player_TestEXPAdd;
     public struct PlayerActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -290,6 +334,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         public InputAction @LightAttack => m_Wrapper.m_Player_LightAttack;
         public InputAction @TestRestart => m_Wrapper.m_Player_TestRestart;
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
+        public InputAction @PauseGame => m_Wrapper.m_Player_PauseGame;
+        public InputAction @TestEXPAdd => m_Wrapper.m_Player_TestEXPAdd;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -317,6 +363,12 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @HeavyAttack.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
                 @HeavyAttack.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeavyAttack;
+                @PauseGame.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPauseGame;
+                @TestEXPAdd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
+                @TestEXPAdd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
+                @TestEXPAdd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -339,6 +391,12 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @HeavyAttack.started += instance.OnHeavyAttack;
                 @HeavyAttack.performed += instance.OnHeavyAttack;
                 @HeavyAttack.canceled += instance.OnHeavyAttack;
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
+                @TestEXPAdd.started += instance.OnTestEXPAdd;
+                @TestEXPAdd.performed += instance.OnTestEXPAdd;
+                @TestEXPAdd.canceled += instance.OnTestEXPAdd;
             }
         }
     }
@@ -384,6 +442,8 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         void OnLightAttack(InputAction.CallbackContext context);
         void OnTestRestart(InputAction.CallbackContext context);
         void OnHeavyAttack(InputAction.CallbackContext context);
+        void OnPauseGame(InputAction.CallbackContext context);
+        void OnTestEXPAdd(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

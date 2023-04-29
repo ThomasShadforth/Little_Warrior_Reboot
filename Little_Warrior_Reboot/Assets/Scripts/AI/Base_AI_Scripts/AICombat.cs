@@ -64,7 +64,7 @@ public class AICombat : MonoBehaviour
     {
         if(_attackCoolTimer > 0)
         {
-            _attackCoolTimer -= Time.deltaTime;
+            _attackCoolTimer -= GamePause.deltaTime;
         }
     }
 
