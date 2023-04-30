@@ -66,6 +66,8 @@ public class PlayerSkillManager
 
     public bool CheckLevelRequirement(int levelRequirement)
     {
+        //Debug.Log(levelRequirement);
+
         if (_currentLevel >= levelRequirement)
         {
             return true;

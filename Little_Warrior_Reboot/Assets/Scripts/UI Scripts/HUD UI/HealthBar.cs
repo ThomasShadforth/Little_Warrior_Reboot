@@ -22,10 +22,10 @@ public class HealthBar : MonoBehaviour
 
     public void UpdateHealthFillAmount(float fillPercent)
     {
-        StartCoroutine(UpdateHealthFillCo(fillPercent));
+        StartCoroutine(_UpdateHealthFillCo(fillPercent));
     }
 
-    IEnumerator UpdateHealthFillCo(float fillPercent)
+    IEnumerator _UpdateHealthFillCo(float fillPercent)
     {
         while(_healthImage.fillAmount != fillPercent)
         {

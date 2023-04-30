@@ -62,8 +62,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (_rb2d.IsSleeping())
         {
-            Debug.Log("WAKING UP");
-
             _rb2d.WakeUp();
         }
         

@@ -30,6 +30,8 @@ public class PlayerLevelSystem : MonoBehaviour
     {
         _currentEXP += expToAdd;
 
+        FindObjectOfType<ExpBar>().UpdateEXPFillAmount(((float)_currentEXP / _expToNextLevel[_currentLevel]), _currentEXP, _expToNextLevel[_currentLevel], _expToNextLevel[_currentLevel + 1]);
+
         if(_currentLevel < _maxLevel)
         {
             if(_currentEXP >= _expToNextLevel[_currentLevel])

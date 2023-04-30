@@ -48,6 +48,7 @@ public class PlayerAbilities : MonoBehaviour
 
     public void CallPlayerLevelNotify(int playerLevel)
     {
+        //Debug.Log("LEVEL: " + playerLevel);
         _playerSkills.PlayerLevelUp(playerLevel);
     }
 

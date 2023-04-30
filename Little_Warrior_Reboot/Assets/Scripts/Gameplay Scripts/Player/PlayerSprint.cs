@@ -99,7 +99,7 @@ public class PlayerSprint : MonoBehaviour
         {
             timePercentage -= Time.deltaTime / _timeTakenToSlow;
             _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
-            Debug.Log("DECREASING SPRINT SPEED");
+            //Debug.Log("DECREASING SPRINT SPEED");
             yield return null;
         }
 

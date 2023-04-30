@@ -45,6 +45,7 @@ public class SkillTreeUI : MonoBehaviour
 
         _playerSkills.OnSkillUnlocked += PlayerSkillManager_OnSkillUnlocked;
         _playerSkills.OnSkillPointsChanged += PlayerSkillManager_OnSkillPointsChanged;
+        _playerSkills.OnPlayerLevelUp += PlayerSkillManager_OnPlayerLevelUp;
 
         _UpdateUI();
         UpdateSkillPointsUI();
@@ -63,6 +64,7 @@ public class SkillTreeUI : MonoBehaviour
 
     void PlayerSkillManager_OnPlayerLevelUp(object sender, System.EventArgs e)
     {
+
         _UpdateUI();
     }
 
@@ -168,6 +170,7 @@ public class SkillTreeUI : MonoBehaviour
 
         public void UpdateUI()
         {
+            
             if (_transform == null) return;
             if (_playerSkills.IsAbilityUnlocked(_abilityType))
             {
@@ -176,14 +179,19 @@ public class SkillTreeUI : MonoBehaviour
             }
             else
             {
+                Debug.Log(_abilityName + ": " + _playerSkills.CanUnlock(_abilityType));
+                Debug.Log(_abilityName + ": " + _playerSkills.CheckLevelRequirement(_requiredLevel));
+
                 if (_playerSkills.CanUnlock(_abilityType) && _playerSkills.CheckLevelRequirement(_requiredLevel))
                 {
+                    //Debug.Log("CAN UNLOCK!");
                     _image.material = _unlockedSkillMaterial;
                     _backgroundImage.color = new Color(75, 103, 125);
                     
                 }
                 else
                 {
+                    //Debug.Log("CANNOT UNLOCK");
                     _image.material = _lockedSkillMaterial;
                     _backgroundImage.color = new Color(.3f, .3f, .3f);
                 }
