@@ -179,8 +179,8 @@ public class SkillTreeUI : MonoBehaviour
             }
             else
             {
-                Debug.Log(_abilityName + ": " + _playerSkills.CanUnlock(_abilityType));
-                Debug.Log(_abilityName + ": " + _playerSkills.CheckLevelRequirement(_requiredLevel));
+                //Debug.Log(_abilityName + ": " + _playerSkills.CanUnlock(_abilityType));
+                //Debug.Log(_abilityName + ": " + _playerSkills.CheckLevelRequirement(_requiredLevel));
 
                 if (_playerSkills.CanUnlock(_abilityType) && _playerSkills.CheckLevelRequirement(_requiredLevel))
                 {

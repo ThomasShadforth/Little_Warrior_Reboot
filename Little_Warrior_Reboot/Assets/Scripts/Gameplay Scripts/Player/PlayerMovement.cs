@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour, IDataPersistence
 {
     Vector2 _velocity;
 
@@ -162,5 +162,14 @@ public class PlayerMovement : MonoBehaviour
         return _grounded;
     }
 
-    
+    public void LoadData(GameData data)
+    {
+        this.transform.position = data.playerPosition;
+    }
+
+    public void SaveData(GameData data)
+    {
+        
+        data.playerPosition = this.transform.position;
+    }
 }
