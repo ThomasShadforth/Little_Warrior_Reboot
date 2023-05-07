@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
     PlayerCombat _playerCombat;
     PlayerStatus _playerStatus;
 
+    int _testDeathCount;
+
     private void Awake()
     {
         _playerInput = new PlayerActionMap();
@@ -81,6 +83,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         {
             return;
         }
+
+        _testDeathCount += 1;
 
         _grounded = _heightMaintenance.GetGrounded();
 
@@ -162,14 +166,20 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         return _grounded;
     }
 
-    public void LoadData(GameData data)
-    {
-        this.transform.position = data.playerPosition;
-    }
-
     public void SaveData(GameData data)
     {
         
+        data.fixedUpdateCount = _testDeathCount;
         data.playerPosition = this.transform.position;
+        Debug.Log("Saved fixed update count: " + data.fixedUpdateCount);
+        Debug.Log("Saved player position: " + data.playerPosition);
+    }
+
+    public void LoadData(GameData data)
+    {
+        Debug.Log("Loaded fixed update count: " + data.fixedUpdateCount);
+        Debug.Log("Loaded player position" + data.playerPosition);
+        this._testDeathCount = data.fixedUpdateCount;
+        this.transform.position = data.playerPosition;
     }
 }

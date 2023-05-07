@@ -4,27 +4,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Menu
 {
-    [Header("Menu Navigation:")]
+    [Header("Menu Navigation")]
     [SerializeField] private SaveSlotMenu _saveSlotMenu;
 
     [Header("Menu Buttons:")]
-    [SerializeField] private Button _newGameButton;
-    [SerializeField] private Button _continueGameButton;
-    [SerializeField] private Button _loadGameButton;
+    [SerializeField] Button _newGameButton;
+    [SerializeField] Button _continueButton;
+    [SerializeField] Button _loadGameButton;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _DisableButtonsDependingData();
-    }
-
-    void _DisableButtonsDependingData()
+    private void Start()
     {
         if (!DataPersistenceManager.instance.HasGameData())
         {
-            _continueGameButton.gameObject.SetActive(false);
+            _continueButton.interactable = false;
             _loadGameButton.interactable = false;
         }
     }
@@ -43,39 +37,26 @@ public class MainMenu : MonoBehaviour
 
     public void OnContinueGameClicked()
     {
-        string sceneToLoad = DataPersistenceManager.instance.GetLastScene();
-        //
-        StartCoroutine(_LoadGameCo(sceneToLoad));
-    }
+        _DisableMenuButtons();
+        //DataPersistenceManager.instance.LoadGame();
+        DataPersistenceManager.instance.SaveGame();
 
-    public void ActivateMenu()
-    {
-        this.gameObject.SetActive(true);
-        _DisableButtonsDependingData();
-    }
-
-    public void DeactivateMenu()
-    {
-        this.gameObject.SetActive(false);
+        SceneManager.LoadSceneAsync("SampleScene");
     }
 
     private void _DisableMenuButtons()
     {
         _newGameButton.interactable = false;
-        _continueGameButton.interactable = false;
+        _continueButton.interactable = false;
     }
 
-    IEnumerator _LoadGameCo(string sceneToLoad)
+    public void ActivateMenu()
     {
-        if(UIScreenFade.instance != null)
-        {
-            UIScreenFade.instance.FadeToBlack();
-        }
+        this.gameObject.SetActive(true);
+    }
 
-        DataPersistenceManager.instance.SaveGame();
-
-        yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadSceneAsync(sceneToLoad);
+    public void DeactivateMenu()
+    {
+        this.gameObject.SetActive(false);
     }
 }

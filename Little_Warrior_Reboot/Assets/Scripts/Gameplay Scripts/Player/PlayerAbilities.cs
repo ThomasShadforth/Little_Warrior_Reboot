@@ -59,6 +59,12 @@ public class PlayerAbilities : MonoBehaviour
 
     public void UnlockDefaultAbility(PlayerSkillManager.AbilityType abilityType)
     {
+        if(_playerSkills == null)
+        {
+            Debug.Log("NO SKILL MANAGER");
+            return;
+        }
+
         bool unlocked = _playerSkills.TryUnlockAbility(abilityType, 0);
     }
 }
