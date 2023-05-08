@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
     PlayerSprint _playerSprint;
     PlayerCombat _playerCombat;
     PlayerStatus _playerStatus;
+    PlayerJump _playerJump;
+    //PlayerAcceleration _accelerationComponent;
 
     int _testDeathCount;
 
@@ -46,7 +48,9 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         _playerSprint = GetComponent<PlayerSprint>();
         _playerCombat = GetComponent<PlayerCombat>();
         _playerStatus = GetComponent<PlayerStatus>();
+        _playerJump = GetComponent<PlayerJump>();
         SetMaxSpeed(_maxSpeed);
+        //_accelerationComponent = new PlayerAcceleration(_maxSpeed);
     }
 
     // Update is called once per frame
@@ -103,6 +107,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         _velocity = _rb2d.velocity;
 
         //Experiment: Original Little Warrior Movement Physics (For running at least)
+        
         if (_playerMoveInput < -.1f)
         {
             if (_speed > 0)
@@ -140,6 +145,9 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
             
         }
 
+
+        //_speed = _accelerationComponent.GetAccelSpeed(_playerMoveInput);
+                
         float extraSpeed = 0;
 
         if(_playerSprint != null)
@@ -147,8 +155,16 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
             extraSpeed = _playerSprint.GetSprintSpeed();
             //Debug.Log(extraSpeed);
         }
-        
-        _velocity = new Vector2(_speed + extraSpeed, _rb2d.velocity.y);
+
+        if((_heightMaintenance.GetGrounded() && !_heightMaintenance.GetOnSlope()) || !_heightMaintenance.GetGrounded())
+        {
+            _velocity = new Vector2((_speed + extraSpeed), _rb2d.velocity.y);
+        } else if(_heightMaintenance.GetGrounded() && _heightMaintenance.GetOnSlope() && !_playerJump.GetIsJumping())
+        {
+            _velocity = new Vector2(Mathf.Abs(_speed + extraSpeed) * _heightMaintenance.GetSlopeNormalPerpendicular().x * -_playerMoveInput,
+                Mathf.Abs(_speed + extraSpeed) * _heightMaintenance.GetSlopeNormalPerpendicular().y * -_playerMoveInput);
+        }
+
         _prevGrounded = _grounded;
         _rb2d.velocity = _velocity;
 

@@ -71,6 +71,11 @@ public class PlayerJump : MonoBehaviour
         _rb2d.velocity = new Vector2(_rb2d.velocity.x, _velocity.y);
     }
 
+    public bool GetIsJumping()
+    {
+        return _isJumping;
+    }
+
     void _Jump()
     {
         if (_playerMove.GetGroundedState() && _rb2d.velocity.y == 0)

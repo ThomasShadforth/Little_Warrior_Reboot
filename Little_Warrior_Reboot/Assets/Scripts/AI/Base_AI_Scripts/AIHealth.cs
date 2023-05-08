@@ -12,6 +12,8 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     HealthSystem _healthSystem;
     AIStatus _aiStatus;
 
+    bool _isDying;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,17 +25,22 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         //_ownerSubject.GetObserverCount();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _isDying = false;
+
+        if (_healthSystem != null)
+        {
+            _healthSystem.Heal(_maxHealth);
+        }
     }
 
     private void OnDisable()
     {
-
-
-        FindObjectOfType<PlayerLevelSystem>().IncreaseExp(_expOnDeath);
+        if (_isDying)
+        {
+            FindObjectOfType<PlayerLevelSystem>().IncreaseExp(_expOnDeath);
+        }
     }
 
     void HealthSystem_OnHealthChanged(object obj, System.EventArgs e)

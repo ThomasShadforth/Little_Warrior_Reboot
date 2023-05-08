@@ -6,6 +6,7 @@ using UnityEngine;
 public class AIMovement : MonoBehaviour
 {
     AIHeightMaintenance _heightMaintenance;
+    SlopeDetection _slopeDetection;
     AIStatus _aiStatus;
     Rigidbody2D _rb2d;
     Vector2 _velocity;
@@ -28,13 +29,20 @@ public class AIMovement : MonoBehaviour
     float _decelRate;
     float _friction = 2.2f;
 
+    [Header("Slope Detection Config:")]
+    [SerializeField] float _slopeCheckDistance;
+    [SerializeField] LayerMask _whatIsGround;
+    CapsuleCollider2D _capsuleCollider;
+
     // Start is called before the first frame update
     void Start()
     {
+        _capsuleCollider = GetComponent<CapsuleCollider2D>();
         _rb2d = GetComponent<Rigidbody2D>();
         _aiStatus = GetComponent<AIStatus>();
         _heightMaintenance = GetComponent<AIHeightMaintenance>();
         SetMaxSpeed(false);
+        _slopeDetection = new SlopeDetection(this.transform, _capsuleCollider.size, _slopeCheckDistance, _whatIsGround);
     }
 
     // Update is called once per frame
@@ -102,7 +110,21 @@ public class AIMovement : MonoBehaviour
             _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _currentMaxSpeed * GamePause.deltaTime);
         }
 
-        _velocity.x = _speed;
+        if (_slopeDetection != null)
+        {
+            _slopeDetection.CheckSlope();
+        }
+
+        if((_heightMaintenance.GetGrounded() && !_slopeDetection.GetIsOnSlope()) || !_heightMaintenance.GetGrounded())
+        {
+            _velocity = new Vector2(_speed, _rb2d.velocity.y);
+        } else if(_heightMaintenance.GetGrounded() && _slopeDetection.GetIsOnSlope())
+        {
+            _velocity = new Vector2(Mathf.Abs(_speed) * _slopeDetection.GetSlopeNormalPerpendicular().x * -_xDirection,
+                Mathf.Abs(_speed) * _slopeDetection.GetSlopeNormalPerpendicular().y * -_xDirection);
+        }
+
+        //_velocity.x = _speed;
         _rb2d.velocity = _velocity;
     }
 
