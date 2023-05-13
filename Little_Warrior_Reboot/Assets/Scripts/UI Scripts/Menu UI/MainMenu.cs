@@ -25,14 +25,26 @@ public class MainMenu : Menu
 
     public void OnNewGameClicked()
     {
-        _saveSlotMenu.ActivateMenu(false);
-        this.DeactivateMenu();
+        if (DataPersistenceManager.instance.GetDisabledDataPersistence())
+        {
+            SceneManager.LoadSceneAsync("SampleScene");
+        }
+        else
+        {
+            _saveSlotMenu.ActivateMenu(false);
+            this.DeactivateMenu();
+        }
     }
 
     public void OnLoadGameClicked()
     {
         _saveSlotMenu.ActivateMenu(true);
         this.DeactivateMenu();
+    }
+
+    public void OnQuitGameClicked()
+    {
+        Application.Quit();
     }
 
     public void OnContinueGameClicked()

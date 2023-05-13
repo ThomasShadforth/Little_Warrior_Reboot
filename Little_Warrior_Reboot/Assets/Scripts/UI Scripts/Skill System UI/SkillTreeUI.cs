@@ -42,6 +42,8 @@ public class SkillTreeUI : MonoBehaviour
         _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("healthMax2Btn"), playerSkills, PlayerSkillManager.AbilityType.HealthMax_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Max Health Increase - 2", "Reinforces your metal plating further, allowing for even more survivability", 10, 5, this));
         _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("risingPunch1Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 1", "A technique that sends your fist soaring into the air!", 10, 2, this));
         _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("risingPunch2Btn"), playerSkills, PlayerSkillManager.AbilityType.Rising_Punch_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Rising Punch - 2", "Strengthens your rising punch, letting it deal more damage!", 10, 5, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("thrustKick1Btn"), playerSkills, PlayerSkillManager.AbilityType.Thrust_Kick_1, _lockedSkillMaterial, _unlockedSkillMaterial, "Thrust Kick - 1", "A strong kick that knocks enemies back!", 10, 2, this));
+        _abilityButtonList.Add(new AbilityButton(skillTreeBase.Find("thrustKick2Btn"), playerSkills, PlayerSkillManager.AbilityType.Thrust_Kick_2, _lockedSkillMaterial, _unlockedSkillMaterial, "Thrust Kick - 2", "Strengthens your thrust kick, letting it deal more damage!", 10, 5, this));
 
         _playerSkills.OnSkillUnlocked += PlayerSkillManager_OnSkillUnlocked;
         _playerSkills.OnSkillPointsChanged += PlayerSkillManager_OnSkillPointsChanged;
@@ -102,11 +104,17 @@ public class SkillTreeUI : MonoBehaviour
         }
     }
 
+    private void OnDisable()
+    {
+        _infoPanel.SetActive(false);
+    }
+
     public void BuyUpgrade()
     {
         if (_playerSkills.TryUnlockAbility(_selectedAbilityType, _selectedAbilityCost))
         {
             _buyButton.GetComponent<Button>().interactable = false;
+            _infoPanel.SetActive(false);
         }
     }
 

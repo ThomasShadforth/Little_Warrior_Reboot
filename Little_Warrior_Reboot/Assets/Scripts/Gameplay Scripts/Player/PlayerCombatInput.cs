@@ -16,6 +16,14 @@ public class PlayerCombatInput : MonoBehaviour
         _playerInput.Player.HeavyAttack.started += _CheckHeavyInput;
     }
 
+    private void OnDisable()
+    {
+        if(_playerInput != null)
+        {
+            _playerInput.Dispose();
+        }
+    }
+
     private void Start()
     {
         _playerCombat = GetComponent<PlayerCombat>();

@@ -40,6 +40,14 @@ public class PlayerJump : MonoBehaviour
         _playerInput.Player.Jump.canceled += _JumpInput;
     }
 
+    private void OnDisable()
+    {
+        if(_playerInput != null)
+        {
+            _playerInput.Dispose();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

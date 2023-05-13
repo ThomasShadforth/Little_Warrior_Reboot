@@ -152,6 +152,11 @@ public class DataPersistenceManager : MonoBehaviour
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
+    public bool GetDisabledDataPersistence()
+    {
+        return _disableDataPersistence;
+    }
+
     public bool HasGameData() 
     {
         return gameData != null;

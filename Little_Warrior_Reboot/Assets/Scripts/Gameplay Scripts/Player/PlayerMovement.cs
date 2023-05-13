@@ -40,6 +40,14 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         _playerInput.Player.PlayerMovement.Enable();
     }
 
+    private void OnDisable()
+    {
+        if(_playerInput != null)
+        {
+            _playerInput.Dispose();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {

@@ -31,6 +31,14 @@ public class PlayerSprint : MonoBehaviour
         
     }
 
+    private void OnDisable()
+    {
+        if(_playerInput != null)
+        {
+            _playerInput.Dispose();
+        }
+    }
+
     private void Start()
     {
         _prevXDirection = 1;
@@ -88,7 +96,7 @@ public class PlayerSprint : MonoBehaviour
         float timePercentage = 0;
         while(timePercentage < 1)
         {
-            timePercentage += Time.deltaTime / _timeTakenToSprint;
+            timePercentage += GamePause.deltaTime / _timeTakenToSprint;
             _currentSprintSpeed = Mathf.Lerp(_currentSprintSpeed, _sprintSpeedIncrease, timePercentage);
             yield return null;
         }
@@ -97,7 +105,7 @@ public class PlayerSprint : MonoBehaviour
 
         while(timePercentage > 0)
         {
-            timePercentage -= Time.deltaTime / _timeTakenToSlow;
+            timePercentage -= GamePause.deltaTime / _timeTakenToSlow;
             _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
             //Debug.Log("DECREASING SPRINT SPEED");
             yield return null;
@@ -113,7 +121,7 @@ public class PlayerSprint : MonoBehaviour
 
         while(timePercentage > 0)
         {
-            timePercentage -= Time.deltaTime / _timeTakenToSlow;
+            timePercentage -= GamePause.deltaTime / _timeTakenToSlow;
             _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
             yield return null;
         }

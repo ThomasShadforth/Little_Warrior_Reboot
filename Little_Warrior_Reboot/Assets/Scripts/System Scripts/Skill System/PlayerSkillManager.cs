@@ -24,7 +24,9 @@ public class PlayerSkillManager
         Rising_Punch_2,
         Punch_Default,
         Punch_1,
-        Punch_2
+        Punch_2,
+        Thrust_Kick_1,
+        Thrust_Kick_2
     }
 
     private List<AbilityType> _unlockedAbilityList;
@@ -129,6 +131,7 @@ public class PlayerSkillManager
         {
             case AbilityType.HealthMax_2: return new AbilityType[1] { AbilityType.HealthMax_1};
             case AbilityType.Rising_Punch_2: return new AbilityType[1] { AbilityType.Rising_Punch_1 };
+            case AbilityType.Thrust_Kick_2: return new AbilityType[1] { AbilityType.Thrust_Kick_1 };
         }
 
         return new AbilityType[1] {AbilityType.None};

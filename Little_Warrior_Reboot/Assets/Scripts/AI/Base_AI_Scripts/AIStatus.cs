@@ -43,7 +43,14 @@ public class AIStatus : MonoBehaviour
     
     IEnumerator KnockbackTimerCo()
     {
-        yield return new WaitForSeconds(_knockTime);
+        float timePercentage = 0;
+
+        while(timePercentage < 1)
+        {
+            timePercentage += GamePause.deltaTime / _knockTime;
+            yield return null;
+        }
+
         SetStatus(StatusEnum.Knockback, false);
     }
 

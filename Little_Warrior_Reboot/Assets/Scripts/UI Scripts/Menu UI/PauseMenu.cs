@@ -18,10 +18,12 @@ public class PauseMenu : MonoBehaviour
         _playerInput.Player.PauseGame.started += PauseGameInput;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        if(_playerInput != null)
+        {
+            _playerInput.Dispose();
+        }
     }
 
     public void OpenMenuWindow(int menuIndex)

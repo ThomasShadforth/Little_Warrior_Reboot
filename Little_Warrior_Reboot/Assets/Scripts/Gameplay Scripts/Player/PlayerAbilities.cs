@@ -43,6 +43,9 @@ public class PlayerAbilities : MonoBehaviour
             case PlayerSkillManager.AbilityType.Rising_Punch_1:
                 _playerCombat.UnlockAttack("Rising Punch");
                 break;
+            case PlayerSkillManager.AbilityType.Thrust_Kick_1:
+                _playerCombat.UnlockAttack("Thrust Kick");
+                break;
         }
     }
 

@@ -52,6 +52,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
 
         if (_healthSystem.CheckIsDead())
         {
+            _isDying = true;
             FindObjectOfType<HitStop>().StopTime(_deathHitStop);
 
             if(EnemyObjectPool.instance != null)
@@ -78,6 +79,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
 
         if (_aiStatus)
         {
+            GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             _aiStatus.SetKnockbackTime(knockbackDuration);
             _aiStatus.SetStatus(StatusEnum.Knockback, true);
             GetComponent<Rigidbody2D>().velocity = knockbackForce;
