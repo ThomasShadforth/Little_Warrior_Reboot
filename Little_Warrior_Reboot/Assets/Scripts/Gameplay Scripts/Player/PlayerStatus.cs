@@ -6,11 +6,18 @@ public class PlayerStatus : MonoBehaviour
 {
     bool _isKnocked;
     bool _isDazed;
+    bool _disabledHeightMaintenance;
+
     float _knockbackTime;
 
     public bool CheckForStatus()
     {
         return (_isKnocked == true || _isDazed == true);
+    }
+
+    public bool GetDisabledHeightMaintenance()
+    {
+        return _disabledHeightMaintenance;
     }
 
     public void SetKnockbackTime(float knockbackDuration)
@@ -31,9 +38,23 @@ public class PlayerStatus : MonoBehaviour
         }
     }
 
+    public void SetDisabledHeightMaintenance()
+    {
+        _disabledHeightMaintenance = true;
+
+        StartCoroutine(EnableHeightMaintenanceCo());
+    }
+
     IEnumerator KnockbackTimerCo()
     {
         yield return new WaitForSeconds(_knockbackTime);
         SetStatus(StatusEnum.Knockback, false);
+    }
+
+    IEnumerator EnableHeightMaintenanceCo()
+    {
+        yield return new WaitForSeconds(.15f);
+
+        _disabledHeightMaintenance = false;
     }
 }

@@ -81,6 +81,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             _aiStatus.SetKnockbackTime(knockbackDuration);
+            _aiStatus.SetDisabledHeightMaintenance();
             _aiStatus.SetStatus(StatusEnum.Knockback, true);
             GetComponent<Rigidbody2D>().velocity = knockbackForce;
         }

@@ -21,6 +21,7 @@ public class PlayerHeightMaintenance : MonoBehaviour
 
     //experimental - Slope check variables
     [SerializeField] private float _slopeCheckDistance;
+    [SerializeField] private float _maxSlopeAngle;
     private CapsuleCollider2D _capsuleCollider;
     private Vector2 _colliderSize;
     private Vector2 _slopeNormalPerpendicular;
@@ -51,7 +52,7 @@ public class PlayerHeightMaintenance : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if((_playerCombat && _playerCombat.GetIsAttacking() && _playerCombat.GetAirAttack()) || (_playerStatus && _playerStatus.CheckForStatus()))
+        if((_playerCombat && _playerCombat.GetIsAttacking() && _playerCombat.GetAirAttack()) || (_playerStatus && _playerStatus.GetDisabledHeightMaintenance()))
         {
             return;
         }
@@ -76,12 +77,24 @@ public class PlayerHeightMaintenance : MonoBehaviour
         if (slopeHitFront)
         {
             //Debug.Log("SLOPE HIT FROM FRONT");
-            _isOnSlope = true;
             _slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+
+            //Debug.Log(_slopeSideAngle);
+
+            if (_slopeSideAngle <= _maxSlopeAngle)
+            {
+                _isOnSlope = true;
+            }
+
         } else if (slopeHitBack)
         {
-            _isOnSlope = true;
             _slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+
+            if (_slopeSideAngle <= _maxSlopeAngle)
+            {
+                _isOnSlope = true;
+            }
+            
         }
         else
         {
@@ -99,6 +112,8 @@ public class PlayerHeightMaintenance : MonoBehaviour
             _slopeNormalPerpendicular = Vector2.Perpendicular(slopeHit.normal).normalized;
 
             _slopeDownAngle = Vector2.Angle(slopeHit.normal, Vector2.up);
+
+            //Debug.Log(_slopeDownAngle);
 
             if(_slopeDownAngle != _slopeDownAngleOld)
             {

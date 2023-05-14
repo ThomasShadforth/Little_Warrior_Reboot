@@ -37,7 +37,7 @@ public class AIHeightMaintenance : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(_aiStatus && _aiStatus.CheckForStatus())
+        if(_aiStatus && _aiStatus.GetDisabledHeightMaintenance())
         {
             return;
         }

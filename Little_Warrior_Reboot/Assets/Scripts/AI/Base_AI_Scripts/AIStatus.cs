@@ -6,6 +6,7 @@ public class AIStatus : MonoBehaviour
 {
     bool _isKnocked;
     bool _isDazed;
+    bool _disabledHeightMaintenance;
 
     [SerializeField] float _knockTime;
 
@@ -20,9 +21,21 @@ public class AIStatus : MonoBehaviour
         return (_isKnocked == true || _isDazed == true);
     }
 
+    public bool GetDisabledHeightMaintenance()
+    {
+        return _disabledHeightMaintenance;
+    }
+
     public void SetKnockbackTime(float knockTime)
     {
         _knockTime = knockTime;
+    }
+
+    public void SetDisabledHeightMaintenance()
+    {
+        _disabledHeightMaintenance = true;
+
+        StartCoroutine(EnableHeightMaintenanceCo());
     }
 
     public void SetStatus(StatusEnum statusToSet, bool statusState)
@@ -52,6 +65,13 @@ public class AIStatus : MonoBehaviour
         }
 
         SetStatus(StatusEnum.Knockback, false);
+    }
+
+    IEnumerator EnableHeightMaintenanceCo()
+    {
+        yield return new WaitForSeconds(.3f);
+
+        _disabledHeightMaintenance = false;
     }
 
 }
