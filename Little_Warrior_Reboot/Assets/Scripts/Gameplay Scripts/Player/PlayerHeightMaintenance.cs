@@ -20,15 +20,6 @@ public class PlayerHeightMaintenance : MonoBehaviour
     [SerializeField] bool _shouldMaintainHeight = true;
 
     //experimental - Slope check variables
-    [SerializeField] private float _slopeCheckDistance;
-    [SerializeField] private float _maxSlopeAngle;
-    private CapsuleCollider2D _capsuleCollider;
-    private Vector2 _colliderSize;
-    private Vector2 _slopeNormalPerpendicular;
-    private float _slopeDownAngle;
-    private float _slopeSideAngle;
-    private float _slopeDownAngleOld;
-    private bool _isOnSlope;
 
     bool _grounded;
     PlayerCombat _playerCombat;
@@ -45,9 +36,6 @@ public class PlayerHeightMaintenance : MonoBehaviour
     {
         _playerCombat = GetComponent<PlayerCombat>();
         _playerStatus = GetComponent<PlayerStatus>();
-
-        _capsuleCollider = GetComponent<CapsuleCollider2D>();
-        _colliderSize = _capsuleCollider.size;
     }
 
     private void FixedUpdate()
@@ -58,73 +46,6 @@ public class PlayerHeightMaintenance : MonoBehaviour
         }
 
         CheckForGrounded();
-        _CheckSlope();
-    }
-
-    void _CheckSlope()
-    {
-        Vector2 checkPos = transform.position - new Vector3(0.0f, (_colliderSize.y / 2));
-
-        _VertSlopeCheck(checkPos);
-        _HorSlopeCheck(checkPos);
-    }
-
-    void _HorSlopeCheck(Vector2 checkPos)
-    {
-        RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, _slopeCheckDistance, _whatIsGround);
-        RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, -transform.right, _slopeCheckDistance, _whatIsGround);
-
-        if (slopeHitFront)
-        {
-            //Debug.Log("SLOPE HIT FROM FRONT");
-            _slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
-
-            //Debug.Log(_slopeSideAngle);
-
-            if (_slopeSideAngle <= _maxSlopeAngle)
-            {
-                _isOnSlope = true;
-            }
-
-        } else if (slopeHitBack)
-        {
-            _slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
-
-            if (_slopeSideAngle <= _maxSlopeAngle)
-            {
-                _isOnSlope = true;
-            }
-            
-        }
-        else
-        {
-            _slopeSideAngle = 0.0f;
-            _isOnSlope = false;
-        }
-    }
-
-    void _VertSlopeCheck(Vector2 checkPos)
-    {
-        RaycastHit2D slopeHit = Physics2D.Raycast(checkPos, Vector2.down, _slopeCheckDistance, _whatIsGround);
-        if (slopeHit)
-        {
-            //Debug.Log("SLOPE IS HIT VERT");
-            _slopeNormalPerpendicular = Vector2.Perpendicular(slopeHit.normal).normalized;
-
-            _slopeDownAngle = Vector2.Angle(slopeHit.normal, Vector2.up);
-
-            //Debug.Log(_slopeDownAngle);
-
-            if(_slopeDownAngle != _slopeDownAngleOld)
-            {
-                _isOnSlope = true;
-            }
-
-            _slopeDownAngleOld = _slopeDownAngle;
-
-            Debug.DrawRay(slopeHit.point, _slopeNormalPerpendicular, Color.red);
-            Debug.DrawRay(slopeHit.point, slopeHit.normal, Color.green);
-        }
     }
 
     public void SetMaintainHeight(bool shouldMaintainHeight)
@@ -134,19 +55,9 @@ public class PlayerHeightMaintenance : MonoBehaviour
         _shouldMaintainHeight = shouldMaintainHeight;
     }
 
-    public Vector2 GetSlopeNormalPerpendicular()
-    {
-        return _slopeNormalPerpendicular;
-    }
-
     public bool GetGrounded()
     {
         return _grounded;
-    }
-
-    public bool GetOnSlope()
-    {
-        return _isOnSlope;
     }
 
     public void CheckForGrounded()
@@ -154,6 +65,9 @@ public class PlayerHeightMaintenance : MonoBehaviour
         Vector2 velocity = _rb2d.velocity;
         
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
+
+        
+        _CheckHazards(hit);
 
         _grounded = _CheckGrounded(rayHitGround, hit);
 
@@ -181,6 +95,33 @@ public class PlayerHeightMaintenance : MonoBehaviour
         }
 
         return grounded;
+    }
+
+    private void _CheckHazards(RaycastHit2D hit)
+    {
+        if (hit)
+        {
+            //Debug.Log(hit.collider.gameObject);
+            LevelHazard hazard = hit.collider.gameObject.GetComponent<LevelHazard>();
+
+            if(hazard != null && !_playerStatus.GetInvincibility())
+            {
+                Debug.Log("HAZARD IS DETECTED");
+                _playerStatus.SetInvincibility();
+
+                IDamageInterface damageInterface = GetComponent<IDamageInterface>();
+
+                if(damageInterface != null)
+                {
+                    Debug.Log("DAMAGE SHOULD TAKE PLACE");
+                    damageInterface.DetectHit(10, new Vector2(-400000, -40), 2f);
+                }
+                /*
+                _rb2d.velocity = Vector2.zero;
+                _rb2d.AddForce(new Vector2(40000, -40), ForceMode2D.Impulse);*/
+            }
+
+        }
     }
 
     private (bool rayHitGround, RaycastHit2D hit) _RaycastToGround()

@@ -11,6 +11,7 @@ public class SlopeDetection
     float _slopeDownAngle;
     float _slopeDownAngleOld;
     float _slopeSideAngle;
+    float _maxSlopeAngle = 45f;
     bool _isOnSlope;
     LayerMask _whatIsGround;
 
@@ -68,12 +69,22 @@ public class SlopeDetection
 
         if (slopeHitFront)
         {
-            _isOnSlope = true;
             _slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+
+            if (_slopeSideAngle <= _maxSlopeAngle)
+            {
+                _isOnSlope = true;
+            }
+            
         } else if (slopeHitBack)
         {
-            _isOnSlope = true;
             _slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+
+            if (_slopeSideAngle <= _maxSlopeAngle)
+            {
+                _isOnSlope = true;
+            }
+            
         }
         else
         {

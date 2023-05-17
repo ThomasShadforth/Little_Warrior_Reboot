@@ -109,6 +109,11 @@ public class SkillTreeUI : MonoBehaviour
         _infoPanel.SetActive(false);
     }
 
+    public void OpenSkillTree()
+    {
+        _UpdateUI();
+    }
+
     public void BuyUpgrade()
     {
         if (_playerSkills.TryUnlockAbility(_selectedAbilityType, _selectedAbilityCost))

@@ -8,11 +8,18 @@ public class PlayerStatus : MonoBehaviour
     bool _isDazed;
     bool _disabledHeightMaintenance;
 
+    bool _invincible;
+
     float _knockbackTime;
 
     public bool CheckForStatus()
     {
         return (_isKnocked == true || _isDazed == true);
+    }
+
+    public bool GetInvincibility()
+    {
+        return _invincible;
     }
 
     public bool GetDisabledHeightMaintenance()
@@ -35,6 +42,7 @@ public class PlayerStatus : MonoBehaviour
                 break;
             case StatusEnum.Dazed:
                 break;
+            
         }
     }
 
@@ -43,6 +51,14 @@ public class PlayerStatus : MonoBehaviour
         _disabledHeightMaintenance = true;
 
         StartCoroutine(EnableHeightMaintenanceCo());
+    }
+
+    public void SetInvincibility()
+    {
+        _invincible = true;
+
+        //To do: insert coroutine that resets invincibility after a few seconds
+        StartCoroutine(DisableInvincibilityCo());
     }
 
     IEnumerator KnockbackTimerCo()
@@ -56,5 +72,43 @@ public class PlayerStatus : MonoBehaviour
         yield return new WaitForSeconds(.15f);
 
         _disabledHeightMaintenance = false;
+    }
+
+    IEnumerator DisableInvincibilityCo()
+    {
+        float timePercentage = 0;
+
+        bool flickerToTransparent = true;
+
+        while(timePercentage < 1)
+        {
+            timePercentage += GamePause.deltaTime / 2f;
+
+            if (flickerToTransparent)
+            {
+                GetComponent<SpriteRenderer>().color = new Color(GetComponent<SpriteRenderer>().color.r, GetComponent<SpriteRenderer>().color.g, GetComponent<SpriteRenderer>().color.b, Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.a, 0, 10f * GamePause.deltaTime));
+
+                if(GetComponent<SpriteRenderer>().color.a <= 0)
+                {
+                    flickerToTransparent = false;
+                }
+            }
+            
+            if(!flickerToTransparent)
+            {
+                //Debug.Log("");
+                GetComponent<SpriteRenderer>().color = new Color(GetComponent<SpriteRenderer>().color.r, GetComponent<SpriteRenderer>().color.g, GetComponent<SpriteRenderer>().color.b, Mathf.MoveTowards(GetComponent<SpriteRenderer>().color.a, 1, 10f * GamePause.deltaTime));
+
+                if (GetComponent<SpriteRenderer>().color.a >= 1)
+                {
+                    flickerToTransparent = true;
+                }
+            }
+
+            yield return null;
+        }
+
+        GetComponent<SpriteRenderer>().color = new Color(GetComponent<SpriteRenderer>().color.r, GetComponent<SpriteRenderer>().color.g, GetComponent<SpriteRenderer>().color.b, 1);
+        _invincible = false;
     }
 }

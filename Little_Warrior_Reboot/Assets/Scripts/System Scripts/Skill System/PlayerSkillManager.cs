@@ -61,6 +61,31 @@ public class PlayerSkillManager
         }
     }
 
+    public void LoadUnlockedAbilities(List<AbilityType> loadedAbilities)
+    {
+        _unlockedAbilityList = loadedAbilities;
+
+        for(int i = 0; i < _unlockedAbilityList.Count; i++)
+        {
+            Debug.Log(_unlockedAbilityList[i].ToString());
+        }
+    }
+
+    public void LoadSkillPoints(int loadedSkillPoints)
+    {
+        _skillPoints = loadedSkillPoints;
+    }
+
+    public List<AbilityType> GetUnlockedAbilities()
+    {
+        return _unlockedAbilityList;
+    }
+
+    public int GetSkillPoints()
+    {
+        return _skillPoints;
+    }
+
     public bool IsAbilityUnlocked(AbilityType abilityType)
     {
         return _unlockedAbilityList.Contains(abilityType);
@@ -113,11 +138,6 @@ public class PlayerSkillManager
         }
         
 
-    }
-
-    public int GetSkillPoints()
-    {
-        return _skillPoints;
     }
 
     public bool CheckSkillPointRequirement(int costRequirement)

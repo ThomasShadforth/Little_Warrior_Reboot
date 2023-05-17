@@ -30,6 +30,12 @@ public class ExpBar : MonoBehaviour
         StartCoroutine(_UpdateEXPFillCo(fillPercent, currentExp, currentLevelCap, nextLevelCap));
     }
 
+    public void LoadLevelText(int loadedLevel)
+    {
+        _levelTextVal = loadedLevel;
+        _UpdateLevelText();
+    }
+
     void _UpdateLevelText()
     {
         levelText.text = $"Level: {_levelTextVal}";

@@ -217,7 +217,6 @@ RectTransform:
   m_Children:
   - {fileID: 616878038}
   - {fileID: 1216995462}
-  - {fileID: 386179011}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -379,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &335328623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -520,14 +519,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386179010}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 647919806}
-  m_Father: {fileID: 1593686}
-  m_RootOrder: 2
+  m_Father: {fileID: 616878038}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -804,6 +803,7 @@ RectTransform:
   - {fileID: 335328623}
   - {fileID: 1854373472}
   - {fileID: 1804471955}
+  - {fileID: 386179011}
   m_Father: {fileID: 1593686}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2227,7 +2227,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -84.11902}
+  m_AnchoredPosition: {x: 0, y: -448}
   m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1804471956
@@ -2382,7 +2382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1854373472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2697,8 +2697,12 @@ PrefabInstance:
       value: DataPersistenceManager
       objectReference: {fileID: 0}
     - target: {fileID: 748458060397860905, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
+      propertyPath: _disableDataPersistence
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 748458060397860905, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
       propertyPath: _overrideSelectedProfileId
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 748458060397860906, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
       propertyPath: m_RootOrder

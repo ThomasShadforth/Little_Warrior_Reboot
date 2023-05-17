@@ -45,7 +45,7 @@ public class LineOfSight2D : MonoBehaviour
 
             Vector3 directionToTarget = (targetTransform.position - transform.position).normalized;
             
-            if(Vector3.Angle(Vector3.right, directionToTarget) < losAngle / 2)
+            if(Vector3.Angle(transform.right, directionToTarget) < losAngle / 2)
             {
                 float distanceToTarget = Vector3.Distance(transform.position, targetTransform.position);
 

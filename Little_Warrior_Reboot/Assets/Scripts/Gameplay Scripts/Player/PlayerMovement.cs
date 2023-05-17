@@ -6,6 +6,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour, IDataPersistence
 {
+    [Header("Slope Detection Config:")]
+    [SerializeField] float _slopeCheckDist;
+    [SerializeField] LayerMask _whatIsGround;
+
     Vector2 _velocity;
 
     bool _grounded;
@@ -14,7 +18,6 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
     Rigidbody2D _rb2d;
 
     float _playerMoveInput;
-    //Note: Temp variables used for testing original acceleration/deceleration (Subject to removal)
     float _speed;
     float _maxSpeed = 8.0f;
     float _timeToReachMaxSpeed = .3f;
@@ -30,7 +33,9 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
     PlayerCombat _playerCombat;
     PlayerStatus _playerStatus;
     PlayerJump _playerJump;
-    //PlayerAcceleration _accelerationComponent;
+
+    SlopeDetection _slopeDetection;
+    CapsuleCollider2D _capsuleCollider;
 
     int _testDeathCount;
 
@@ -57,6 +62,8 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         _playerCombat = GetComponent<PlayerCombat>();
         _playerStatus = GetComponent<PlayerStatus>();
         _playerJump = GetComponent<PlayerJump>();
+        _capsuleCollider = GetComponent<CapsuleCollider2D>();
+        _slopeDetection = new SlopeDetection(this.transform, _capsuleCollider.size, _slopeCheckDist, _whatIsGround);
         SetMaxSpeed(_maxSpeed);
         //_accelerationComponent = new PlayerAcceleration(_maxSpeed);
     }
@@ -164,13 +171,18 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
             //Debug.Log(extraSpeed);
         }
 
-        if((_heightMaintenance.GetGrounded() && !_heightMaintenance.GetOnSlope()) || !_heightMaintenance.GetGrounded())
+        if(_slopeDetection != null)
+        {
+            _slopeDetection.CheckSlope();
+        }
+
+        if((_heightMaintenance.GetGrounded() && !_slopeDetection.GetIsOnSlope()) || !_heightMaintenance.GetGrounded())
         {
             _velocity = new Vector2((_speed + extraSpeed), _rb2d.velocity.y);
-        } else if(_heightMaintenance.GetGrounded() && _heightMaintenance.GetOnSlope() && !_playerJump.GetIsJumping())
+        } else if(_heightMaintenance.GetGrounded() && _slopeDetection.GetIsOnSlope() && !_playerJump.GetIsJumping())
         {
-            _velocity = new Vector2(Mathf.Abs(_speed + extraSpeed) * _heightMaintenance.GetSlopeNormalPerpendicular().x * -_playerMoveInput,
-                Mathf.Abs(_speed + extraSpeed) * _heightMaintenance.GetSlopeNormalPerpendicular().y * -_playerMoveInput);
+            _velocity = new Vector2(Mathf.Abs(_speed + extraSpeed) * _slopeDetection.GetSlopeNormalPerpendicular().x * -_playerMoveInput,
+                Mathf.Abs(_speed + extraSpeed) * _slopeDetection.GetSlopeNormalPerpendicular().y * -_playerMoveInput);
         }
 
         _prevGrounded = _grounded;

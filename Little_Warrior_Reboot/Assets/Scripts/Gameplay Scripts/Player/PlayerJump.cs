@@ -133,10 +133,9 @@ public class PlayerJump : MonoBehaviour
     void _JumpAction()
     {
         
-        if(_coyoteTimer > 0f || (_jumpPhase < _maxAirJumps && _isJumping))
-        {
-            
-            if (_isJumping)
+        if(_coyoteTimer > 0f || (_jumpPhase < _maxAirJumps && _isJumping) || (_coyoteTimer < 0 && !_playerMove.GetGroundedState() && _jumpPhase < _maxAirJumps))
+        {   
+            if (_isJumping || (_coyoteTimer < 0 && !_playerMove.GetGroundedState()))
             {
                 _jumpPhase += 1;
             }

@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerAbilities : MonoBehaviour
+public class PlayerAbilities : MonoBehaviour, IDataPersistence
 {
     PlayerSkillManager _playerSkills;
     PlayerMovement _playerMove;
     PlayerCombat _playerCombat;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        _playerSkills = new PlayerSkillManager();
+    }
+
     void Start()
     {
         _playerMove = GetComponent<PlayerMovement>();
         _playerCombat = GetComponent<PlayerCombat>();
-        _playerSkills = new PlayerSkillManager();
+
         
         SkillTreeUI skillTree = FindObjectOfType<SkillTreeUI>(true);
 
@@ -68,6 +73,21 @@ public class PlayerAbilities : MonoBehaviour
             return;
         }
 
+        Debug.Log("DEFAULT ABILITY UNLOCKED");
+
         bool unlocked = _playerSkills.TryUnlockAbility(abilityType, 0);
+        
+    }
+
+    public void LoadData(GameData data)
+    {
+        _playerSkills.LoadUnlockedAbilities(data.unlockedAbilities);
+        _playerSkills.LoadSkillPoints(data.currentSkillPoints);
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.unlockedAbilities = _playerSkills.GetUnlockedAbilities();
+        data.currentSkillPoints = _playerSkills.GetSkillPoints();
     }
 }

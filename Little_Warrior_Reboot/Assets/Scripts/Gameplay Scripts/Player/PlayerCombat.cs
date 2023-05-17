@@ -1,10 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour, IDataPersistence
 {
     [SerializeField] AttackData[] _playerLightAttacks;
     [SerializeField] AttackData[] _playerHeavyAttacks;
@@ -205,4 +206,32 @@ public class PlayerCombat : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
+    public void LoadData(GameData data)
+    {
+        if(data.playerLightAttacks.Count != 0)
+        {
+            AttackData[] loadedLightAttacks = data.playerLightAttacks.ToArray();
+
+            for(int i = 0; i < _playerLightAttacks.Length; i++)
+            {
+                _playerLightAttacks[i].SetUnlockStatus(loadedLightAttacks[i].GetUnlockStatus());
+            }
+        }
+
+        if(data.playerHeavyAttacks.Count != 0)
+        {
+            AttackData[] loadedHeavyAttacks = data.playerHeavyAttacks.ToArray();
+
+            for(int i = 0; i < _playerHeavyAttacks.Length; i++)
+            {
+                _playerHeavyAttacks[i].SetUnlockStatus(loadedHeavyAttacks[i].GetUnlockStatus());
+            }
+        }
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerLightAttacks = _playerLightAttacks.ToList();
+        data.playerHeavyAttacks = _playerHeavyAttacks.ToList();
+    }
 }

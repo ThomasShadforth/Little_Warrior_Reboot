@@ -68,6 +68,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
 
     public void DetectHit(int damageTaken, Vector2 knockbackForce = default(Vector2), float knockbackDuration = 0)
     {
+        Debug.Log(knockbackForce);
         _NotifyObservers(damageTaken);
 
         if (_playerStatus)
@@ -77,6 +78,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
             _playerStatus.SetDisabledHeightMaintenance();
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().velocity = knockbackForce;
+            Debug.Log(GetComponent<Rigidbody2D>().velocity);
         }
     }
 

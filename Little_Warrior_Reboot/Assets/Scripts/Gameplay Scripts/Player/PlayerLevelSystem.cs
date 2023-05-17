@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerLevelSystem : MonoBehaviour
+public class PlayerLevelSystem : MonoBehaviour, IDataPersistence
 {
     [SerializeField] int[] _expToNextLevel;
     [SerializeField] int[] _skillPointLevels;
@@ -15,14 +15,17 @@ public class PlayerLevelSystem : MonoBehaviour
 
     PlayerActionMap _playerInput;
 
+    private void Awake()
+    {
+        _SetupLevelRequirements();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         _playerInput = new PlayerActionMap();
         _playerInput.Player.TestEXPAdd.Enable();
         _playerInput.Player.TestEXPAdd.started += _AddEXPInput;
-
-        _SetupLevelRequirements();
         
     }
 
@@ -67,5 +70,24 @@ public class PlayerLevelSystem : MonoBehaviour
     void _AddEXPInput(InputAction.CallbackContext context)
     {
         IncreaseExp(20);
+    }
+
+    public void LoadData(GameData data)
+    {
+        _currentLevel = data.playerLevel;
+
+        GetComponent<PlayerAbilities>().CallPlayerLevelNotify(_currentLevel);
+        FindObjectOfType<ExpBar>().LoadLevelText(_currentLevel);
+
+        _currentEXP = data.playerCurrentEXP;
+
+        FindObjectOfType<ExpBar>().UpdateEXPFillAmount(((float)_currentEXP / _expToNextLevel[_currentLevel]), _currentEXP, _expToNextLevel[_currentLevel], _expToNextLevel[_currentLevel + 1]);
+    }
+
+    public void SaveData(GameData data)
+    {
+        data.playerLevel = _currentLevel;
+
+        data.playerCurrentEXP = _currentEXP;
     }
 }
