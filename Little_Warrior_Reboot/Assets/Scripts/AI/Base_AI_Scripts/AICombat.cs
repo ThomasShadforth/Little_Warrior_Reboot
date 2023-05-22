@@ -10,6 +10,7 @@ public class AICombat : MonoBehaviour
     [SerializeField] float _hitDetectRadius;
     [SerializeField] float _attackCoolTime;
     [SerializeField] Vector2 _knockForce;
+    [SerializeField] LayerMask _playerLayer;
     IDamageInterface _aiDamageInterface;
 
     bool _isAttacking;
@@ -45,7 +46,7 @@ public class AICombat : MonoBehaviour
                 }
 
                 //To do: Pass in position for purpose of knockback calculation
-                damageInterface.DetectHit(20, _knockForce, .8f);
+                damageInterface.DetectHit(20, knockForce, .8f);
             }
         }
     }

@@ -50,8 +50,6 @@ public class PlayerHeightMaintenance : MonoBehaviour
 
     public void SetMaintainHeight(bool shouldMaintainHeight)
     {
-        //Debug.Log(shouldMaintainHeight);
-
         _shouldMaintainHeight = shouldMaintainHeight;
     }
 
@@ -116,9 +114,6 @@ public class PlayerHeightMaintenance : MonoBehaviour
                     Debug.Log("DAMAGE SHOULD TAKE PLACE");
                     damageInterface.DetectHit(10, new Vector2(-400000, -40), 2f);
                 }
-                /*
-                _rb2d.velocity = Vector2.zero;
-                _rb2d.AddForce(new Vector2(40000, -40), ForceMode2D.Impulse);*/
             }
 
         }

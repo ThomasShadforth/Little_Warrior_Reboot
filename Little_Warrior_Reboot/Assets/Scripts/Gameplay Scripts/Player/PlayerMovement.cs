@@ -159,22 +159,20 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
             _speed -= (Mathf.Min(Mathf.Abs(_speed * 2.2f), _friction * 2.2f) * Mathf.Sign(_speed) * _maxSpeed * GamePause.deltaTime);
             
         }
-
-
-        //_speed = _accelerationComponent.GetAccelSpeed(_playerMoveInput);
-                
+        
         float extraSpeed = 0;
 
         if(_playerSprint != null)
         {
             extraSpeed = _playerSprint.GetSprintSpeed();
-            //Debug.Log(extraSpeed);
         }
 
         if(_slopeDetection != null)
         {
             _slopeDetection.CheckSlope();
         }
+
+        
 
         if((_heightMaintenance.GetGrounded() && !_slopeDetection.GetIsOnSlope()) || !_heightMaintenance.GetGrounded())
         {

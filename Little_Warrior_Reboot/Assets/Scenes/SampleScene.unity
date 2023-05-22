@@ -53990,7 +53990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307634423744221042, guid: 3bd50bd3502497d43926f6b96ab8a2fe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.078165
+      value: 9.064636
       objectReference: {fileID: 0}
     - target: {fileID: 4307634423744221042, guid: 3bd50bd3502497d43926f6b96ab8a2fe, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54054,7 +54054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4307634423863048743, guid: 3bd50bd3502497d43926f6b96ab8a2fe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.381186
+      value: -14.364635
       objectReference: {fileID: 0}
     - target: {fileID: 4307634423863048743, guid: 3bd50bd3502497d43926f6b96ab8a2fe, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54470,6 +54470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b26f144e74a7d047bfcec506a5918c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _slopeCheckDist: 0
+  _whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &1737415007
 Rigidbody2D:
   serializedVersion: 4
@@ -54613,8 +54617,6 @@ MonoBehaviour:
   _springStrength: 200
   _springDamp: 10
   _shouldMaintainHeight: 1
-  _slopeCheckDistance: 0
-  _maxSlopeAngle: 0
 --- !u!114 &1737415013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62089,6 +62091,14 @@ PrefabInstance:
     - target: {fileID: 3039771832853552660, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039771832853552664, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
+      propertyPath: _slopeCheckDist
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039771832853552664, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
+      propertyPath: _whatIsGround.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 3039771832853552675, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
       propertyPath: m_Name

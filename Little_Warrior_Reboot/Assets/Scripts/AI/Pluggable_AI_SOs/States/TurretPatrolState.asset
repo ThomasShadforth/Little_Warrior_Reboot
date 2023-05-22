@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e657b85e9c6cdc0429b7724836b1909c, type: 3}
+  m_Name: TurretPatrolState
+  m_EditorClassIdentifier: 
+  _actions:
+  - {fileID: 11400000, guid: e116b086e0a34a24ba9d4746a4847261, type: 2}
+  _transitions:
+  - decision: {fileID: 11400000, guid: e2aa1f549aa82d7408d63838a2646614, type: 2}
+    trueState: {fileID: 11400000, guid: e349b35788ef17e4397e6c36f768deb1, type: 2}
+    falseState: {fileID: 11400000, guid: cad0248b278d243439bc41471cf759b9, type: 2}
+  - decision: {fileID: 11400000, guid: b42c389c3dfb5614ab467b305fbaf4c5, type: 2}
+    trueState: {fileID: 11400000, guid: a9db1b51593849347b96cb00e91a809b, type: 2}
+    falseState: {fileID: 11400000, guid: cad0248b278d243439bc41471cf759b9, type: 2}

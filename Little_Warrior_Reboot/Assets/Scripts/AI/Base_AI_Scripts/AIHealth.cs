@@ -53,7 +53,13 @@ public class AIHealth : Subject, IObserver, IDamageInterface
         if (_healthSystem.CheckIsDead())
         {
             _isDying = true;
-            FindObjectOfType<HitStop>().StopTime(_deathHitStop);
+
+            HitStop hitStopManager = FindObjectOfType<HitStop>();
+
+            if (hitStopManager != null)
+            {
+                hitStopManager.StopTime(_deathHitStop);
+            }
 
             if(EnemyObjectPool.instance != null)
             {

@@ -12,11 +12,13 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
     AttackData _currentAttack;
     [SerializeField] Transform _hitDetectPoint;
     [SerializeField] float _hitDetectRadius;
+    [SerializeField] LayerMask _enemyLayer;
     IDamageInterface _playerDamageInterface;
     bool _isAttacking;
     bool _airAttack;
     PlayerHeightMaintenance _playerHeight;
     PlayerAbilities _playerAbilities;
+    
 
     void Start()
     {

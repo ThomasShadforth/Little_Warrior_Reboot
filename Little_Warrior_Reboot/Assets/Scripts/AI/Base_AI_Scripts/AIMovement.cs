@@ -61,7 +61,6 @@ public class AIMovement : MonoBehaviour
 
         if((_aiStatus && _aiStatus.CheckForStatus()))
         {
-            Debug.Log(_rb2d.velocity.x);
             _speed = 0;
             _xDirection = 0;
             return;

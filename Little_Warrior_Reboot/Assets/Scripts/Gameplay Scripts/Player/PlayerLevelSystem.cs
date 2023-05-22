@@ -33,7 +33,12 @@ public class PlayerLevelSystem : MonoBehaviour, IDataPersistence
     {
         _currentEXP += expToAdd;
 
-        FindObjectOfType<ExpBar>().UpdateEXPFillAmount(((float)_currentEXP / _expToNextLevel[_currentLevel]), _currentEXP, _expToNextLevel[_currentLevel], _expToNextLevel[_currentLevel + 1]);
+        ExpBar expBar = FindObjectOfType<ExpBar>();
+
+        if (expBar != null)
+        {
+            expBar.UpdateEXPFillAmount(((float)_currentEXP / _expToNextLevel[_currentLevel]), _currentEXP, _expToNextLevel[_currentLevel], _expToNextLevel[_currentLevel + 1]);
+        }
 
         if(_currentLevel < _maxLevel)
         {

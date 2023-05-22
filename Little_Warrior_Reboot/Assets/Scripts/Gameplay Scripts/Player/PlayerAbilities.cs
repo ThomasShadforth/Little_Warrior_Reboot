@@ -73,8 +73,6 @@ public class PlayerAbilities : MonoBehaviour, IDataPersistence
             return;
         }
 
-        Debug.Log("DEFAULT ABILITY UNLOCKED");
-
         bool unlocked = _playerSkills.TryUnlockAbility(abilityType, 0);
         
     }

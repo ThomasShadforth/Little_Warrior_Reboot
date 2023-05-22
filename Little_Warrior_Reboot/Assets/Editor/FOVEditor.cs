@@ -21,6 +21,7 @@ public class FOVEditor : Editor
         {
             Handles.color = Color.green;
             Handles.DrawLine(los.transform.position, los.GetPlayer().transform.position);
+            Handles.EndGUI();
         }
     }
 

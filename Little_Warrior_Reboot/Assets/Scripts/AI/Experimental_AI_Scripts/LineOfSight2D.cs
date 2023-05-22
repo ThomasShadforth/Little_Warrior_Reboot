@@ -51,17 +51,25 @@ public class LineOfSight2D : MonoBehaviour
 
                 if(!Physics2D.Raycast(transform.position, directionToTarget, distanceToTarget, obstructionConfig))
                 {
-                    Debug.Log("CAN SEE PLAYER");
+                    //Debug.Log("CAN SEE PLAYER");
                     _canSeePlayer = true;
                 }
                 else
                 {
+                    Debug.Log("CANT SEE PLAYER");
                     _canSeePlayer = false;
                 }
             }
-        } else if (_canSeePlayer)
+            else
+            {
+                _canSeePlayer = false;
+            }
+        } else
         {
-            _canSeePlayer = false;
+            if (_canSeePlayer)
+            {
+                _canSeePlayer = false;
+            }
         }
     }
 

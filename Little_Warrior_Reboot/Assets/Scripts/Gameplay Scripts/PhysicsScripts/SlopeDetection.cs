@@ -30,7 +30,7 @@ public class SlopeDetection
 
     public Vector2 GetSlopeNormalPerpendicular()
     {
-        return Vector2.zero;
+        return _slopeNormalPerp;
     }
 
     public void CheckSlope()
