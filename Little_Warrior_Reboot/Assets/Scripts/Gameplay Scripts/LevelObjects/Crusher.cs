@@ -35,4 +35,13 @@ public class Crusher : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         GetComponent<Animator>().SetBool("IsActivated", true);
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        IDamageInterface damageInterface = other.gameObject.GetComponent<IDamageInterface>();
+        if (damageInterface != null)
+        {
+            //Damage the player
+        }
+    }
 }

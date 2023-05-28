@@ -19,6 +19,7 @@ public class TurretAIAttackAction : AIAction
         if (!turretData.GetIsAttacking())
         {
             turretData.TickAttackWaitTimer();
+            turretData.TrackPlayer();
 
             if (turretData.GetAttackWaitTimerEnded())
             {

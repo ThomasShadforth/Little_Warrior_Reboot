@@ -9,8 +9,11 @@ public class AITurretData : MonoBehaviour
     [SerializeField] float _rotationSpeed;
     [SerializeField] float _turretWaitTime;
     [SerializeField] float _attackWaitTime;
+    [SerializeField] LayerMask _ignoreLayer;
 
     Transform _playerTarget;
+
+    Vector3 _lastPlayerLocation;
 
     LineOfSight2D _enemyLos;
     float _totalRotation;
@@ -23,6 +26,7 @@ public class AITurretData : MonoBehaviour
     {
         _enemyLos = GetComponent<LineOfSight2D>();
         SetWaitTime();
+        SetAttackWaitTime();
     }
 
     private void Update()
@@ -49,6 +53,14 @@ public class AITurretData : MonoBehaviour
 
     public void SetNewRotation()
     {
+        float rotationDifference = _totalRotation - _maxRotationAngle;
+
+        float currentZRot = transform.localEulerAngles.z;
+        currentZRot -= rotationDifference;
+        currentZRot = Mathf.Round(currentZRot);
+
+        transform.localEulerAngles = new Vector3(0, 0, currentZRot);
+
         _totalRotation = 0;
         _rotationSpeed = -_rotationSpeed;
     }
@@ -63,8 +75,14 @@ public class AITurretData : MonoBehaviour
         _turretWaitTimer -= GamePause.deltaTime;
     }
 
+    public void SetLastPlayerPosition()
+    {
+        _lastPlayerLocation = _playerTarget.position;
+    }
+
     public void SetAttackWaitTime()
     {
+        _isAttacking = false;
         _attackWaitTimer = _attackWaitTime;
     }
 
@@ -76,20 +94,28 @@ public class AITurretData : MonoBehaviour
 
     public void Attack()
     {
-        //_isAttacking = true;
-        Vector3 directionToTarget = (_playerTarget.transform.position - transform.position).normalized;
+        _isAttacking = true;
+        SetLastPlayerPosition();
+        //StartCoroutine(TempTurretFireCo());
+    }
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, 10);
+    public void FireLaser()
+    {
+        Vector3 directionToTarget = (_lastPlayerLocation - transform.position).normalized;
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, 10, ~_ignoreLayer);
 
         if (hits.Length != 0)
         {
+            Debug.Log(hits[0].collider.gameObject.name);
+
             foreach (RaycastHit2D hit in hits)
             {
                 Debug.DrawRay(hit.point, hit.normal * 40, Color.red);
 
                 IDamageInterface damagedObject = hit.collider.gameObject.GetComponent<IDamageInterface>();
 
-                if(damagedObject != null)
+                if (damagedObject != null)
                 {
                     damagedObject.DetectHit(10, default, 0);
                 }
@@ -97,7 +123,17 @@ public class AITurretData : MonoBehaviour
             }
         }
 
-        SetAttackWaitTime();
+        if(ExplosionObjectPool.instance != null)
+        {
+            GameObject explosionObject = ExplosionObjectPool.instance.GetFromPool();
+            explosionObject.transform.position = hits[0].point;
+        }
+
+    }
+
+    public void TrackPlayer()
+    {
+        _enemyLos.SetLastPosition(_enemyLos.GetPlayer().transform.position);
     }
 
     public bool GetWaitTimerEnded()
@@ -124,4 +160,33 @@ public class AITurretData : MonoBehaviour
     {
         return _enemyLos.GetCanSeePlayer();
     }
+
+    /*
+    IEnumerator TempTurretFireCo()
+    {
+
+        Vector3 directionToTarget = (_lastPlayerLocation - transform.position).normalized;
+
+        yield return new WaitForSeconds(1.5f);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, 10);
+
+        if (hits.Length != 0)
+        {
+            foreach (RaycastHit2D hit in hits)
+            {
+                Debug.DrawRay(hit.point, hit.normal * 40, Color.red);
+
+                IDamageInterface damagedObject = hit.collider.gameObject.GetComponent<IDamageInterface>();
+
+                if (damagedObject != null)
+                {
+                    damagedObject.DetectHit(10, default, 0);
+                }
+
+            }
+        }
+
+        SetAttackWaitTime();
+    }*/
 }

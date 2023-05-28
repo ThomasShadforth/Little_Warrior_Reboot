@@ -11,6 +11,8 @@ public class LineOfSight2D : MonoBehaviour
     [SerializeField] GameObject _player;
     [SerializeField] Vector3 _offset;
 
+    Vector3 _lastPlayerPosition;
+
     public LayerMask playerLayer;
     public LayerMask obstructionConfig;
 
@@ -71,6 +73,16 @@ public class LineOfSight2D : MonoBehaviour
                 _canSeePlayer = false;
             }
         }
+    }
+
+    public void SetLastPosition(Vector3 positionToSet)
+    {
+        _lastPlayerPosition = positionToSet;
+    }
+
+    public Vector3 GetLastPlayerPosition()
+    {
+        return _lastPlayerPosition;
     }
 
     public bool GetCanSeePlayer()
