@@ -16,6 +16,7 @@ public class Crusher : MonoBehaviour
         else
         {
             Debug.Log("NO MANAGER!");
+            ResetWait();
         }
     }
 
@@ -36,12 +37,5 @@ public class Crusher : MonoBehaviour
         GetComponent<Animator>().SetBool("IsActivated", true);
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        IDamageInterface damageInterface = other.gameObject.GetComponent<IDamageInterface>();
-        if (damageInterface != null)
-        {
-            //Damage the player
-        }
-    }
+    
 }
