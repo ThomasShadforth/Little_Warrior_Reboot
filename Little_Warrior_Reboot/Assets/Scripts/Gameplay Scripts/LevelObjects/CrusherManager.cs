@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CrusherManager : MonoBehaviour
 {
+    [SerializeField] float _crusherActivationDelay;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,8 +21,8 @@ public class CrusherManager : MonoBehaviour
             foreach(Crusher crusher in crushers)
             {
                 crusher.ActivateCrusher();
-                Debug.Log("ACTIVATING CRUSHER");
-                yield return new WaitForSeconds(.4f);
+                //Debug.Log("ACTIVATING CRUSHER");
+                yield return new WaitForSeconds(_crusherActivationDelay);
             }
         }
     }

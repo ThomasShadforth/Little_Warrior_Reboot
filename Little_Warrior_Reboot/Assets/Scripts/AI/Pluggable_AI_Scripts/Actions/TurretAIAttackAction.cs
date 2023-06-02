@@ -20,6 +20,7 @@ public class TurretAIAttackAction : AIAction
         {
             turretData.TickAttackWaitTimer();
             turretData.TrackPlayer();
+            turretData.SetLaserLine();
 
             if (turretData.GetAttackWaitTimerEnded())
             {

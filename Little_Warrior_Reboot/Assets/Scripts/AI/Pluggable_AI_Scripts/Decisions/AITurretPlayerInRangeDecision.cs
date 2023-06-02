@@ -19,10 +19,18 @@ public class AITurretPlayerInRangeDecision : AIDecision
 
         if (turretData.GetCanSeePlayer())
         {
+            turretData.SetLaserActive(true);
             return true;
         }
         else
         {
+            turretData.SetLaserActive();
+
+            if (!turretData.GetIsAttacking())
+            {
+                turretData.SetAttackWaitTime();
+            }
+
             return false;
         }
     }

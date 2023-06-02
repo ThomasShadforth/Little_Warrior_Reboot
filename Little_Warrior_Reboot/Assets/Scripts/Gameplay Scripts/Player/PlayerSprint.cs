@@ -59,12 +59,15 @@ public class PlayerSprint : MonoBehaviour
             StartCoroutine(StopSprintCo());
         }
 
-        if (_startedSprint)
+        if (AfterImageObjectPool.instance != null)
         {
-            if(Mathf.Abs(transform.position.x - _lastImageXPos) > _distBetweenAfterImage)
+            if (_startedSprint)
             {
-                AfterImageObjectPool.instance.GetFromPool();
-                _lastImageXPos = transform.position.x;
+                if (Mathf.Abs(transform.position.x - _lastImageXPos) > _distBetweenAfterImage)
+                {
+                    AfterImageObjectPool.instance.GetFromPool();
+                    _lastImageXPos = transform.position.x;
+                }
             }
         }
 

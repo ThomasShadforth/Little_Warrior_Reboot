@@ -11,6 +11,10 @@ public class AITurretData : MonoBehaviour
     [SerializeField] float _attackWaitTime;
     [SerializeField] LayerMask _ignoreLayer;
 
+    //Experimental: Testing linerenderer compatibility
+    [SerializeField] LineRenderer _lineRenderer;
+    [SerializeField] GameObject _fovLight;
+
     Transform _playerTarget;
 
     Vector3 _lastPlayerLocation;
@@ -56,6 +60,7 @@ public class AITurretData : MonoBehaviour
         float rotationDifference = _totalRotation - _maxRotationAngle;
 
         float currentZRot = transform.localEulerAngles.z;
+
         currentZRot -= rotationDifference;
         currentZRot = Mathf.Round(currentZRot);
 
@@ -96,14 +101,15 @@ public class AITurretData : MonoBehaviour
     {
         _isAttacking = true;
         SetLastPlayerPosition();
-        //StartCoroutine(TempTurretFireCo());
     }
 
     public void FireLaser()
     {
         Vector3 directionToTarget = (_lastPlayerLocation - transform.position).normalized;
 
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, 10, ~_ignoreLayer);
+        float distanceToLastTarget = Vector3.Distance(transform.position, _lastPlayerLocation);
+
+        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, distanceToLastTarget, ~_ignoreLayer);
 
         if (hits.Length != 0)
         {
@@ -112,28 +118,48 @@ public class AITurretData : MonoBehaviour
             foreach (RaycastHit2D hit in hits)
             {
                 Debug.DrawRay(hit.point, hit.normal * 40, Color.red);
-
                 IDamageInterface damagedObject = hit.collider.gameObject.GetComponent<IDamageInterface>();
-
                 if (damagedObject != null)
                 {
                     damagedObject.DetectHit(10, default, 0);
                 }
 
             }
-        }
 
-        if(ExplosionObjectPool.instance != null)
+            if (ExplosionObjectPool.instance != null)
+            {
+                GameObject explosionObject = ExplosionObjectPool.instance.GetFromPool();
+                explosionObject.transform.position = hits[0].point;
+            }
+
+        }
+        else
         {
-            GameObject explosionObject = ExplosionObjectPool.instance.GetFromPool();
-            explosionObject.transform.position = hits[0].point;
+            Debug.Log("AAAAAAAA");
         }
 
+        
     }
 
     public void TrackPlayer()
     {
         _enemyLos.SetLastPosition(_enemyLos.GetPlayer().transform.position);
+    }
+
+    public void SetLaserActive(bool isActive = false)
+    {
+        _lineRenderer.enabled = isActive;
+        _fovLight.SetActive(!isActive);
+    }
+
+    public void SetLaserLine()
+    {
+        if(_lineRenderer != null)
+        {
+            _lineRenderer.SetPositions(new Vector3[] { transform.position, _enemyLos.GetLastPlayerPosition() });
+            _lineRenderer.startColor = Color.Lerp(Color.green, Color.red, _attackWaitTimer / _attackWaitTime);
+            _lineRenderer.endColor = Color.Lerp(Color.green, Color.red, _attackWaitTimer / _attackWaitTime);
+        }
     }
 
     public bool GetWaitTimerEnded()
@@ -160,33 +186,4 @@ public class AITurretData : MonoBehaviour
     {
         return _enemyLos.GetCanSeePlayer();
     }
-
-    /*
-    IEnumerator TempTurretFireCo()
-    {
-
-        Vector3 directionToTarget = (_lastPlayerLocation - transform.position).normalized;
-
-        yield return new WaitForSeconds(1.5f);
-
-        RaycastHit2D[] hits = Physics2D.RaycastAll(transform.position, directionToTarget, 10);
-
-        if (hits.Length != 0)
-        {
-            foreach (RaycastHit2D hit in hits)
-            {
-                Debug.DrawRay(hit.point, hit.normal * 40, Color.red);
-
-                IDamageInterface damagedObject = hit.collider.gameObject.GetComponent<IDamageInterface>();
-
-                if (damagedObject != null)
-                {
-                    damagedObject.DetectHit(10, default, 0);
-                }
-
-            }
-        }
-
-        SetAttackWaitTime();
-    }*/
 }

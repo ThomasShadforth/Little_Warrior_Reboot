@@ -9,13 +9,9 @@ public class Crusher : MonoBehaviour
     {
         CrusherManager parentManager = GetComponentInParent<CrusherManager>();
 
-        if(parentManager != null)
+        if(parentManager == null)
         {
-            Debug.Log("MANAGER FOUND");
-        }
-        else
-        {
-            Debug.Log("NO MANAGER!");
+            
             ResetWait();
         }
     }
