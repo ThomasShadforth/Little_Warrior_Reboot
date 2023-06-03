@@ -83,7 +83,7 @@ public class AIHealth : Subject, IObserver, IDamageInterface
     {
         _NotifyObservers(damageTaken);
 
-        if (_aiStatus)
+        if (_aiStatus && gameObject.activeInHierarchy)
         {
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             _aiStatus.SetKnockbackTime(knockbackDuration);
