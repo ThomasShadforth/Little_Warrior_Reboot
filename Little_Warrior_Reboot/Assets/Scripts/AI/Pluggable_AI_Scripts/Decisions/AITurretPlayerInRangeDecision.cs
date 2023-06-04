@@ -19,6 +19,11 @@ public class AITurretPlayerInRangeDecision : AIDecision
 
         if (turretData.GetCanSeePlayer())
         {
+            if (turretData.GetLessThanMaxWaitTime())
+            {
+                turretData.SetWaitTime();
+            }
+
             turretData.SetLaserActive(true);
             return true;
         }

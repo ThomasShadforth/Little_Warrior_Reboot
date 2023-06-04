@@ -32,6 +32,11 @@ public class AIPatrolData : MonoBehaviour
         return _minimumPatrolDistance;
     }
 
+    public bool GetLessThanMaxWaitTime()
+    {
+        return _waitTimer < _waitTime;
+    }
+
     public void SetPatrolIndex()
     {
         _currentPatrolIndex++;

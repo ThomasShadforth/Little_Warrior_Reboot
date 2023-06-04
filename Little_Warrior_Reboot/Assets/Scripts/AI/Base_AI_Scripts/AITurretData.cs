@@ -162,6 +162,11 @@ public class AITurretData : MonoBehaviour
         }
     }
 
+    public bool GetLessThanMaxWaitTime()
+    {
+        return _turretWaitTimer < _turretWaitTime;
+    }
+
     public bool GetWaitTimerEnded()
     {
         return _turretWaitTimer <= 0;

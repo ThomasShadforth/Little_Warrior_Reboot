@@ -23,6 +23,15 @@ public class AICheckPlayerRangeDecision : AIDecision
 
         if(Vector2.Distance(thinker.transform.position, targetData.GetPlayerTarget().position) <= targetData.GetMinimumTargetDistance())
         {
+            AIPatrolData patrolData = thinker.GetComponent<AIPatrolData>();
+
+            if (patrolData == null) return false;
+
+            if (patrolData.GetLessThanMaxWaitTime())
+            {
+                patrolData.SetWaitTimer();
+            }
+
             aiMove.SetMaxSpeed(true);
             return true;
         }
