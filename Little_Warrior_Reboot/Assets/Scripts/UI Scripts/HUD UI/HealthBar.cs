@@ -7,11 +7,15 @@ public class HealthBar : MonoBehaviour
 {
     [SerializeField] Image _healthImage;
     [SerializeField] float _fillSpeed;
+    [SerializeField] bool _isPlayerHealth;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (_isPlayerHealth)
+        {
+            FindObjectOfType<PlayerHealth>().SetHealthBar(this);
+        }
     }
 
     // Update is called once per frame

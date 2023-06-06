@@ -378,7 +378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &335328623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -829,6 +829,7 @@ MonoBehaviour:
   _newGameButton: {fileID: 1195097190}
   _continueButton: {fileID: 335328624}
   _loadGameButton: {fileID: 1854373473}
+  _firstLevelString: 
 --- !u!224 &625799223 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6484845404610773977, guid: e4d2fc0477b09b240be736fae4f2adf8, type: 3}
@@ -2382,7 +2383,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1854373472
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2698,11 +2699,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 748458060397860905, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
       propertyPath: _disableDataPersistence
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 748458060397860905, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
       propertyPath: _overrideSelectedProfileId
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 748458060397860906, guid: 3444bfc047f058e4796fd8014e5a2132, type: 3}
       propertyPath: m_RootOrder

@@ -35,6 +35,11 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
 
     }
 
+    public void SetHealthBar(HealthBar playerHealth)
+    {
+        _playerHealthBar = playerHealth;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -48,6 +53,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
         //Call when player health changes (on hit or heal)
         if(_playerHealthBar != null)
         {
+            Debug.Log("UPDATING FILL");
             _playerHealthBar.UpdateHealthFillAmount(_healthSystem.GetHealthPercent());
         }
 
@@ -63,7 +69,6 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
 
     public void OnNotify(int damageTaken)
     {
-        Debug.Log(damageTaken);
         _healthSystem.Damage(damageTaken);
     }
 

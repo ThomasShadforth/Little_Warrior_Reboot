@@ -14,6 +14,9 @@ public class MainMenu : Menu
     [SerializeField] Button _continueButton;
     [SerializeField] Button _loadGameButton;
 
+    [Header("Additional Configuration")]
+    [SerializeField] string _firstLevelString;
+
     private void Start()
     {
         if (!DataPersistenceManager.instance.HasGameData())
@@ -27,7 +30,7 @@ public class MainMenu : Menu
     {
         if (DataPersistenceManager.instance.GetDisabledDataPersistence())
         {
-            SceneManager.LoadSceneAsync("SampleScene");
+            SceneManager.LoadSceneAsync("Level_2_Draft");
         }
         else
         {
@@ -53,7 +56,7 @@ public class MainMenu : Menu
         //DataPersistenceManager.instance.LoadGame();
         DataPersistenceManager.instance.SaveGame();
 
-        SceneManager.LoadSceneAsync("SampleScene");
+        SceneManager.LoadSceneAsync("Level_2_Draft");
     }
 
     private void _DisableMenuButtons()

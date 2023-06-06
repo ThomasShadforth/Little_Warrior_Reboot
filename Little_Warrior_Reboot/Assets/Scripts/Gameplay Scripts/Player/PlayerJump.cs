@@ -86,7 +86,7 @@ public class PlayerJump : MonoBehaviour
 
     void _Jump()
     {
-        if (_playerMove.GetGroundedState() && _rb2d.velocity.y == 0)
+        if (_playerMove.GetGroundedState() && _rb2d.velocity.y <= 0)
         {
             _coyoteTimer = _coyoteTime;
             _isJumping = false;
