@@ -16,6 +16,9 @@ public class SaveSlot : MonoBehaviour
     [Header("Clear Button")]
     [SerializeField] private Button _clearButton;
 
+    bool _hasData;
+
+    [SerializeField] string _lastSavedScene;
     private Button _saveSlotButton;
 
     private void Awake()
@@ -27,21 +30,35 @@ public class SaveSlot : MonoBehaviour
     {
         if(data == null)
         {
+            _hasData = false;
             _noDataContent.SetActive(true);
             _hasDataContent.SetActive(false);
-            //_clearButton.gameObject.SetActive(false);
+            _clearButton.gameObject.SetActive(false);
         }
         else
         {
+            _hasData = true;
+
             _noDataContent.SetActive(false);
             _hasDataContent.SetActive(true);
-            //_clearButton.gameObject.SetActive(true);
+            _lastSavedScene = data.lastSavedScene;
+            _clearButton.gameObject.SetActive(true);
         }
+    }
+
+    public string GetLastSavedScene()
+    {
+        return _lastSavedScene;
     }
 
     public string GetProfileId()
     {
         return _profileId;
+    }
+
+    public bool GetHasData()
+    {
+        return _hasData;
     }
 
     public void SetInteractable(bool interactable)

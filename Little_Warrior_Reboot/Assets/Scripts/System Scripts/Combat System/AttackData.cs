@@ -15,6 +15,8 @@ public class AttackData
     //Test: Knockback multiplier vectors for specific attacks (E.g. Uppercut)
     [SerializeField] Vector2 _attackKnockback;
     [SerializeField] float _knockbackDuration;
+    [SerializeField] float _camShakeIntensity;
+    [SerializeField] float _camShakeTime;
     //Test: Force Multipliers for attack movement
     [SerializeField] Vector2 _attackMoveForce;
     [SerializeField] PlayerSkillManager.AbilityType _abilityType;
@@ -52,6 +54,16 @@ public class AttackData
     public float GetKnockbackDuration()
     {
         return _knockbackDuration;
+    }
+
+    public float GetCamShakeIntensity()
+    {
+        return _camShakeIntensity;
+    }
+
+    public float GetCamShakeTime()
+    {
+        return _camShakeTime;
     }
 
     public Vector2 GetMovementForce()

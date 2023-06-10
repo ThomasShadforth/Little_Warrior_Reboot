@@ -20,6 +20,8 @@ public class GameData
 
     //To do: Add string to store the name of the last scene the game was saved in.
 
+    public string lastSavedScene;
+
     // the values defined in this constructor will be the default values
     // the game starts with when there's no data to load
     public GameData() 
@@ -30,6 +32,7 @@ public class GameData
         playerHeavyAttacks = new List<AttackData>();
         playerLevel = 1;
         playerCurrentEXP = 0;
+        lastSavedScene = "";
     }
 
 

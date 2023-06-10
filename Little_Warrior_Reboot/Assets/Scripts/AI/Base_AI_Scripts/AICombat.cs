@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class AICombat : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class AICombat : MonoBehaviour
     [SerializeField] float _attackCoolTime;
     [SerializeField] Vector2 _knockForce;
     [SerializeField] LayerMask _playerLayer;
+    
+
+    [SerializeField] float _camShakeIntensity;
+    [SerializeField] float _camShakeTime;
+
     IDamageInterface _aiDamageInterface;
 
     bool _isAttacking;
@@ -30,25 +36,39 @@ public class AICombat : MonoBehaviour
 
     public void AttackHitDetect()
     {
-        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(_hitDetectPoint.position, _hitDetectRadius);
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(_hitDetectPoint.position, _hitDetectRadius, _playerLayer);
 
-        foreach(Collider2D hitObject in hitObjects)
+        if (hitObjects.Length != 0)
         {
-            IDamageInterface damageInterface = hitObject.gameObject.GetComponent<IDamageInterface>();
-
-            //In the case of the AI, only damage if the player is detected (So they don't unintentionally harm other enemies/environmental objects)
-            if(damageInterface != null && damageInterface != _aiDamageInterface && hitObject.gameObject.CompareTag("Player"))
+            foreach (Collider2D hitObject in hitObjects)
             {
-                Vector2 knockForce = _knockForce;
-                if(hitObject.transform.position.x < transform.position.x)
-                {
-                    knockForce.x *= -1;
-                }
+                Debug.Log(hitObject.gameObject.name);
 
-                //To do: Pass in position for purpose of knockback calculation
-                damageInterface.DetectHit(20, knockForce, .8f);
+                IDamageInterface damageInterface = hitObject.gameObject.GetComponent<IDamageInterface>();
+
+                //In the case of the AI, only damage if the player is detected (So they don't unintentionally harm other enemies/environmental objects)
+                if (damageInterface != null && damageInterface != _aiDamageInterface && hitObject.gameObject.CompareTag("Player"))
+                {
+                    Vector2 knockForce = _knockForce;
+                    if (hitObject.transform.position.x < transform.position.x)
+                    {
+                        knockForce.x *= -1;
+                    }
+
+                    //To do: Pass in position for purpose of knockback calculation
+                    damageInterface.DetectHit(20, knockForce, .8f);
+                }
             }
+
+            StartCoroutine(CinemachineCameraShake.StartCamShakeCo(_camShakeIntensity, _camShakeTime, FindObjectOfType<CinemachineVirtualCamera>()));
         }
+
+    }
+
+    public void StopAttacking()
+    {
+        SetIsAttacking(false);
+        SetAttackCooldown();
     }
 
     public float GetAttackCooldown()

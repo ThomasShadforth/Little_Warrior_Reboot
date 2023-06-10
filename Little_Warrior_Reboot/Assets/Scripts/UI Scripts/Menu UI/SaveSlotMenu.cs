@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,6 +15,9 @@ public class SaveSlotMenu : Menu
     [Header("Menu Buttons:")]
     [SerializeField] private Button _backButton;
 
+    [Header("Confirmation Pop-up")]
+    [SerializeField] private ConfirmationPopupMenu _confirmationPopupMenu;
+
     private SaveSlot[] _saveSlots;
 
     private bool _isLoadingGame = false;
@@ -27,16 +31,39 @@ public class SaveSlotMenu : Menu
     {
         _DisableMenuButtons();
 
-        DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+        //To do: Adjust save system with improvements/fixes (Outside of finding objects in scenes)
 
-        if (!_isLoadingGame)
+        if (_isLoadingGame)
         {
-            DataPersistenceManager.instance.NewGame();
+            DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+            SaveGameAndLoadScene(saveSlot.GetLastSavedScene());
+        } else if (saveSlot.GetHasData())
+        {
+            _confirmationPopupMenu.ActivateMenu("Starting a new game will overwrite the currently saved data. Are you sure?",
+                () =>
+                {
+                    DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+                    DataPersistenceManager.instance.NewGame();
+                    SaveGameAndLoadScene();
+                },
+                () =>
+                {
+                    this.ActivateMenu(_isLoadingGame);
+                }
+                );
         }
+        else
+        {
+            DataPersistenceManager.instance.ChangeSelectedProfileId(saveSlot.GetProfileId());
+            DataPersistenceManager.instance.NewGame();
+            SaveGameAndLoadScene();
+        }
+    }
 
+    private void SaveGameAndLoadScene(string sceneToLoad = "")
+    {
         DataPersistenceManager.instance.SaveGame();
-
-        SceneManager.LoadScene("SampleScene");
+        StartCoroutine(LoadSceneCo());
     }
 
     public void OnBackButtonPressed()
@@ -77,6 +104,24 @@ public class SaveSlotMenu : Menu
         this.SetFirstSelected(firstSelectedButton);
     }
 
+    public void OnClearButtonClicked(SaveSlot saveSlot)
+    {
+        _DisableMenuButtons();
+        _confirmationPopupMenu.ActivateMenu(
+            "Are you sure you want to delete this save data?",
+            () =>
+            {
+                DataPersistenceManager.instance.DeleteProfileData(saveSlot.GetProfileId());
+                ActivateMenu(_isLoadingGame);
+            },
+            () =>
+            {
+                _backButton.interactable = true;
+                ActivateMenu(_isLoadingGame);
+            }
+            );
+    }
+
     public void DeactivateMenu()
     {
         this.gameObject.SetActive(false);
@@ -90,5 +135,27 @@ public class SaveSlotMenu : Menu
         }
 
         _backButton.interactable = false;
+    }
+
+    IEnumerator LoadSceneCo(string sceneToLoad = "")
+    {
+        if(UIScreenFade.instance != null)
+        {
+            UIScreenFade.instance.FadeToBlack();
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        if(sceneToLoad == "")
+        {
+            //For now, load the first level.
+            //Will need to work out a system for loading in/out the sandbox space
+            SceneManager.LoadSceneAsync("Level_1_Draft");
+        }
+        else
+        {
+            //GameManager.instance.
+            SceneManager.LoadSceneAsync(sceneToLoad);
+        }
     }
 }

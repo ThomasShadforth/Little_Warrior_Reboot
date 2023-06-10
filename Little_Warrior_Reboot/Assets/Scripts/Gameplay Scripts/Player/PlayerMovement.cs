@@ -204,6 +204,7 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
     {
         
         data.fixedUpdateCount = _testDeathCount;
+
         data.playerPosition = this.transform.position;
         Debug.Log("Saved fixed update count: " + data.fixedUpdateCount);
         Debug.Log("Saved player position: " + data.playerPosition);
@@ -214,6 +215,15 @@ public class PlayerMovement : MonoBehaviour, IDataPersistence
         Debug.Log("Loaded fixed update count: " + data.fixedUpdateCount);
         Debug.Log("Loaded player position" + data.playerPosition);
         this._testDeathCount = data.fixedUpdateCount;
-        this.transform.position = data.playerPosition;
+        
+        if (GameManager.instance != null)
+        {
+            if (GameManager.instance.GetCurrentScene() == GameManager.instance.GetSceneManagerScene() || GameManager.instance.GetCurrentScene() == "")
+            {
+                Debug.Log("LOADING PREVIOUS POSITION");
+                this.transform.position = data.playerPosition;
+            }
+        }
+        
     }
 }

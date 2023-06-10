@@ -79,6 +79,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
 
         if (_playerStatus)
         {
+            GetComponent<Animator>().Play("PlayerHurt");
             _playerStatus.SetKnockbackTime(knockbackDuration);
             _playerStatus.SetStatus(StatusEnum.Knockback, true);
             _playerStatus.SetDisabledHeightMaintenance();

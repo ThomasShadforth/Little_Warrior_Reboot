@@ -14,6 +14,15 @@ public class UIScreenFade : MonoBehaviour
     bool _fadingToBlack;
     bool _fadingFromBlack;
 
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
@@ -21,7 +30,7 @@ public class UIScreenFade : MonoBehaviour
         {
             if(_fadeImage.color.a == 1)
             {
-                FadeToBlack();
+                FadeFromBlack();
             }
         }
     }
@@ -39,7 +48,7 @@ public class UIScreenFade : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
 
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        
     }
 
     // Start is called before the first frame update

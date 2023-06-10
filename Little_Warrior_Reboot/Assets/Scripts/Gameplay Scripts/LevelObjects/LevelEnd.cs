@@ -13,7 +13,19 @@ public class LevelEnd : MonoBehaviour
         {
             //For now, load levels via this script.
             //A dedicated script will be created at a later point in time
-            SceneManager.LoadSceneAsync(_nextLevel);
+            StartCoroutine(_LoadNextLevelCo());
         }
+    }
+
+    IEnumerator _LoadNextLevelCo()
+    {
+        if(UIScreenFade.instance != null)
+        {
+            UIScreenFade.instance.FadeToBlack();
+        }
+
+        yield return new WaitForSeconds(1.5f);
+
+        SceneManager.LoadSceneAsync(_nextLevel);
     }
 }

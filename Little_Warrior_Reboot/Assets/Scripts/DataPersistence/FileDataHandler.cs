@@ -6,19 +6,20 @@ using System.IO;
 
 public class FileDataHandler
 {
-    private string dataDirPath = "";
-    private string dataFileName = "";
-    private bool useEncryption = false;
-    private readonly string encryptionCodeWord = "word";
+    private string _dataDirPath = "";
+    private string _fileName = "";
+    private bool _useEncryption = false;
+    private readonly string _encryptionKeyword = "Omega";
+    private readonly string _backupExtension = ".bak";
 
     public FileDataHandler(string dataDirPath, string dataFileName, bool useEncryption) 
     {
-        this.dataDirPath = dataDirPath;
-        this.dataFileName = dataFileName;
-        this.useEncryption = useEncryption;
+        this._dataDirPath = dataDirPath;
+        this._fileName = dataFileName;
+        this._useEncryption = useEncryption;
     }
 
-    public GameData Load(string profileId) 
+    public GameData Load(string profileId, bool allowRestoreFromBackup = true) 
     {
         // base case - if the profileId is null, return right away
         if (profileId == null) 
@@ -27,7 +28,7 @@ public class FileDataHandler
         }
 
         // use Path.Combine to account for different OS's having different path separators
-        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, profileId, _fileName);
         GameData loadedData = null;
         if (File.Exists(fullPath)) 
         {
@@ -44,7 +45,7 @@ public class FileDataHandler
                 }
 
                 // optionally decrypt the data
-                if (useEncryption) 
+                if (_useEncryption) 
                 {
                     dataToLoad = EncryptDecrypt(dataToLoad);
                 }
@@ -54,7 +55,21 @@ public class FileDataHandler
             }
             catch (Exception e) 
             {
-                Debug.LogError("Error occured when trying to load data from file: " + fullPath + "\n" + e);
+                if (allowRestoreFromBackup)
+                {
+                    Debug.LogWarning("Failed to load data file. Attempting to roll back to previous save.\n" + e);
+                    bool rollbackSuccess = _AttemptRollbackOfSaveData(fullPath);
+
+                    if (rollbackSuccess)
+                    {
+                        loadedData = Load(profileId, false);
+                    }
+                }
+                else
+                {
+                    Debug.LogError("Error occured when trying to load data from file: " + fullPath + " and backup failed to work." + "\n" + e);
+                }
+                
             }
         }
         return loadedData;
@@ -69,7 +84,8 @@ public class FileDataHandler
         }
 
         // use Path.Combine to account for different OS's having different path separators
-        string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+        string fullPath = Path.Combine(_dataDirPath, profileId, _fileName);
+        string backupFilePath = fullPath + _backupExtension;
         try 
         {
             // create the directory the file will be written to if it doesn't already exist
@@ -79,7 +95,7 @@ public class FileDataHandler
             string dataToStore = JsonUtility.ToJson(data, true);
 
             // optionally encrypt the data
-            if (useEncryption) 
+            if (_useEncryption) 
             {
                 dataToStore = EncryptDecrypt(dataToStore);
             }
@@ -92,10 +108,46 @@ public class FileDataHandler
                     writer.Write(dataToStore);
                 }
             }
+
+            GameData verifiedGameData = Load(profileId);
+
+            if(verifiedGameData != null)
+            {
+                File.Copy(fullPath, backupFilePath, true);
+            }
+            else
+            {
+                throw new Exception("Save file couldn't be verified and back-up creation was a failure");
+            }
         }
         catch (Exception e) 
         {
             Debug.LogError("Error occured when trying to save data to file: " + fullPath + "\n" + e);
+        }
+    }
+
+    public void Delete(string profileId)
+    {
+        if(profileId == null)
+        {
+            return;
+        }
+
+        string fullPath = Path.Combine(_dataDirPath, profileId, _fileName);
+        try
+        {
+            if (File.Exists(fullPath))
+            {
+                Directory.Delete(Path.GetDirectoryName(fullPath), true);
+            }
+            else
+            {
+                Debug.LogWarning("Tried to delete profile data, but data was not found at: " + fullPath);
+            }
+        }
+        catch(Exception e)
+        {
+            Debug.LogError("Failed to delete data for profileId: " + profileId + " at path: " + fullPath + "\n" + e);
         }
     }
 
@@ -104,14 +156,14 @@ public class FileDataHandler
         Dictionary<string, GameData> profileDictionary = new Dictionary<string, GameData>();
 
         // loop over all directory names in the data directory path
-        IEnumerable<DirectoryInfo> dirInfos = new DirectoryInfo(dataDirPath).EnumerateDirectories();
+        IEnumerable<DirectoryInfo> dirInfos = new DirectoryInfo(_dataDirPath).EnumerateDirectories();
         foreach (DirectoryInfo dirInfo in dirInfos) 
         {
             string profileId = dirInfo.Name;
 
             // defensive programming - check if the data file exists
             // if it doesn't, then this folder isn't a profile and should be skipped
-            string fullPath = Path.Combine(dataDirPath, profileId, dataFileName);
+            string fullPath = Path.Combine(_dataDirPath, profileId, _fileName);
             if (!File.Exists(fullPath))
             {
                 Debug.LogWarning("Skipping directory when loading all profiles because it does not contain data: "
@@ -134,6 +186,20 @@ public class FileDataHandler
         }
 
         return profileDictionary;
+    }
+
+    public string GetProfileLastSavedScene(string profileId)
+    {
+        GameData dataToLoad = Load(profileId);
+
+        if(dataToLoad != null)
+        {
+            return dataToLoad.lastSavedScene;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     public string GetMostRecentlyUpdatedProfileId() 
@@ -172,13 +238,40 @@ public class FileDataHandler
         return mostRecentProfileId;
     }
 
+    private bool _AttemptRollbackOfSaveData(string directoryPath)
+    {
+        bool success = false;
+
+        string backupFilePath = directoryPath + _backupExtension;
+
+        try
+        {
+            if (File.Exists(backupFilePath))
+            {
+                File.Copy(backupFilePath, directoryPath, true);
+                success = true;
+                Debug.LogWarning("Data had to be rolled back to backup file at: " + backupFilePath);
+            }
+            else
+            {
+                throw new Exception("Tried to roll back data, but no backup exists to roll back to.");
+            }
+        }
+        catch(Exception e)
+        {
+            Debug.Log("Error occurred while trying to roll back to backup file at: " + backupFilePath + "\n" + e);
+        }
+
+        return success;
+    }
+
     // the below is a simple implementation of XOR encryption
     private string EncryptDecrypt(string data) 
     {
         string modifiedData = "";
         for (int i = 0; i < data.Length; i++) 
         {
-            modifiedData += (char) (data[i] ^ encryptionCodeWord[i % encryptionCodeWord.Length]);
+            modifiedData += (char) (data[i] ^ _encryptionKeyword[i % _encryptionKeyword.Length]);
         }
         return modifiedData;
     }

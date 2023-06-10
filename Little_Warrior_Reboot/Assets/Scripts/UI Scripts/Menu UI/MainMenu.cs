@@ -53,10 +53,13 @@ public class MainMenu : Menu
     public void OnContinueGameClicked()
     {
         _DisableMenuButtons();
+        string sceneToLoad = DataPersistenceManager.instance.GetProfileLastSavedScene();
         //DataPersistenceManager.instance.LoadGame();
-        DataPersistenceManager.instance.SaveGame();
+        //DataPersistenceManager.instance.SaveGame();
 
-        SceneManager.LoadSceneAsync("Level_2_Draft");
+        //SceneManager.LoadSceneAsync("Level_2_Draft");
+
+        StartCoroutine(_LoadGameCo(sceneToLoad));
     }
 
     private void _DisableMenuButtons()
@@ -73,5 +76,17 @@ public class MainMenu : Menu
     public void DeactivateMenu()
     {
         this.gameObject.SetActive(false);
+    }
+
+    IEnumerator _LoadGameCo(string sceneToLoad)
+    {
+        if(UIScreenFade.instance != null)
+        {
+            UIScreenFade.instance.FadeToBlack();
+        }
+
+        DataPersistenceManager.instance.SaveGame();
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }

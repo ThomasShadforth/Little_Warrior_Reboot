@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Cinemachine;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour, IDataPersistence
@@ -13,6 +14,9 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
     [SerializeField] Transform _hitDetectPoint;
     [SerializeField] float _hitDetectRadius;
     [SerializeField] LayerMask _enemyLayer;
+    [SerializeField] LayerMask _ignoreLayer;
+
+
     IDamageInterface _playerDamageInterface;
     bool _isAttacking;
     bool _airAttack;
@@ -71,24 +75,29 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
 
     public void AttackHitDetect()
     {
-        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(_hitDetectPoint.position, _hitDetectRadius);
+        Collider2D[] hitObjects = Physics2D.OverlapCircleAll(_hitDetectPoint.position, _hitDetectRadius, ~_ignoreLayer);
 
-        foreach(Collider2D hitObject in hitObjects)
+        if (hitObjects.Length != 0)
         {
-            IDamageInterface damageInterface = hitObject.GetComponent<IDamageInterface>();
-
-            if(damageInterface != null && damageInterface != _playerDamageInterface)
+            foreach (Collider2D hitObject in hitObjects)
             {
-                Vector2 knockForce = _currentAttack.GetAttackKnockback();
+                IDamageInterface damageInterface = hitObject.GetComponent<IDamageInterface>();
 
-                if(hitObject.transform.position.x < transform.position.x)
+                if (damageInterface != null && damageInterface != _playerDamageInterface)
                 {
-                    knockForce.x *= -1;
+                    Vector2 knockForce = _currentAttack.GetAttackKnockback();
+
+                    if (hitObject.transform.position.x < transform.position.x)
+                    {
+                        knockForce.x *= -1;
+                    }
+
+                    damageInterface.DetectHit(_currentAttack.GetDamageDealt(), knockForce, _currentAttack.GetKnockbackDuration());
                 }
 
-                damageInterface.DetectHit(_currentAttack.GetDamageDealt(), knockForce, _currentAttack.GetKnockbackDuration());
             }
 
+            StartCoroutine(CinemachineCameraShake.StartCamShakeCo(_currentAttack.GetCamShakeIntensity(), _currentAttack.GetCamShakeTime(), FindObjectOfType<CinemachineVirtualCamera>()));
         }
     }
 

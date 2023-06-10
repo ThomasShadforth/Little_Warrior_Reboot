@@ -37,8 +37,17 @@ public class PlayerStatus : MonoBehaviour
         switch (statusToSet)
         {
             case StatusEnum.Knockback:
-                _isKnocked = statusState;
-                StartCoroutine(KnockbackTimerCo());
+
+                if (statusState)
+                {
+                    _isKnocked = statusState;
+                    StartCoroutine(KnockbackTimerCo());
+                } else if(_isKnocked && !statusState)
+                {
+                    _isKnocked = statusState;
+                    GetComponent<Animator>().Play("Idle");
+                }
+
                 break;
             case StatusEnum.Dazed:
                 break;

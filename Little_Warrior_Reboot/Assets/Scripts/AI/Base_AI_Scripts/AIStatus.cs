@@ -17,6 +17,7 @@ public class AIStatus : MonoBehaviour
 
     public bool CheckForStatus()
     {
+        //Debug.Log(_isKnocked);
         //At the moment, use a general check for status conditions. Will replace with more specific ones later down the line
         return (_isKnocked == true || _isDazed == true);
     }
@@ -43,10 +44,15 @@ public class AIStatus : MonoBehaviour
         switch (statusToSet)
         {
             case StatusEnum.Knockback:
-                _isKnocked = statusState;
-                if (gameObject.activeInHierarchy)
+                
+                if (gameObject.activeInHierarchy && statusState)
                 {
+                    _isKnocked = statusState;
                     StartCoroutine(KnockbackTimerCo());
+                } else if(_isKnocked && !statusState)
+                {
+                    GetComponent<Animator>().Play("Idle");
+                    _isKnocked = statusState;
                 }
                 break;
             case StatusEnum.Dazed:
@@ -58,8 +64,9 @@ public class AIStatus : MonoBehaviour
     {
         float timePercentage = 0;
 
-        while(timePercentage < 1)
+        while(timePercentage <= 1)
         {
+            //Debug.Log("Knockback time for " + gameObject.name + ": " + timePercentage);
             timePercentage += GamePause.deltaTime / _knockTime;
             yield return null;
         }
