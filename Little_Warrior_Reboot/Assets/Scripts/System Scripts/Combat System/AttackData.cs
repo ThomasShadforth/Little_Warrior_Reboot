@@ -21,6 +21,8 @@ public class AttackData
     [SerializeField] Vector2 _attackMoveForce;
     [SerializeField] PlayerSkillManager.AbilityType _abilityType;
 
+    [SerializeField] string _playedSFXName;
+
     public string GetAttackName()
     {
         return _attackName;
@@ -64,6 +66,11 @@ public class AttackData
     public float GetCamShakeTime()
     {
         return _camShakeTime;
+    }
+
+    public string GetSFXName()
+    {
+        return _playedSFXName;
     }
 
     public Vector2 GetMovementForce()

@@ -108,8 +108,10 @@ public class PlayerSprint : MonoBehaviour
 
         while(timePercentage > 0)
         {
+            
             timePercentage -= GamePause.deltaTime / _timeTakenToSlow;
-            _currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
+            //_currentSprintSpeed = Mathf.MoveTowards(0, _sprintSpeedIncrease, timePercentage);
+            _currentSprintSpeed = Mathf.Lerp(0, _sprintSpeedIncrease, timePercentage);
             //Debug.Log("DECREASING SPRINT SPEED");
             yield return null;
         }

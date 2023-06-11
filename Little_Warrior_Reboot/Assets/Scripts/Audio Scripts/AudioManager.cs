@@ -47,7 +47,31 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name)
     {
+        Sound s = null;
 
+        for(int i = 0; i < _sounds.Length; i++)
+        {
+            if(_sounds[i].name == name)
+            {
+                s = _sounds[i];
+                i = _sounds.Length;
+            }
+        }
+
+        if(s == null)
+        {
+            return;
+        }
+
+        for(int i = 0; i < _sounds.Length; i++)
+        {
+            if(_sounds[i].source.isPlaying && !name.Contains("FX"))
+            {
+                _sounds[i].source.Stop();
+            }
+        }
+
+        s.source.Play();
     }
 
     public void Stop(string name)
@@ -68,6 +92,11 @@ public class AudioManager : MonoBehaviour
         if (s == null) return false;
 
         return (s.source.isPlaying);
+    }
+
+    public void DestroySelf()
+    {
+        Destroy(gameObject);
     }
 
 }

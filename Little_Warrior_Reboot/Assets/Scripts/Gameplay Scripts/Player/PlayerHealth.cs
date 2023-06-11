@@ -83,6 +83,7 @@ public class PlayerHealth : Subject, IObserver, IDamageInterface
             _playerStatus.SetKnockbackTime(knockbackDuration);
             _playerStatus.SetStatus(StatusEnum.Knockback, true);
             _playerStatus.SetDisabledHeightMaintenance();
+            GetComponent<PlayerCombat>().StopAttack();
             GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             GetComponent<Rigidbody2D>().velocity = knockbackForce;
             

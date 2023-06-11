@@ -98,6 +98,12 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
             }
 
             StartCoroutine(CinemachineCameraShake.StartCamShakeCo(_currentAttack.GetCamShakeIntensity(), _currentAttack.GetCamShakeTime(), FindObjectOfType<CinemachineVirtualCamera>()));
+
+            if(AudioManager.instance != null)
+            {
+                AudioManager.instance.Play(_currentAttack.GetSFXName());
+            }
+
         }
     }
 
@@ -125,6 +131,13 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
 
     }
     
+    public void StopAttack()
+    {
+        _isAttacking = false;
+        _airAttack = false;
+        _currentAttack = null;
+    }
+
     public void TriggerAttack(string attackType)
     {
         if(attackType == "Light")
@@ -142,9 +155,6 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
                 if(_currentAttack.GetNextLightAttack() != "")
                 {
                     _SearchForAttack(_currentAttack.GetNextLightAttack());
-                } else if(_currentAttack.GetNextHeavyAttack() != "")
-                {
-                    _SearchForAttack(_currentAttack.GetNextHeavyAttack());
                 }
             }
             
@@ -160,11 +170,7 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
             }
             else
             {
-                if (_currentAttack.GetNextLightAttack() != "")
-                {
-                    _SearchForAttack(_currentAttack.GetNextLightAttack());
-                }
-                else if (_currentAttack.GetNextHeavyAttack() != "")
+                if (_currentAttack.GetNextHeavyAttack() != "")
                 {
                     _SearchForAttack(_currentAttack.GetNextHeavyAttack());
                 }
@@ -244,5 +250,10 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
     {
         data.playerLightAttacks = _playerLightAttacks.ToList();
         data.playerHeavyAttacks = _playerHeavyAttacks.ToList();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.DrawWireSphere(_hitDetectPoint.position, _hitDetectRadius);
     }
 }
