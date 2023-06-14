@@ -393,10 +393,11 @@ MonoBehaviour:
   _maxRotationAngle: 75
   _rotationSpeed: -50
   _turretWaitTime: 3
-  _attackWaitTime: 2
+  _attackWaitTime: 1.25
   _ignoreLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1536
+  _chargeSFXName: LaserChargeFX_1
   _lineRenderer: {fileID: 2580557149859348254}
   _fovLight: {fileID: 1594232575}
 --- !u!95 &2580557150637686086

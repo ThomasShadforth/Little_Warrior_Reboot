@@ -26,7 +26,9 @@ public class PlayerSkillManager
         Punch_1,
         Punch_2,
         Thrust_Kick_1,
-        Thrust_Kick_2
+        Thrust_Kick_2,
+        Jab_1_1,
+        Jab_2_1
     }
 
     private List<AbilityType> _unlockedAbilityList;

@@ -350,6 +350,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerLightAttacks:
+  - _attackName: Jab1
+    _nextLightAttack: Jab2
+    _nextHeavyAttack: 
+    _isUnlocked: 0
+    _defaultMove: 1
+    _damageDealt: 10
+    _attackKnockback: {x: 1, y: 1}
+    _knockbackDuration: 0.69
+    _camShakeIntensity: 0.2
+    _camShakeTime: 0.3
+    _attackMoveForce: {x: 2, y: 0}
+    _abilityType: 11
+    _playedSFXName: JabFX_1
+  - _attackName: Jab2
+    _nextLightAttack: Punch
+    _nextHeavyAttack: 
+    _isUnlocked: 0
+    _defaultMove: 1
+    _damageDealt: 10
+    _attackKnockback: {x: 2, y: 1}
+    _knockbackDuration: 0.69
+    _camShakeIntensity: 0.2
+    _camShakeTime: 0.3
+    _attackMoveForce: {x: 2, y: 0}
+    _abilityType: 12
+    _playedSFXName: JabFX_1
   - _attackName: Punch
     _nextLightAttack: 
     _nextHeavyAttack: Rising Punch
@@ -362,6 +388,7 @@ MonoBehaviour:
     _camShakeTime: 0.6
     _attackMoveForce: {x: 4, y: 0}
     _abilityType: 7
+    _playedSFXName: PunchFX_1
   _playerHeavyAttacks:
   - _attackName: Thrust Kick
     _nextLightAttack: 
@@ -375,6 +402,7 @@ MonoBehaviour:
     _camShakeTime: 0.6
     _attackMoveForce: {x: 5, y: 0}
     _abilityType: 9
+    _playedSFXName: 
   - _attackName: Rising Punch
     _nextLightAttack: 
     _nextHeavyAttack: 
@@ -387,6 +415,7 @@ MonoBehaviour:
     _camShakeTime: 0.6
     _attackMoveForce: {x: 0, y: 8}
     _abilityType: 4
+    _playedSFXName: PunchFX_2
   _hitDetectPoint: {fileID: 3039771832969205343}
   _hitDetectRadius: 0.4
   _enemyLayer:
@@ -394,7 +423,7 @@ MonoBehaviour:
     m_Bits: 256
   _ignoreLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1664
 --- !u!114 &3039771832853552657
 MonoBehaviour:
   m_ObjectHideFlags: 0

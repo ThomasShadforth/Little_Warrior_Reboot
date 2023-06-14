@@ -11,6 +11,8 @@ public class AITurretData : MonoBehaviour
     [SerializeField] float _attackWaitTime;
     [SerializeField] LayerMask _ignoreLayer;
 
+    [SerializeField] string _chargeSFXName;
+
     //Experimental: Testing linerenderer compatibility
     [SerializeField] LineRenderer _lineRenderer;
     [SerializeField] GameObject _fovLight;
@@ -101,6 +103,12 @@ public class AITurretData : MonoBehaviour
     {
         _isAttacking = true;
         SetLastPlayerPosition();
+
+        if(AudioManager.instance != null)
+        {
+            AudioManager.instance.Play(_chargeSFXName);
+        }
+
     }
 
     public void FireLaser()
@@ -133,11 +141,6 @@ public class AITurretData : MonoBehaviour
             }
 
         }
-        else
-        {
-            Debug.Log("AAAAAAAA");
-        }
-
         
     }
 
