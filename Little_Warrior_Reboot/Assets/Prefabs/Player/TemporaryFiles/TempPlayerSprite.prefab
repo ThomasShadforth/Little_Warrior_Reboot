@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 3039771832853552659}
   - component: {fileID: 3039771832853552652}
   - component: {fileID: 8045189106433161336}
+  - component: {fileID: 3155835972969630898}
   m_Layer: 7
   m_Name: TempPlayerSprite
   m_TagString: Player
@@ -349,73 +350,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 409114586d50ca54a8493ca04de4800f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerLightAttacks:
-  - _attackName: Jab1
-    _nextLightAttack: Jab2
-    _nextHeavyAttack: 
-    _isUnlocked: 0
-    _defaultMove: 1
-    _damageDealt: 10
-    _attackKnockback: {x: 1, y: 1}
-    _knockbackDuration: 0.69
-    _camShakeIntensity: 0.2
-    _camShakeTime: 0.3
-    _attackMoveForce: {x: 2, y: 0}
-    _abilityType: 11
-    _playedSFXName: JabFX_1
-  - _attackName: Jab2
-    _nextLightAttack: Punch
-    _nextHeavyAttack: 
-    _isUnlocked: 0
-    _defaultMove: 1
-    _damageDealt: 10
-    _attackKnockback: {x: 2, y: 1}
-    _knockbackDuration: 0.69
-    _camShakeIntensity: 0.2
-    _camShakeTime: 0.3
-    _attackMoveForce: {x: 2, y: 0}
-    _abilityType: 12
-    _playedSFXName: JabFX_1
-  - _attackName: Punch
-    _nextLightAttack: 
-    _nextHeavyAttack: Rising Punch
-    _isUnlocked: 0
-    _defaultMove: 1
-    _damageDealt: 20
-    _attackKnockback: {x: 5, y: 2}
-    _knockbackDuration: 0.69
-    _camShakeIntensity: 0.4
-    _camShakeTime: 0.6
-    _attackMoveForce: {x: 4, y: 0}
-    _abilityType: 7
-    _playedSFXName: PunchFX_1
-  _playerHeavyAttacks:
-  - _attackName: Thrust Kick
-    _nextLightAttack: 
-    _nextHeavyAttack: 
-    _isUnlocked: 0
-    _defaultMove: 0
-    _damageDealt: 20
-    _attackKnockback: {x: 7, y: 3}
-    _knockbackDuration: 0.3
-    _camShakeIntensity: 0.75
-    _camShakeTime: 0.6
-    _attackMoveForce: {x: 5, y: 0}
-    _abilityType: 9
-    _playedSFXName: 
-  - _attackName: Rising Punch
-    _nextLightAttack: 
-    _nextHeavyAttack: 
-    _isUnlocked: 0
-    _defaultMove: 0
-    _damageDealt: 20
-    _attackKnockback: {x: 3, y: 7}
-    _knockbackDuration: 1.7
-    _camShakeIntensity: 0.55
-    _camShakeTime: 0.6
-    _attackMoveForce: {x: 0, y: 8}
-    _abilityType: 4
-    _playedSFXName: PunchFX_2
   _hitDetectPoint: {fileID: 3039771832969205343}
   _hitDetectRadius: 0.4
   _enemyLayer:
@@ -423,7 +357,7 @@ MonoBehaviour:
     m_Bits: 256
   _ignoreLayer:
     serializedVersion: 2
-    m_Bits: 1664
+    m_Bits: 3712
 --- !u!114 &3039771832853552657
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +430,85 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterCollider: {fileID: 3039771832853552665}
   _blockingCollider: {fileID: 3039771831930539644}
+--- !u!114 &3155835972969630898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3039771832853552675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b94e9c0397ebfc4ebe102e5bff76e66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerLightAttacks:
+  - _attackName: Jab1
+    _nextLightAttack: Jab2
+    _nextHeavyAttack: 
+    _isUnlocked: 1
+    _defaultMove: 1
+    _damageDealt: 10
+    _attackKnockback: {x: 1, y: 1}
+    _knockbackDuration: 0.69
+    _camShakeIntensity: 0.2
+    _camShakeTime: 0.3
+    _attackMoveForce: {x: 2, y: 0}
+    _abilityType: 11
+    _playedSFXName: JabFX_1
+  - _attackName: Jab2
+    _nextLightAttack: Punch
+    _nextHeavyAttack: 
+    _isUnlocked: 1
+    _defaultMove: 1
+    _damageDealt: 10
+    _attackKnockback: {x: 2, y: 1}
+    _knockbackDuration: 0.69
+    _camShakeIntensity: 0.2
+    _camShakeTime: 0.3
+    _attackMoveForce: {x: 2, y: 0}
+    _abilityType: 12
+    _playedSFXName: JabFX_1
+  - _attackName: Punch
+    _nextLightAttack: 
+    _nextHeavyAttack: Rising Punch
+    _isUnlocked: 1
+    _defaultMove: 1
+    _damageDealt: 20
+    _attackKnockback: {x: 5, y: 2}
+    _knockbackDuration: 0.69
+    _camShakeIntensity: 0.4
+    _camShakeTime: 0.6
+    _attackMoveForce: {x: 4, y: 0}
+    _abilityType: 7
+    _playedSFXName: PunchFX_1
+  _playerHeavyAttacks:
+  - _attackName: Thrust Kick
+    _nextLightAttack: 
+    _nextHeavyAttack: 
+    _isUnlocked: 0
+    _defaultMove: 0
+    _damageDealt: 20
+    _attackKnockback: {x: 7, y: 3}
+    _knockbackDuration: 0.3
+    _camShakeIntensity: 0.75
+    _camShakeTime: 0.6
+    _attackMoveForce: {x: 5, y: 0}
+    _abilityType: 9
+    _playedSFXName: 
+  - _attackName: Rising Punch
+    _nextLightAttack: 
+    _nextHeavyAttack: 
+    _isUnlocked: 0
+    _defaultMove: 0
+    _damageDealt: 20
+    _attackKnockback: {x: 3, y: 7}
+    _knockbackDuration: 1.7
+    _camShakeIntensity: 0.55
+    _camShakeTime: 0.6
+    _attackMoveForce: {x: 0, y: 8}
+    _abilityType: 4
+    _playedSFXName: PunchFX_2
 --- !u!1 &3039771832969205342
 GameObject:
   m_ObjectHideFlags: 0

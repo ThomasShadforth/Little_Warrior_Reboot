@@ -6,11 +6,13 @@ using UnityEngine;
 public class AITurretAnimator : MonoBehaviour
 {
     AITurretData _turretData;
+    AITurretCombat _turretCombat;
     Animator _animator;
     // Start is called before the first frame update
     void Start()
     {
         _turretData = GetComponent<AITurretData>();
+        _turretCombat = GetComponent<AITurretCombat>();
         _animator = GetComponent<Animator>();
     }
 
@@ -27,7 +29,7 @@ public class AITurretAnimator : MonoBehaviour
 
     void _AnimateTurret()
     {
-        if (_turretData.GetIsAttacking())
+        if (_turretCombat.GetIsAttacking())
         {
             _animator.SetBool("IsAttacking", true);
         }

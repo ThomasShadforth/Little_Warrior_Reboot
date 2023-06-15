@@ -7,7 +7,8 @@ public class PlayerAbilities : MonoBehaviour, IDataPersistence
 {
     PlayerSkillManager _playerSkills;
     PlayerMovement _playerMove;
-    PlayerCombat _playerCombat;
+
+    PlayerAttackInfo _playerAttackInfo;
 
     // Start is called before the first frame update
     private void Awake()
@@ -18,8 +19,7 @@ public class PlayerAbilities : MonoBehaviour, IDataPersistence
     void Start()
     {
         _playerMove = GetComponent<PlayerMovement>();
-        _playerCombat = GetComponent<PlayerCombat>();
-
+        _playerAttackInfo = GetComponent<PlayerAttackInfo>();
         
         SkillTreeUI skillTree = FindObjectOfType<SkillTreeUI>(true);
 
@@ -46,10 +46,10 @@ public class PlayerAbilities : MonoBehaviour, IDataPersistence
                 _playerMove.SetMaxSpeed(30);
                 break;
             case PlayerSkillManager.AbilityType.Rising_Punch_1:
-                _playerCombat.UnlockAttack("Rising Punch");
+                _playerAttackInfo.UnlockAttack("Rising Punch");
                 break;
             case PlayerSkillManager.AbilityType.Thrust_Kick_1:
-                _playerCombat.UnlockAttack("Thrust Kick");
+                _playerAttackInfo.UnlockAttack("Thrust Kick");
                 break;
         }
     }

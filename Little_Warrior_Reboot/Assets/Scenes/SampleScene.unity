@@ -483,6 +483,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  _camShakeIntensity: 0
+  _camShakeTime: 0
 --- !u!114 &178570915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1283,6 +1285,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  _camShakeIntensity: 0
+  _camShakeTime: 0
 --- !u!114 &823727008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1935,6 +1939,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthImage: {fileID: 1128311157}
   _fillSpeed: 0.6
+  _isPlayerHealth: 0
 --- !u!114 &1128311157
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54977,6 +54982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthImage: {fileID: 1963856791}
   _fillSpeed: 0.6
+  _isPlayerHealth: 0
 --- !u!114 &1963856791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55111,6 +55117,8 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 0
+  _camShakeIntensity: 0
+  _camShakeTime: 0
 --- !u!114 &1973508030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61977,6 +61985,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _healthImage: {fileID: 2124673445}
   _fillSpeed: 0.6
+  _isPlayerHealth: 0
 --- !u!114 &2124673445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62176,6 +62185,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3039771832853552656, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
+      propertyPath: _playerLightAttacks.Array.data[0]._isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3039771832853552656, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
+      propertyPath: _playerLightAttacks.Array.data[1]._isUnlocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3039771832853552657, guid: 34d6ec2ab9bbf514998eab802081bc31, type: 3}
       propertyPath: _playerHealthBar
       value: 

@@ -17,6 +17,10 @@ public class AITurretPlayerInRangeDecision : AIDecision
 
         if (turretData == null) return false;
 
+        AITurretCombat turretCombat = thinker.GetComponent<AITurretCombat>();
+
+        if (turretCombat == null) return false;
+
         if (turretData.GetCanSeePlayer())
         {
             if (turretData.GetLessThanMaxWaitTime())
@@ -31,9 +35,9 @@ public class AITurretPlayerInRangeDecision : AIDecision
         {
             turretData.SetLaserActive();
 
-            if (!turretData.GetIsAttacking())
+            if (!turretCombat.GetIsAttacking())
             {
-                turretData.SetAttackWaitTime();
+                turretCombat.SetAttackWaitTimer();
             }
 
             return false;

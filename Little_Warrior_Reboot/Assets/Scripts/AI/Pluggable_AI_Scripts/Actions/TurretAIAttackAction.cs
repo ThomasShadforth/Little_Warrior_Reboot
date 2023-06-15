@@ -16,15 +16,19 @@ public class TurretAIAttackAction : AIAction
 
         if (turretData == null) return;
 
-        if (!turretData.GetIsAttacking())
-        {
-            turretData.TickAttackWaitTimer();
-            turretData.TrackPlayer();
-            turretData.SetLaserLine();
+        AITurretCombat turretCombat = thinker.GetComponent<AITurretCombat>();
 
-            if (turretData.GetAttackWaitTimerEnded())
+        if (turretCombat == null) return;
+
+        if (!turretCombat.GetIsAttacking())
+        {
+            turretCombat.TickAttackWaitTimer();
+            turretData.TrackPlayer();
+            turretCombat.SetLaserLine();
+
+            if (turretCombat.GetAttackWaitTimeFinished())
             {
-                turretData.Attack();
+                turretCombat.AttackTarget();
             }
         }
 

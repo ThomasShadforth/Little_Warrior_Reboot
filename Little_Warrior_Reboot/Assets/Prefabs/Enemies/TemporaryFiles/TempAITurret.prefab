@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 2580557150637686084}
   - component: {fileID: 2580557150637686086}
   - component: {fileID: 2580557150637686087}
+  - component: {fileID: 8159692435113075782}
   m_Layer: 0
   m_Name: TurretHead
   m_TagString: Untagged
@@ -393,11 +394,6 @@ MonoBehaviour:
   _maxRotationAngle: 75
   _rotationSpeed: -50
   _turretWaitTime: 3
-  _attackWaitTime: 1.25
-  _ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 1536
-  _chargeSFXName: LaserChargeFX_1
   _lineRenderer: {fileID: 2580557149859348254}
   _fovLight: {fileID: 1594232575}
 --- !u!95 &2580557150637686086
@@ -432,6 +428,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2104e36093f6e824f9f66d8c45e56a5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8159692435113075782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2580557150637686104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c997a50c4fb3e6047aae92063f75f930, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _attackWaitTime: 1.25
+  _ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 1536
+  _lineRenderer: {fileID: 2580557149859348254}
 --- !u!1 &2580557150788978977
 GameObject:
   m_ObjectHideFlags: 0

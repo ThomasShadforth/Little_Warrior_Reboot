@@ -6,71 +6,25 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
 
-public class PlayerCombat : MonoBehaviour, IDataPersistence
+public class PlayerCombat : MonoBehaviour
 {
-    [SerializeField] AttackData[] _playerLightAttacks;
-    [SerializeField] AttackData[] _playerHeavyAttacks;
     AttackData _currentAttack;
     [SerializeField] Transform _hitDetectPoint;
     [SerializeField] float _hitDetectRadius;
     [SerializeField] LayerMask _enemyLayer;
     [SerializeField] LayerMask _ignoreLayer;
 
-
     IDamageInterface _playerDamageInterface;
     bool _isAttacking;
     bool _airAttack;
     PlayerHeightMaintenance _playerHeight;
-    PlayerAbilities _playerAbilities;
-    
+    PlayerAttackInfo _playerAttackInfo;
 
     void Start()
     {
         _playerDamageInterface = GetComponent<IDamageInterface>();
         _playerHeight = GetComponent<PlayerHeightMaintenance>();
-        _playerAbilities = GetComponent<PlayerAbilities>();
-        _SetupDefaultSkills();
-    }
-
-    private void _SetupDefaultSkills()
-    {
-        for(int i = 0; i < _playerLightAttacks.Length; i++)
-        {
-            if (_playerLightAttacks[i].GetDefaultStatus()) {
-                _playerAbilities.UnlockDefaultAbility(_playerLightAttacks[i].GetAbilityType());
-                _playerLightAttacks[i].SetUnlockStatus(true);
-            
-            }
-        }
-
-        for(int i = 0; i < _playerHeavyAttacks.Length; i++)
-        {
-            if (_playerHeavyAttacks[i].GetDefaultStatus()) {
-                _playerAbilities.UnlockDefaultAbility(_playerHeavyAttacks[i].GetAbilityType());
-                _playerHeavyAttacks[i].SetUnlockStatus(true);
-            } 
-        }
-    }
-
-    public void UnlockAttack(string attackName)
-    {
-        foreach(AttackData attack in _playerLightAttacks)
-        {
-            if(attack.GetAttackName() == attackName)
-            {
-                attack.SetUnlockStatus(true);
-                return;
-            }
-        }
-
-        foreach(AttackData attack in _playerHeavyAttacks)
-        {
-            if(attack.GetAttackName() == attackName)
-            {
-                attack.SetUnlockStatus(true);
-                return;
-            }
-        }
+        _playerAttackInfo = GetComponent<PlayerAttackInfo>();
     }
 
     public void AttackHitDetect()
@@ -81,6 +35,8 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
         {
             foreach (Collider2D hitObject in hitObjects)
             {
+                Debug.Log(hitObject.gameObject.name);
+
                 IDamageInterface damageInterface = hitObject.GetComponent<IDamageInterface>();
 
                 if (damageInterface != null && damageInterface != _playerDamageInterface)
@@ -117,7 +73,6 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
 
     public void ApplyMoveForce()
     {
-        
         Vector2 moveForce = _currentAttack.GetMovementForce();
         moveForce.x *= transform.localScale.x;
 
@@ -128,7 +83,6 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
         }
         
         GetComponent<Rigidbody2D>().velocity = moveForce;
-
     }
     
     public void StopAttack()
@@ -144,9 +98,10 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
         {
             if(_currentAttack == null)
             {
-                if (_playerLightAttacks[0].GetUnlockStatus())
+                _currentAttack = _playerAttackInfo.SearchForLightAttack();
+
+                if (_currentAttack != null && _currentAttack.GetUnlockStatus())
                 {
-                    _currentAttack = _playerLightAttacks[0];
                     GetComponent<Animator>().Play(_currentAttack.GetAttackName());
                 }
             }
@@ -154,55 +109,22 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
             {
                 if(_currentAttack.GetNextLightAttack() != "")
                 {
-                    _SearchForAttack(_currentAttack.GetNextLightAttack());
+                    _currentAttack = _playerAttackInfo.SearchForLightAttack(_currentAttack.GetNextLightAttack());
+                    if(_currentAttack != null)
+                    {
+                        GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                    }
                 }
             }
             
         } else if(attackType == "Heavy")
         {
-            if (_currentAttack == null)
+            if (_currentAttack != null)
             {
-                if (_playerHeavyAttacks[0].GetUnlockStatus())
+                if(_currentAttack.GetNextHeavyAttack() != "")
                 {
-                    _currentAttack = _playerHeavyAttacks[0];
-                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                    _playerAttackInfo.SearchForHeavyAttack(_currentAttack.GetNextHeavyAttack());
                 }
-            }
-            else
-            {
-                if (_currentAttack.GetNextHeavyAttack() != "")
-                {
-                    _SearchForAttack(_currentAttack.GetNextHeavyAttack());
-                }
-            }
-        }
-    }
-
-    void _SearchForAttack(string nextAttackName)
-    {
-        foreach(AttackData attack in _playerLightAttacks)
-        {
-            if(attack.GetAttackName() == nextAttackName)
-            {
-                if (attack.GetUnlockStatus())
-                {
-                    _currentAttack = attack;
-                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
-                }
-                return;
-            }
-        }
-
-        foreach(AttackData attack in _playerHeavyAttacks)
-        {
-            if(attack.GetAttackName() == nextAttackName)
-            {
-                if (attack.GetUnlockStatus())
-                {
-                    _currentAttack = attack;
-                    GetComponent<Animator>().Play(_currentAttack.GetAttackName());
-                }
-                return;
             }
         }
     }
@@ -223,37 +145,10 @@ public class PlayerCombat : MonoBehaviour, IDataPersistence
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
 
-    public void LoadData(GameData data)
-    {
-        if(data.playerLightAttacks.Count != 0)
-        {
-            AttackData[] loadedLightAttacks = data.playerLightAttacks.ToArray();
-
-            for(int i = 0; i < _playerLightAttacks.Length; i++)
-            {
-                _playerLightAttacks[i].SetUnlockStatus(loadedLightAttacks[i].GetUnlockStatus());
-            }
-        }
-
-        if(data.playerHeavyAttacks.Count != 0)
-        {
-            AttackData[] loadedHeavyAttacks = data.playerHeavyAttacks.ToArray();
-
-            for(int i = 0; i < _playerHeavyAttacks.Length; i++)
-            {
-                _playerHeavyAttacks[i].SetUnlockStatus(loadedHeavyAttacks[i].GetUnlockStatus());
-            }
-        }
-    }
-
-    public void SaveData(GameData data)
-    {
-        data.playerLightAttacks = _playerLightAttacks.ToList();
-        data.playerHeavyAttacks = _playerHeavyAttacks.ToList();
-    }
-
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(_hitDetectPoint.position, _hitDetectRadius);
     }
+
+
 }
