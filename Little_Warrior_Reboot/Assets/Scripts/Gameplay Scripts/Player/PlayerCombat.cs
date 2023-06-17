@@ -123,7 +123,12 @@ public class PlayerCombat : MonoBehaviour
             {
                 if(_currentAttack.GetNextHeavyAttack() != "")
                 {
-                    _playerAttackInfo.SearchForHeavyAttack(_currentAttack.GetNextHeavyAttack());
+                    _currentAttack = _playerAttackInfo.SearchForHeavyAttack(_currentAttack.GetNextHeavyAttack());
+
+                    if(_currentAttack != null)
+                    {
+                        GetComponent<Animator>().Play(_currentAttack.GetAttackName());
+                    }
                 }
             }
         }

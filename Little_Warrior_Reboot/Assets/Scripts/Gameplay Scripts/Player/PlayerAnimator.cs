@@ -17,6 +17,7 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField]
     float _prevXDirection;
 
+    bool _facingRight = true;
     bool _grounded;
     [SerializeField]
     bool _prevGrounded;
@@ -51,9 +52,27 @@ public class PlayerAnimator : MonoBehaviour
 
         _xDirection = _playerInput.Player.PlayerMovement.ReadValue<float>();
 
+        if(_xDirection > .01f)
+        {
+            _xDirection = 1f;
+        } else if(_xDirection < -.01f)
+        {
+            _xDirection = -1f;
+        }
+
         if (_xDirection != _prevXDirection && _xDirection != 0)
         {
-            _SwitchXScale();
+            if(_facingRight && _xDirection < 0)
+            {
+                _facingRight = false;
+                _SwitchXScale();
+            } else if(!_facingRight && _xDirection > 0)
+            {
+                _facingRight = true;
+                _SwitchXScale();
+            }
+
+            
         }
 
         _UpdateAnimation();

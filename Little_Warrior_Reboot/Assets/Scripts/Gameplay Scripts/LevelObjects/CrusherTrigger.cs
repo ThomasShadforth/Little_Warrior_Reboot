@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class CrusherTrigger : MonoBehaviour
 {
+    [SerializeField] int _damageDealt = 20;
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         IDamageInterface damageInterface = other.gameObject.GetComponent<IDamageInterface>();
         if (damageInterface != null)
         {
             //Damage the player
-            damageInterface.DetectHit(20);
+            damageInterface.DetectHit(_damageDealt);
             Debug.Log("HIT!");
 
             if (ExplosionObjectPool.instance != null)
