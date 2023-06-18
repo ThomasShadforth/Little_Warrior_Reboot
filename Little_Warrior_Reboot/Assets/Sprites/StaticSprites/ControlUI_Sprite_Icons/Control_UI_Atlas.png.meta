@@ -174,9 +174,9 @@ TextureImporter:
       name: Control_UI_Atlas_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 34
         y: 64
-        width: 16
+        width: 12
         height: 16
       alignment: 6
       pivot: {x: 0, y: 0}
@@ -195,9 +195,9 @@ TextureImporter:
       name: Control_UI_Atlas_3
       rect:
         serializedVersion: 2
-        x: 48
+        x: 50
         y: 64
-        width: 16
+        width: 12
         height: 16
       alignment: 6
       pivot: {x: 0, y: 0}
@@ -216,9 +216,9 @@ TextureImporter:
       name: Control_UI_Atlas_4
       rect:
         serializedVersion: 2
-        x: 64
+        x: 66
         y: 64
-        width: 16
+        width: 12
         height: 16
       alignment: 6
       pivot: {x: 0, y: 0}
@@ -237,9 +237,9 @@ TextureImporter:
       name: Control_UI_Atlas_5
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 48
-        width: 16
+        width: 12
         height: 16
       alignment: 6
       pivot: {x: 0, y: 0}
@@ -250,6 +250,69 @@ TextureImporter:
       bones: []
       spriteID: 95325079a9cc328418fb59a7de4063c0
       internalID: -1750716665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Control_UI_Atlas_6
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 48
+        width: 12
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e38e7881e52f304a9f1cd3f152d422c
+      internalID: 1053396981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Control_UI_Atlas_7
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 48
+        width: 10
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6d41f4dc9bb08c41bbde02cc439caf1
+      internalID: -1648480286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Control_UI_Atlas_8
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb74b7efc850cb4eab1ff6349393ca9
+      internalID: -1308452316
       vertices: []
       indices: 
       edges: []
@@ -268,8 +331,11 @@ TextureImporter:
       Control_UI_Atlas_0: 1150797417
       Control_UI_Atlas_2: -308550158
       Control_UI_Atlas_3: -1736832276
+      Control_UI_Atlas_7: -1648480286
+      Control_UI_Atlas_6: 1053396981
       Control_UI_Atlas_5: -1750716665
       Control_UI_Atlas_4: -1811375462
+      Control_UI_Atlas_8: -1308452316
       Control_UI_Atlas_1: 2006810021
   spritePackingTag: 
   pSDRemoveMatte: 0

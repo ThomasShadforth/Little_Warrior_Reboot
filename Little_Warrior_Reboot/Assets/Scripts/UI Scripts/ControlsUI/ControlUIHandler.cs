@@ -9,7 +9,6 @@ using TMPro;
 public class ControlUIHandler : MonoBehaviour
 {
     [SerializeField] string _originalFieldText;
-    [SerializeField] Image _iconImage;
     [SerializeField] ControlUIData _UIData;
 
     [SerializeField] TextMeshProUGUI _controlUIText;
@@ -29,7 +28,7 @@ public class ControlUIHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _playerInputHandler = GetComponent<PlayerInput>();
+        _playerInputHandler = FindObjectOfType<PlayerInput>();
         _UpdateButtonImage(_playerInputHandler.currentControlScheme);
     }
 
@@ -50,16 +49,30 @@ public class ControlUIHandler : MonoBehaviour
 
     void _UpdateButtonImage(string controlSchemeName)
     {
-        //_iconImage.sprite = _UIData.GetControlSchemeIcon(controlSchemeName);
 
         string outputText = "";
-        //outputText = _originalFieldText.Replace("[Insert Icon Here]", $"<sprite name= \"{_UIData.GetIconAssetTag(controlSchemeName)}\">");
 
         outputText = _originalFieldText.Replace("[Insert Icon Here]", $"<sprite={_UIData.GetIconAssetIndex(controlSchemeName)}>");
         _controlUIText.text = outputText;
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            _controlUIText.gameObject.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            _controlUIText.gameObject.SetActive(false);
+        }
+    }
 
 
-    
+
+
 }

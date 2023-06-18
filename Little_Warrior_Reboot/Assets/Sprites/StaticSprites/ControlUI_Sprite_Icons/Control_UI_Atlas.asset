@@ -113,6 +113,24 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: Y_Button_Icon
     m_HashCode: 667232772
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 6
+    m_Scale: 1
+    m_Name: Q_Key_Icon
+    m_HashCode: -892253427
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 7
+    m_Scale: 1
+    m_Name: E_Key_Icon
+    m_HashCode: -1529072487
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 8
+    m_Scale: 1
+    m_Name: Shift_Key_Icon
+    m_HashCode: -866792196
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -152,9 +170,9 @@ MonoBehaviour:
       m_HorizontalBearingY: 12
       m_HorizontalAdvance: 16
     m_GlyphRect:
-      m_X: 32
+      m_X: 34
       m_Y: 64
-      m_Width: 16
+      m_Width: 12
       m_Height: 16
     m_Scale: 1
     m_AtlasIndex: 0
@@ -167,9 +185,9 @@ MonoBehaviour:
       m_HorizontalBearingY: 12
       m_HorizontalAdvance: 16
     m_GlyphRect:
-      m_X: 48
+      m_X: 50
       m_Y: 64
-      m_Width: 16
+      m_Width: 12
       m_Height: 16
     m_Scale: 1
     m_AtlasIndex: 0
@@ -182,9 +200,9 @@ MonoBehaviour:
       m_HorizontalBearingY: 12
       m_HorizontalAdvance: 16
     m_GlyphRect:
-      m_X: 64
+      m_X: 66
       m_Y: 64
-      m_Width: 16
+      m_Width: 12
       m_Height: 16
     m_Scale: 1
     m_AtlasIndex: 0
@@ -197,12 +215,57 @@ MonoBehaviour:
       m_HorizontalBearingY: 12
       m_HorizontalAdvance: 16
     m_GlyphRect:
-      m_X: 0
+      m_X: 2
+      m_Y: 48
+      m_Width: 12
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -1750716665, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
+  - m_Index: 6
+    m_Metrics:
+      m_Width: 16
+      m_Height: 16
+      m_HorizontalBearingX: -0
+      m_HorizontalBearingY: 12
+      m_HorizontalAdvance: 16
+    m_GlyphRect:
+      m_X: 18
+      m_Y: 48
+      m_Width: 12
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: 1053396981, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
+  - m_Index: 7
+    m_Metrics:
+      m_Width: 16
+      m_Height: 16
+      m_HorizontalBearingX: -0
+      m_HorizontalBearingY: 12
+      m_HorizontalAdvance: 16
+    m_GlyphRect:
+      m_X: 35
+      m_Y: 48
+      m_Width: 10
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -1648480286, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
+  - m_Index: 8
+    m_Metrics:
+      m_Width: 16
+      m_Height: 16
+      m_HorizontalBearingX: -0
+      m_HorizontalBearingY: 12
+      m_HorizontalAdvance: 16
+    m_GlyphRect:
+      m_X: 48
       m_Y: 48
       m_Width: 16
       m_Height: 16
     m_Scale: 1
     m_AtlasIndex: 0
-    sprite: {fileID: -1750716665, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
+    sprite: {fileID: -1308452316, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
