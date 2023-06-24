@@ -17,6 +17,8 @@ public class AIPatrolPointReachedDecision : AIDecision
 
         if (patrolData == null) return false;
 
+        if (patrolData.GetPatrolPoints().Length == 0) return false;
+
         AIMovement aiMove = thinker.GetComponent<AIMovement>();
 
         if (aiMove == null) return false;

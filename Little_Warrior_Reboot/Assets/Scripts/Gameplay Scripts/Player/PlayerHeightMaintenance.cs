@@ -64,7 +64,8 @@ public class PlayerHeightMaintenance : MonoBehaviour
         
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
 
-        
+        _SetPlatform(hit);
+
         _CheckHazards(hit);
 
         _grounded = _CheckGrounded(rayHitGround, hit);
@@ -155,6 +156,20 @@ public class PlayerHeightMaintenance : MonoBehaviour
         if (hitRb2d != null)
         {
 
+        }
+    }
+
+    private void _SetPlatform(RaycastHit2D hit)
+    {
+        try
+        {
+            Platform platformParent = hit.collider.gameObject.GetComponent<Platform>();
+            transform.parent = platformParent.transform;
+            platformParent.CheckMovementCondition();
+        }
+        catch
+        {
+            transform.parent = null;
         }
     }
 }

@@ -20,9 +20,10 @@ public class CrusherManager : MonoBehaviour
         {
             foreach(Crusher crusher in crushers)
             {
+                yield return new WaitForSeconds(_crusherActivationDelay);
                 crusher.ActivateCrusher();
                 //Debug.Log("ACTIVATING CRUSHER");
-                yield return new WaitForSeconds(_crusherActivationDelay);
+                
             }
         }
     }

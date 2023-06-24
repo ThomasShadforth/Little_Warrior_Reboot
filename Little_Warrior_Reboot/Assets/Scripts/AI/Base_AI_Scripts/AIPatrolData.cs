@@ -21,6 +21,19 @@ public class AIPatrolData : MonoBehaviour
         return _patrolPoints;
     }
 
+    public bool GetPatrolPointsNull()
+    {
+        if(_patrolPoints == null)
+        {
+            
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     // Start is called before the first frame update
     public int GetPatrolIndex()
     {

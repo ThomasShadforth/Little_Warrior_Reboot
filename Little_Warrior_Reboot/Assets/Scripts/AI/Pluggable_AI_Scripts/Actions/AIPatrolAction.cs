@@ -16,6 +16,8 @@ public class AIPatrolAction : AIAction
 
         if (patrolData == null) return;
 
+        if (patrolData.GetPatrolPoints().Length == 0) return;
+
         Vector2 patrolPointDirection = patrolData.GetPatrolPoints()[patrolData.GetPatrolIndex()].position - thinker.transform.position;
 
         AIMovement aiMove = thinker.GetComponent<AIMovement>();

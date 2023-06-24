@@ -61,6 +61,9 @@ public class AIHealth : Subject, IObserver, IDamageInterface
                 hitStopManager.StopTime(_deathHitStop);
             }
 
+            
+            _NotifyObservers(0);
+
             if(EnemyObjectPool.instance != null)
             {
                 EnemyObjectPool.instance.AddToPool(gameObject);
@@ -69,13 +72,13 @@ public class AIHealth : Subject, IObserver, IDamageInterface
             {
                 gameObject.SetActive(false);
             }
-
-            //Return enemy to object pool (TODO: Create object pooling scripts)
         }
     }
 
     public void OnNotify(int damageTaken)
     {
+        if (damageTaken == 0) return;
+
         _healthSystem.Damage(damageTaken);
     }
 

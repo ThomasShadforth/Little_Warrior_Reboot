@@ -35,7 +35,7 @@ public class PlayerCombat : MonoBehaviour
         {
             foreach (Collider2D hitObject in hitObjects)
             {
-                Debug.Log(hitObject.gameObject.name);
+                //Debug.Log(hitObject.gameObject.name);
 
                 IDamageInterface damageInterface = hitObject.GetComponent<IDamageInterface>();
 
@@ -81,8 +81,9 @@ public class PlayerCombat : MonoBehaviour
             GetComponent<Rigidbody2D>().gravityScale = 1.7f;
             _airAttack = true;
         }
-        
+
         GetComponent<Rigidbody2D>().velocity = moveForce;
+        
     }
     
     public void StopAttack()
@@ -149,6 +150,8 @@ public class PlayerCombat : MonoBehaviour
         _isAttacking = true;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
     }
+
+    
 
     private void OnDrawGizmosSelected()
     {

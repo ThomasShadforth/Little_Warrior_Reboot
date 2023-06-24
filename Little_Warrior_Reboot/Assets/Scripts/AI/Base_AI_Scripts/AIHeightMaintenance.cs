@@ -60,6 +60,8 @@ public class AIHeightMaintenance : MonoBehaviour
     {
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
 
+        _SetPlatform(hit);
+
         _grounded = _CheckGrounded(rayHitGround, hit);
 
         if (rayHitGround && _shouldMaintainHeight)
@@ -91,6 +93,20 @@ public class AIHeightMaintenance : MonoBehaviour
         bool rayHitGround = Physics2D.Raycast(transform.position, Vector2.down, _rayToGroundLength, _whatIsGround);
 
         return (rayHitGround, hit);
+    }
+
+    private void _SetPlatform(RaycastHit2D hit)
+    {
+        try
+        {
+            Platform platformParent = hit.collider.gameObject.GetComponent<Platform>();
+            transform.parent = platformParent.transform;
+            platformParent.CheckMovementCondition();
+        }
+        catch
+        {
+            transform.parent = null;
+        }
     }
 
     private void _MaintainHeight(RaycastHit2D hit)
