@@ -21,7 +21,11 @@ public class AIHeightMaintenance : MonoBehaviour
 
     AIStatus _aiStatus;
 
+    float _platformExitTime;
+
     bool _grounded;
+    bool _onTriggerPlatform;
+
 
     private void Awake()
     {
@@ -59,7 +63,7 @@ public class AIHeightMaintenance : MonoBehaviour
     public void CheckForGrounded()
     {
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
-
+        
         _SetPlatform(hit);
 
         _grounded = _CheckGrounded(rayHitGround, hit);
@@ -100,12 +104,24 @@ public class AIHeightMaintenance : MonoBehaviour
         try
         {
             Platform platformParent = hit.collider.gameObject.GetComponent<Platform>();
-            transform.parent = platformParent.transform;
-            platformParent.CheckMovementCondition();
+
+            _platformExitTime = platformParent.GetPlatformExitTimer();
+
+            RigidParent rigidParent = platformParent.GetRigidParent();
+
+            if (rigidParent == null) return;
+
+            transform.SetParent(rigidParent.transform);
+
         }
         catch
         {
-            transform.parent = null;
+            _platformExitTime -= GamePause.deltaTime;
+
+            if (_platformExitTime <= 0)
+            {
+                transform.parent = null;
+            }
         }
     }
 

@@ -18,7 +18,6 @@ public class DefeatedEnemyCondition : LevelCondition, IObserver
 
             if(enemySubject != null)
             {
-                Debug.Log("Added to subject's list of observers!");
                 enemySubject.AddObserver(this);
             }
         }

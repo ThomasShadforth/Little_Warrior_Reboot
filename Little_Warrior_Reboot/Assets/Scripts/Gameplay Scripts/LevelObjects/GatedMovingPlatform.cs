@@ -15,13 +15,11 @@ public class GatedMovingPlatform : Platform
 
     bool _conditionFulfilled;
     bool _platformStopped;
-    
+
+    Rigidbody2D _rb;
+
 
     // Start is called before the first frame update
-    void Start()
-    {
-        _startPosition = transform.position + (Vector3)_positionOffset;
-    }
 
     // Update is called once per frame
     protected override void Move()
@@ -31,10 +29,9 @@ public class GatedMovingPlatform : Platform
             return;
         }
 
+        _rb.transform.position += (Vector3)_moveVelocity * GamePause.deltaTime;
 
-        transform.position += (Vector3)_moveVelocity * GamePause.deltaTime;
-
-        float distanceTravelled = Vector2.Distance(_startPosition, transform.position);
+        float distanceTravelled = Vector2.Distance(_startPosition, _rb.transform.position);
 
         //Debug.Log(distanceTravelled);
 
@@ -49,8 +46,8 @@ public class GatedMovingPlatform : Platform
 
             if (!_conditionFulfilled)
             {
-                Debug.Log("SETTING POSITION");
-                transform.position = _startPosition;
+                //Debug.Log("SETTING POSITION");
+                _rb.transform.position = _startPosition;
             }
 
             
@@ -66,14 +63,21 @@ public class GatedMovingPlatform : Platform
     {
         if (_needsPlayer)
         {
-            _hasStarted = true;
-
-            if (_primaryCondition != null)
+            if (_primaryCondition != null && !_hasStarted)
             {
+                _hasStarted = true;
                 _primaryCondition.ActivateCondition();
             }
 
         }
+    }
+
+    public override void SetStartingState()
+    {
+        base.SetStartingState();
+
+        _startPosition = transform.position + (Vector3)_positionOffset;
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     //Compared to regular moving platforms, this platform will have a condition check distance and maximum distance.
@@ -82,7 +86,6 @@ public class GatedMovingPlatform : Platform
     {
         if (_primaryCondition.CheckCondition())
         {
-            Debug.Log("AAAAAAAAA");
             _conditionFulfilled = true;
         }
     }

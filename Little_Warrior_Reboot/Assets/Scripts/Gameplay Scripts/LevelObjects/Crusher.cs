@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Crusher : MonoBehaviour
 {
+    [SerializeField] float _crusherWaitTime = 2.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,7 @@ public class Crusher : MonoBehaviour
 
     IEnumerator WaitToCrushCo()
     {
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(_crusherWaitTime);
         GetComponent<Animator>().SetBool("IsActivated", true);
     }
 

@@ -12,7 +12,7 @@ public class ControlUIData
 
     public int GetIconAssetIndex(string controlSchemeType)
     {
-        Debug.Log(controlSchemeType);
+        //Debug.Log(controlSchemeType);
 
         int keyboardIconIndex = _iconsSpriteAsset.GetSpriteIndexFromName(_keyboardIconName);
         int xboxGamepadIconIndex = _iconsSpriteAsset.GetSpriteIndexFromName(_xboxGamepadIconName);

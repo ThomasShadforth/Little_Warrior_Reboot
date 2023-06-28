@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    [SerializeField] float _platformExitTimer;
+    [SerializeField] protected RigidParent _rigidParent;
     [SerializeField] protected bool _needsPlayer;
+    [SerializeField] protected bool _requiresTrigger;
     protected bool _hasStarted;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (!_needsPlayer)
-        {
-            _hasStarted = true;
-        }
+        SetStartingState();
     }
 
     // Update is called once per frame
@@ -25,7 +25,6 @@ public class Platform : MonoBehaviour
     private void FixedUpdate()
     {
         if (!_hasStarted) return;
-
         Move();
     }
 
@@ -42,5 +41,28 @@ public class Platform : MonoBehaviour
     public virtual void CheckMovementCondition()
     {
         
+    }
+
+    public RigidParent GetRigidParent()
+    {
+        return _rigidParent;
+    }
+
+    public float GetPlatformExitTimer()
+    {
+        return _platformExitTimer;
+    }
+
+    public bool GetRequiresTrigger()
+    {
+        return _requiresTrigger;
+    }
+
+    public virtual void SetStartingState()
+    {
+        if (!_needsPlayer)
+        {
+            _hasStarted = true;
+        }
     }
 }

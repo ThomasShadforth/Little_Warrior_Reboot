@@ -19,7 +19,9 @@ public class PlayerHeightMaintenance : MonoBehaviour
     [SerializeField] float _springDamp;
     [SerializeField] bool _shouldMaintainHeight = true;
 
-    //experimental - Slope check variables
+    bool _onTriggerPlatform;
+
+    float _platformExitTime;
 
     bool _grounded;
     PlayerCombat _playerCombat;
@@ -58,13 +60,20 @@ public class PlayerHeightMaintenance : MonoBehaviour
         return _grounded;
     }
 
+    public void SetOnPlatform(bool isOnPlat)
+    {
+        _onTriggerPlatform = isOnPlat;
+    }
+
     public void CheckForGrounded()
     {
         Vector2 velocity = _rb2d.velocity;
         
         (bool rayHitGround, RaycastHit2D hit) = _RaycastToGround();
 
+
         _SetPlatform(hit);
+        
 
         _CheckHazards(hit);
 
@@ -163,13 +172,23 @@ public class PlayerHeightMaintenance : MonoBehaviour
     {
         try
         {
+            
             Platform platformParent = hit.collider.gameObject.GetComponent<Platform>();
-            transform.parent = platformParent.transform;
+
+            _platformExitTime = platformParent.GetPlatformExitTimer();
+
+            RigidParent platformRigidParent = platformParent.GetRigidParent();
+            transform.SetParent(platformRigidParent.transform);
             platformParent.CheckMovementCondition();
         }
         catch
         {
-            transform.parent = null;
+            _platformExitTime -= GamePause.deltaTime;
+
+            if (_platformExitTime <= 0)
+            {
+                transform.parent = null;
+            }
         }
     }
 }
