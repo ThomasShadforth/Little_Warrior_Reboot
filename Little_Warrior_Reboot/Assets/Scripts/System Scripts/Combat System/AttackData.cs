@@ -13,7 +13,8 @@ public class AttackData
     [SerializeField] bool _defaultMove;
     [SerializeField] int _damageDealt;
     //Test: Knockback multiplier vectors for specific attacks (E.g. Uppercut)
-    [SerializeField] Vector2 _attackKnockback;
+    [SerializeField] Vector2 _attackKnockbackMinimum;
+    [SerializeField] Vector2 _attackKnockbackMaximum;
     [SerializeField] float _knockbackDuration;
     [SerializeField] float _camShakeIntensity;
     [SerializeField] float _camShakeTime;
@@ -80,7 +81,16 @@ public class AttackData
 
     public Vector2 GetAttackKnockback()
     {
-        return _attackKnockback;
+        return _attackKnockbackMinimum;
+    }
+
+    public Vector2 GetRandomKnockback()
+    {
+        Vector2 randomKnockback;
+        randomKnockback.x = Random.Range(_attackKnockbackMinimum.x, _attackKnockbackMaximum.x);
+        randomKnockback.y = Random.Range(_attackKnockbackMinimum.y, _attackKnockbackMaximum.y);
+
+        return randomKnockback;
     }
 
     public PlayerSkillManager.AbilityType GetAbilityType()

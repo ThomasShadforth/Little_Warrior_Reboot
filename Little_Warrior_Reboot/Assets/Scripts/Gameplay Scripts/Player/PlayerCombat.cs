@@ -41,7 +41,7 @@ public class PlayerCombat : MonoBehaviour
 
                 if (damageInterface != null && damageInterface != _playerDamageInterface)
                 {
-                    Vector2 knockForce = _currentAttack.GetAttackKnockback();
+                    Vector2 knockForce = _currentAttack.GetRandomKnockback();
 
                     if (hitObject.transform.position.x < transform.position.x)
                     {

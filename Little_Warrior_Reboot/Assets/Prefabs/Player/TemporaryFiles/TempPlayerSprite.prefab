@@ -431,6 +431,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterCollider: {fileID: 3039771832853552665}
   _blockingCollider: {fileID: 3039771831930539644}
+  _ignoredLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  _collisionBlockerLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3155835972969630898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,12 +452,13 @@ MonoBehaviour:
   _playerLightAttacks:
   - _attackName: Jab1
     _nextLightAttack: Jab2
-    _nextHeavyAttack: 
+    _nextHeavyAttack: Rising Punch
     _isUnlocked: 1
     _defaultMove: 1
     _damageDealt: 10
-    _attackKnockback: {x: 1, y: 1}
-    _knockbackDuration: 0.69
+    _attackKnockbackMinimum: {x: 1.1, y: 2}
+    _attackKnockbackMaximum: {x: 1.2, y: 2.1}
+    _knockbackDuration: 0.5
     _camShakeIntensity: 0.2
     _camShakeTime: 0.3
     _attackMoveForce: {x: 2, y: 0}
@@ -463,8 +470,9 @@ MonoBehaviour:
     _isUnlocked: 1
     _defaultMove: 1
     _damageDealt: 10
-    _attackKnockback: {x: 2, y: 1}
-    _knockbackDuration: 0.69
+    _attackKnockbackMinimum: {x: 1.1, y: 2}
+    _attackKnockbackMaximum: {x: 1.25, y: 2.15}
+    _knockbackDuration: 0.75
     _camShakeIntensity: 0.2
     _camShakeTime: 0.3
     _attackMoveForce: {x: 2, y: 0}
@@ -472,12 +480,13 @@ MonoBehaviour:
     _playedSFXName: JabFX_1
   - _attackName: Punch
     _nextLightAttack: 
-    _nextHeavyAttack: Rising Punch
+    _nextHeavyAttack: 
     _isUnlocked: 1
     _defaultMove: 1
     _damageDealt: 20
-    _attackKnockback: {x: 5, y: 2}
-    _knockbackDuration: 0.69
+    _attackKnockbackMinimum: {x: 3, y: 3}
+    _attackKnockbackMaximum: {x: 3.2, y: 3.5}
+    _knockbackDuration: 1
     _camShakeIntensity: 0.4
     _camShakeTime: 0.6
     _attackMoveForce: {x: 4, y: 0}
@@ -490,7 +499,8 @@ MonoBehaviour:
     _isUnlocked: 0
     _defaultMove: 0
     _damageDealt: 20
-    _attackKnockback: {x: 7, y: 3}
+    _attackKnockbackMinimum: {x: 0, y: 0}
+    _attackKnockbackMaximum: {x: 0, y: 0}
     _knockbackDuration: 0.3
     _camShakeIntensity: 0.75
     _camShakeTime: 0.6
@@ -503,7 +513,8 @@ MonoBehaviour:
     _isUnlocked: 0
     _defaultMove: 0
     _damageDealt: 20
-    _attackKnockback: {x: 3, y: 7}
+    _attackKnockbackMinimum: {x: 2, y: 6}
+    _attackKnockbackMaximum: {x: 2.1, y: 6.1}
     _knockbackDuration: 1.7
     _camShakeIntensity: 0.55
     _camShakeTime: 0.6
