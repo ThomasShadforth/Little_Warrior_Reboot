@@ -18,6 +18,10 @@ public class SaveSlotMenu : Menu
     [Header("Confirmation Pop-up")]
     [SerializeField] private ConfirmationPopupMenu _confirmationPopupMenu;
 
+    [Header("Additional Configuration")]
+    [SerializeField] string _firstLevelString;
+    [SerializeField] string _trainingLevelString;
+
     private SaveSlot[] _saveSlots;
 
     private bool _isLoadingGame = false;
@@ -137,6 +141,18 @@ public class SaveSlotMenu : Menu
         _backButton.interactable = false;
     }
 
+    private void _CheckForTrainingLevelDecision()
+    {
+        _confirmationPopupMenu.ActivateMenu("Would you like to enter the training environment to learn your basic abilities?", () =>
+        {
+            SaveGameAndLoadScene(_trainingLevelString);
+        },
+        () =>
+        {
+            SaveGameAndLoadScene();
+        });
+    }
+
     IEnumerator LoadSceneCo(string sceneToLoad = "")
     {
         if(UIScreenFade.instance != null)
@@ -150,7 +166,7 @@ public class SaveSlotMenu : Menu
         {
             //For now, load the first level.
             //Will need to work out a system for loading in/out the sandbox space
-            SceneManager.LoadSceneAsync("Level_1_Draft");
+            SceneManager.LoadSceneAsync(_firstLevelString);
         }
         else
         {

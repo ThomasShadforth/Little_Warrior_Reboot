@@ -53,7 +53,10 @@ public class PlayerCombat : MonoBehaviour
 
             }
 
-            StartCoroutine(CinemachineCameraShake.StartCamShakeCo(_currentAttack.GetCamShakeIntensity(), _currentAttack.GetCamShakeTime(), FindObjectOfType<CinemachineVirtualCamera>()));
+            CinemachineBrain cineCamBrain = FindObjectOfType<CinemachineBrain>();
+            CinemachineVirtualCamera currentVirtualCam = CinemachineCamHelper.GetCineCam(cineCamBrain.ActiveVirtualCamera);
+
+            StartCoroutine(CinemachineCameraShake.StartCamShakeCo(_currentAttack.GetCamShakeIntensity(), _currentAttack.GetCamShakeTime(), currentVirtualCam));
 
             if(AudioManager.instance != null)
             {

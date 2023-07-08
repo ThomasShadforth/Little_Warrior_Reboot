@@ -12,7 +12,7 @@ public class AICombat : MonoBehaviour
     [SerializeField] float _attackCoolTime;
     [SerializeField] Vector2 _knockForce;
     [SerializeField] LayerMask _playerLayer;
-    
+    [SerializeField] float _attackDamage = 20.0f;
 
     [SerializeField] float _camShakeIntensity;
     [SerializeField] float _camShakeTime;

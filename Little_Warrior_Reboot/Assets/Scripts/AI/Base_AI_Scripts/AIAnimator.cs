@@ -60,6 +60,8 @@ public class AIAnimator : MonoBehaviour
 
     void _UpdateAnimation()
     {
+        if (_animator == null) return;
+
         if (_grounded)
         {
             if(_xDirection != 0)

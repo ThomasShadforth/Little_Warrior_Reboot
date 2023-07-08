@@ -63,6 +63,8 @@ public class CinemachineStateDrivenCam : MonoBehaviour
                 i = _camNames.Count;
             }
         }
+
+        
     }
 
     void _ParentCinemachineCams()

@@ -98,6 +98,15 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""33aba8a0-4ab6-4f29-b272-f7db844ea1f8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -309,6 +318,17 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                     ""action"": ""TestEXPAdd"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17b5e451-198d-44ca-b881-b60faa6661b1"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -376,6 +396,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         m_Player_HeavyAttack = m_Player.FindAction("HeavyAttack", throwIfNotFound: true);
         m_Player_PauseGame = m_Player.FindAction("PauseGame", throwIfNotFound: true);
         m_Player_TestEXPAdd = m_Player.FindAction("TestEXPAdd", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -446,6 +467,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_HeavyAttack;
     private readonly InputAction m_Player_PauseGame;
     private readonly InputAction m_Player_TestEXPAdd;
+    private readonly InputAction m_Player_Interact;
     public struct PlayerActions
     {
         private @PlayerActionMap m_Wrapper;
@@ -458,6 +480,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         public InputAction @HeavyAttack => m_Wrapper.m_Player_HeavyAttack;
         public InputAction @PauseGame => m_Wrapper.m_Player_PauseGame;
         public InputAction @TestEXPAdd => m_Wrapper.m_Player_TestEXPAdd;
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -491,6 +514,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @TestEXPAdd.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
                 @TestEXPAdd.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
                 @TestEXPAdd.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTestEXPAdd;
+                @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -519,6 +545,9 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
                 @TestEXPAdd.started += instance.OnTestEXPAdd;
                 @TestEXPAdd.performed += instance.OnTestEXPAdd;
                 @TestEXPAdd.canceled += instance.OnTestEXPAdd;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -584,6 +613,7 @@ public partial class @PlayerActionMap : IInputActionCollection2, IDisposable
         void OnHeavyAttack(InputAction.CallbackContext context);
         void OnPauseGame(InputAction.CallbackContext context);
         void OnTestEXPAdd(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

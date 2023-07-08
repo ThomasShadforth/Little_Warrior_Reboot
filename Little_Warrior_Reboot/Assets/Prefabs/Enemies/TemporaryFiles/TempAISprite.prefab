@@ -291,6 +291,7 @@ MonoBehaviour:
   _playerLayer:
     serializedVersion: 2
     m_Bits: 128
+  _attackDamage: 40
   _camShakeIntensity: 1.75
   _camShakeTime: 0.45
 --- !u!114 &5339146280879423302

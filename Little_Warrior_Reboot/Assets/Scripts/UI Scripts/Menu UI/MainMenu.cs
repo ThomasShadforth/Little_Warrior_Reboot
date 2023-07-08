@@ -15,7 +15,10 @@ public class MainMenu : Menu
     [SerializeField] Button _loadGameButton;
 
     [Header("Additional Configuration")]
+    [SerializeField] string _debugLevelString;
+    [SerializeField] string _trainingAreaString;
     [SerializeField] string _firstLevelString;
+    [SerializeField] ConfirmationPopupMenu _confirmationPopup;
 
     private void Start()
     {
@@ -30,7 +33,7 @@ public class MainMenu : Menu
     {
         if (DataPersistenceManager.instance.GetDisabledDataPersistence())
         {
-            SceneManager.LoadSceneAsync("Level_2_Draft");
+            _CheckTrainingLevelDecision();
         }
         else
         {
@@ -76,6 +79,23 @@ public class MainMenu : Menu
     public void DeactivateMenu()
     {
         this.gameObject.SetActive(false);
+    }
+
+    void _CheckTrainingLevelDecision()
+    {
+        if(_confirmationPopup != null)
+        {
+            _confirmationPopup.ActivateMenu("Would you like to enter the training environment to learn your basic abilities?",
+                () =>
+                {
+                    //The scene
+                    StartCoroutine(_LoadGameCo(_trainingAreaString));
+                },
+                () =>
+                {
+                    StartCoroutine(_LoadGameCo(_firstLevelString));
+                });
+        }
     }
 
     IEnumerator _LoadGameCo(string sceneToLoad)
