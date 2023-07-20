@@ -317,6 +317,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Control_UI_Atlas_9
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 48
+        width: 10
+        height: 16
+      alignment: 6
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f54ce99d842383479105fa77cf28bd4
+      internalID: -1713410831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -330,6 +351,7 @@ TextureImporter:
     nameFileIdTable:
       Control_UI_Atlas_0: 1150797417
       Control_UI_Atlas_2: -308550158
+      Control_UI_Atlas_9: -1713410831
       Control_UI_Atlas_3: -1736832276
       Control_UI_Atlas_7: -1648480286
       Control_UI_Atlas_6: 1053396981

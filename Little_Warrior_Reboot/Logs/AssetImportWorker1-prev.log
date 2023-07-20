@@ -15,7 +15,7 @@ D:/Unity Projects/Github/Little_Warrior_Reboot/Little_Warrior_Reboot
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-58836
+60749
 Successfully changed project path to: D:/Unity Projects/Github/Little_Warrior_Reboot/Little_Warrior_Reboot
 D:/Unity Projects/Github/Little_Warrior_Reboot/Little_Warrior_Reboot
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,7 +47,7 @@ D:/Unity Projects/Github/Little_Warrior_Reboot/Little_Warrior_Reboot
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Refreshing native plugins compatible for Editor in 123.09 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 124.73 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.11f1 (0a5ca18544bf)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/Resources/UnitySubsystems
@@ -63,54 +63,180 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56136
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56632
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.11f1/Editor/Data/PlaybackEngines/MetroSupport/UnityEditor.UWP.Extensions.dll
-Registered in 0.011173 seconds.
+Registered in 0.009798 seconds.
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 120.29 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 122.91 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.073 seconds
+- Completed reload, in  0.667 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1074ms)
-		BeginReloadAssembly (148ms)
+	ReloadAssembly (668ms)
+		BeginReloadAssembly (76ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (708ms)
-			LoadAssemblies (146ms)
+		EndReloadAssembly (481ms)
+			LoadAssemblies (74ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (326ms)
+			SetupTypeCache (100ms)
 			ReleaseScriptCaches (0ms)
 			RebuildScriptCaches (26ms)
-			SetupLoadedEditorAssemblies (308ms)
+			SetupLoadedEditorAssemblies (307ms)
 				LogAssemblyErrors (0ms)
 				InitializePlatformSupportModulesInManaged (11ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (120ms)
+				RefreshPlugins (123ms)
 				BeforeProcessingInitializeOnLoad (1ms)
-				ProcessInitializeOnLoadAttributes (129ms)
-				ProcessInitializeOnLoadMethodAttributes (46ms)
+				ProcessInitializeOnLoadAttributes (131ms)
+				ProcessInitializeOnLoadMethodAttributes (41ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007989 seconds.
+Registered in 0.007749 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image D:\Unity Projects\Github\Little_Warrior_Reboot\Little_Warrior_Reboot\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image D:\Unity Projects\Github\Little_Warrior_Reboot\Little_Warrior_Reboot\Library\PackageCache\com.unity.visualscripting@1.7.8\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for UWP target not found
 Native extension for WindowsStandalone target not found
 Native extension for WebGL target not found
-Refreshing native plugins compatible for Editor in 140.73 ms, found 4 plugins.
+Refreshing native plugins compatible for Editor in 143.17 ms, found 4 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.632 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1633ms)
+		BeginReloadAssembly (122ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (23ms)
+		EndReloadAssembly (1380ms)
+			LoadAssemblies (121ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (323ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (88ms)
+			SetupLoadedEditorAssemblies (792ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (12ms)
+				SetLoadedEditorAssemblies (0ms)
+				RefreshPlugins (143ms)
+				BeforeProcessingInitializeOnLoad (142ms)
+				ProcessInitializeOnLoadAttributes (381ms)
+				ProcessInitializeOnLoadMethodAttributes (104ms)
+				AfterProcessingInitializeOnLoad (11ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (6ms)
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
+Refreshing native plugins compatible for Editor in 2.16 ms, found 4 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 6164 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 59 unused Assets / (0.8 MB). Loaded Objects now: 6617.
+Memory consumption went from 239.3 MB to 238.6 MB.
+Total: 5.921700 ms (FindLiveObjects: 0.859600 ms CreateObjectMapping: 0.181800 ms MarkObjects: 4.398700 ms  DeleteObjects: 0.480600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-codec-MediaFoundation-h265: e54d7ab0439102e2317fc1e4b246158d -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 246765.664450 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Xbox_X_Button_Icon.png
+  artifactKey: Guid(5026bf3872ea17746a77e142d8060589) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Xbox_X_Button_Icon.png using Guid(5026bf3872ea17746a77e142d8060589) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2dcebcbf2ae2acae763edfb392bdf30') in 0.178311 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Shift_Key_Icon.png
+  artifactKey: Guid(de554376169c7c8499ad5c845353b6c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Shift_Key_Icon.png using Guid(de554376169c7c8499ad5c845353b6c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c6a34185a6cb7403a291de33cf027c0') in 0.042214 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/AD_Key_Icon.png
+  artifactKey: Guid(42276a65d0d7c7949a6919f52b02fe89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/AD_Key_Icon.png using Guid(42276a65d0d7c7949a6919f52b02fe89) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eaacdcb9841116e25ad3b9b300824678') in 0.031087 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000048 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/AD_Key_Icon.aseprite
+  artifactKey: Guid(ba4c79227439a8e44bb1a97446e1867e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/AD_Key_Icon.aseprite using Guid(ba4c79227439a8e44bb1a97446e1867e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7f0f8b74e7c1e60b6ab143ce8e6e3ece') in 0.006527 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000035 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Xbox_Y_Button_Icon.png
+  artifactKey: Guid(ef13a3db1e6e90945bc9fa4395cd6be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Xbox_Y_Button_Icon.png using Guid(ef13a3db1e6e90945bc9fa4395cd6be1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '5617c32ccd4b31f41fed3e8fb00b27bb') in 0.034558 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000025 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Q_Key_Icon.png
+  artifactKey: Guid(f07770799ffc9af4ab7161c36125bfb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Q_Key_Icon.png using Guid(f07770799ffc9af4ab7161c36125bfb5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'df29ddea5322c54eeef00126f0680312') in 0.031973 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000027 seconds.
+  path: Assets/Sprites/StaticSprites
+  artifactKey: Guid(955a722002499c941a59f0c942688199) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites using Guid(955a722002499c941a59f0c942688199) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '60c7833436ba5d93db8b51c5e197ae06') in 0.009085 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000034 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Control_UI_Atlas.png
+  artifactKey: Guid(9e2d63a16aa6007419e59c8cc8511af1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Control_UI_Atlas.png using Guid(9e2d63a16aa6007419e59c8cc8511af1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70994ff42147e93327251131677794a6') in 0.057683 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Sprites/StaticSprites/Level Objects
+  artifactKey: Guid(8b1d2aea3fec9dc4f880854fa8de2295) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/Level Objects using Guid(8b1d2aea3fec9dc4f880854fa8de2295) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd35c8fc7ffbad8322440c734c7c05ba7') in 0.008892 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Left_Stick_Icon.png
+  artifactKey: Guid(3b7ba970cbe43ef458c3bad76cf0d815) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/ControlUI_Sprite_Icons/Left_Stick_Icon.png using Guid(3b7ba970cbe43ef458c3bad76cf0d815) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eda56bfb149d88a8fcc3f42b3f4c0814') in 0.030746 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000040 seconds.
+  path: Assets/Sprites/StaticSprites/Whitebox_Tilemap.png
+  artifactKey: Guid(94ad29ac30df2eb4c8f7a2ab9c737969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/Whitebox_Tilemap.png using Guid(94ad29ac30df2eb4c8f7a2ab9c737969) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1238c01658abb33981a0452e5f244a41') in 0.056742 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000026 seconds.
+  path: Assets/Sprites/StaticSprites/Whitebox Square.png
+  artifactKey: Guid(48e3f312560c9304fb4d7465b40b676b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Sprites/StaticSprites/Whitebox Square.png using Guid(48e3f312560c9304fb4d7465b40b676b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd34f736ad0bdfff1c7b8e21d3dc85663') in 0.046163 seconds 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

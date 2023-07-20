@@ -131,6 +131,12 @@ MonoBehaviour:
     m_Scale: 1
     m_Name: Shift_Key_Icon
     m_HashCode: -866792196
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 9
+    m_Scale: 1
+    m_Name: F_Key_Icon
+    m_HashCode: 49186042
   m_SpriteGlyphTable:
   - m_Index: 0
     m_Metrics:
@@ -267,5 +273,20 @@ MonoBehaviour:
     m_Scale: 1
     m_AtlasIndex: 0
     sprite: {fileID: -1308452316, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
+  - m_Index: 9
+    m_Metrics:
+      m_Width: 10
+      m_Height: 16
+      m_HorizontalBearingX: 0
+      m_HorizontalBearingY: 12
+      m_HorizontalAdvance: 10
+    m_GlyphRect:
+      m_X: 67
+      m_Y: 48
+      m_Width: 10
+      m_Height: 16
+    m_Scale: 1
+    m_AtlasIndex: 0
+    sprite: {fileID: -1713410831, guid: 9e2d63a16aa6007419e59c8cc8511af1, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
