@@ -99,4 +99,9 @@ public class AIHealth : Subject, IObserver, IDamageInterface
 
         
     }
+
+    public HealthSystem GetHealthSystem()
+    {
+        return _healthSystem;
+    }
 }

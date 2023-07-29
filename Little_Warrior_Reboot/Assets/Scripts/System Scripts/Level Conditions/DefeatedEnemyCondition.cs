@@ -95,7 +95,10 @@ public class DefeatedEnemyCondition : LevelCondition, IObserver
         {
             Debug.Log("ALL ENEMIES IN WAVE DEFEATED");
             //Spawn the next wave of enemies
-            _nextWaveToSpawn.ActivateCondition();
+            if (_nextWaveToSpawn)
+            {
+                _nextWaveToSpawn.ActivateCondition();
+            }
         }
     }
 }
